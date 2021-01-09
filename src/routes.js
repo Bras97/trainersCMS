@@ -8,6 +8,8 @@ import { DefaultLayout } from "./layouts";
 import BlogOverview from "./views/BlogOverview";
 import UserProfileLite from "./views/UserProfileLite";
 import AddNewPost from "./views/AddNewPost";
+import AddNewTariff from "./views/AddNewTariff";
+import AddNewEvent from "./views/AddNewEvent";
 import Errors from "./views/Errors";
 import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
@@ -36,19 +38,19 @@ export default [
     component: AddNewPost
   },
   {
-    path: "/errors",
+    path: "/add-new-tariff",
     layout: DefaultLayout,
-    component: Errors
+    component: AddNewTariff
+  },
+  {
+    path: "/add-new-event",
+    layout: DefaultLayout,
+    component: AddNewEvent
   },
   {
     path: "/components-overview",
     layout: DefaultLayout,
     component: ComponentsOverview
-  },
-  {
-    path: "/tables",
-    layout: DefaultLayout,
-    component: Tables
   },
   {
     path: "/blog-posts",

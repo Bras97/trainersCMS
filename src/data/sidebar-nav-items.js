@@ -18,12 +18,12 @@ export default function() {
     {
       title: "Cenniki",
       htmlBefore: '<i class="material-icons">note_add</i>',
-      to: "/add-new-post",
+      to: "/add-new-tariff",
     },
     {
       title: "Wydarzenia",
       htmlBefore: '<i class="material-icons">note_add</i>',
-      to: "/add-new-post",
+      to: "/add-new-event",
     },
     {
       title: "Forms & Components",
