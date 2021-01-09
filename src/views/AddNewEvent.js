@@ -5,7 +5,7 @@ import PageTitle from "../components/common/PageTitle";
 import Editor from "../components/add-new-post/Editor";
 import SidebarActions from "../components/add-new-post/SidebarActions";
 import SidebarCategories from "../components/add-new-post/SidebarCategories";
-import { Card, CardBody, Form, FormInput } from "shards-react";
+import { Card, CardBody, Form, FormInput, Button } from "shards-react";
 
 const AddNewEvent = () => (
   <Container fluid className="main-content-container px-4 pb-4">
@@ -16,22 +16,25 @@ const AddNewEvent = () => (
 
     <Row>
       {/* Editor */}
-      <Col lg="9" md="12">
+      <Col lg="12" md="12">
       <Card small className="mb-3">
       <CardBody>
         <Form className="add-new-event">
           <FormInput size="lg" className="mb-3" placeholder="Nazwa wydarzenia" />
+          <FormInput size="lg" className="mb-3" placeholder="Data wydarzenia" />
+          <FormInput size="lg" className="mb-3" placeholder="Godzina wydarzenia" />
           <FormInput className="mb-1" style={{minHeight: "200px"}} placeholder="Opis" />
+          <Editor />
+          <div class="text-center mt-3">
+            <Button theme="accent" size="lg">
+              <i className="material-icons">file_copy</i> Zatwierdź
+            </Button>
+          </div>
         </Form>
       </CardBody>
     </Card>
       </Col>
 
-      {/* Sidebar Widgets */}
-      <Col lg="3" md="12">
-        <SidebarActions />
-        <SidebarCategories />
-      </Col>
     </Row>
   </Container>
 );

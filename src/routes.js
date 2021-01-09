@@ -13,6 +13,9 @@ import AddNewEvent from "./views/AddNewEvent";
 import Errors from "./views/Errors";
 import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
+import PostsList from "./views/PostsList";
+import TariffsList from "./views/TariffsList";
+import EventsList from "./views/EventsList";
 import BlogPosts from "./views/BlogPosts";
 
 export default [
@@ -56,5 +59,20 @@ export default [
     path: "/blog-posts",
     layout: DefaultLayout,
     component: BlogPosts
+  },
+  {
+    path: "/posts-list",
+    layout: DefaultLayout,
+    component: PostsList
+  },
+  {
+    path: "/tariffs-list",
+    layout: DefaultLayout,
+    component: TariffsList
+  },
+  {
+    path: "/events-list",
+    layout: DefaultLayout,
+    component: EventsList
   }
 ];

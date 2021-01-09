@@ -6,24 +6,24 @@ export default function() {
       to: "/user-profile-lite",
     },
     {
-      title: "Posty",
+      title: "Przegląd postów",
       htmlBefore: '<i class="material-icons">vertical_split</i>',
       to: "/blog-posts",
     },
     {
-      title: "Nowy post",
-      htmlBefore: '<i class="material-icons">note_add</i>',
-      to: "/add-new-post",
+      title: "Posty",
+      htmlBefore: '<i class="material-icons">vertical_split</i>',
+      to: "/posts-list",
     },
     {
       title: "Cenniki",
-      htmlBefore: '<i class="material-icons">note_add</i>',
-      to: "/add-new-tariff",
+      htmlBefore: '<i class="material-icons">money</i>',
+      to: "/tariffs-list",
     },
     {
       title: "Wydarzenia",
-      htmlBefore: '<i class="material-icons">note_add</i>',
-      to: "/add-new-event",
+      htmlBefore: '<i class="material-icons">event</i>',
+      to: "/events-list",
     },
     {
       title: "Forms & Components",

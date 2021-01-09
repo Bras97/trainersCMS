@@ -9,7 +9,7 @@ import { Card, CardBody, Form, FormInput,
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  FormSelect } from "shards-react";
+  FormSelect, Button } from "shards-react";
 
 const AddNewTariff = () => (
   <Container fluid className="main-content-container px-4 pb-4">
@@ -20,7 +20,7 @@ const AddNewTariff = () => (
 
     <Row>
       {/* Editor */}
-      <Col lg="9" md="12">
+      <Col lg="12" md="12">
       <Card small className="mb-3">
       <CardBody>
         <Form className="add-new-tariff">
@@ -37,15 +37,14 @@ const AddNewTariff = () => (
             </FormSelect>
           </InputGroup>
           <FormInput size="lg" className="mb-3" placeholder="Cena" />
+          <div class="text-center mt-3">
+            <Button theme="accent" size="lg">
+              <i className="material-icons">file_copy</i> Zatwierdź
+            </Button>
+          </div>
         </Form>
       </CardBody>
     </Card>
-      </Col>
-
-      {/* Sidebar Widgets */}
-      <Col lg="3" md="12">
-        <SidebarActions />
-        <SidebarCategories />
       </Col>
     </Row>
   </Container>
