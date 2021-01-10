@@ -17,6 +17,9 @@ import PostsList from "./views/PostsList";
 import TariffsList from "./views/TariffsList";
 import EventsList from "./views/EventsList";
 import BlogPosts from "./views/BlogPosts";
+import EditPost from "./views/EditPost";
+import EditEvent from "./views/EditEvent";
+import EditTariff from "./views/EditTariff";
 
 export default [
   {
@@ -74,5 +77,20 @@ export default [
     path: "/events-list",
     layout: DefaultLayout,
     component: EventsList
+  },
+  {
+    path: "/edit-post/:id",
+    layout: DefaultLayout,
+    component: EditPost
+  },
+  {
+    path: "/edit-event/:id",
+    layout: DefaultLayout,
+    component: EditEvent
+  },
+  {
+    path: "/edit-tariff/:id",
+    layout: DefaultLayout,
+    component: EditTariff
   }
 ];

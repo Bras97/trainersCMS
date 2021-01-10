@@ -1,10 +1,16 @@
 import React from "react";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 import PageTitle from "../components/common/PageTitle";
 
-const TariffsList = () => (
+const TariffsList = () => {
+
+  const {tariffs} = useSelector(state => state.tariffs);
+  console.log(tariffs);
+
+  return(
   <Container fluid className="main-content-container px-4">
     {/* Page Header */}
     <Row noGutters className="page-header py-4">
@@ -41,21 +47,15 @@ const TariffsList = () => (
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>1h personalny trening</td>
-                  <td >Pływanie</td>
-                  <td >60 zł</td>
-                  {/* <td>{{quiz.Internal.quizName | limitChars:20}}</td> */}
-                  <td> <a href="/add-new-tariff"><FaPen /></a> &ensp; <FaTrashAlt /> </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>1h personalny trening</td>
-                  <td>Bieganie</td>
-                  <td>50 zł</td>
-                  <td> <a href="/add-new-tariff"><FaPen /></a> &ensp; <FaTrashAlt /> </td>
-                </tr>
+                {tariffs.map(tariff => 
+                  <tr>
+                    <td>{tariff.id}</td>
+                    <td>{tariff.title}</td>
+                    <td>{tariff.category}</td>
+                    <td>{tariff.price}</td>
+                    <td> <a href={"edit-tariff/" + tariff.id}><FaPen /></a> &ensp; <a href="/posts-list"><FaTrashAlt /> </a></td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </CardBody>
@@ -64,6 +64,6 @@ const TariffsList = () => (
     </Row>
 
   </Container>
-);
+)};
 
 export default TariffsList;

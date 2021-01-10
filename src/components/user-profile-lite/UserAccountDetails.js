@@ -73,39 +73,13 @@ const UserAccountDetails = ({ title }) => (
                   />
                 </Col>
               </Row>
-              <FormGroup>
-                <label htmlFor="feAddress">Adres</label>
-                <FormInput
-                  id="feAddress"
-                  placeholder="Adres"
-                  value="1234 Main St."
-                  onChange={() => {}}
-                />
-              </FormGroup>
               <Row form>
                 {/* City */}
-                <Col md="6" className="form-group">
+                <Col md="12" className="form-group">
                   <label htmlFor="feCity">Miasto</label>
                   <FormInput
                     id="feCity"
                     placeholder="Miasto"
-                    onChange={() => {}}
-                  />
-                </Col>
-                {/* State */}
-                <Col md="4" className="form-group">
-                  <label htmlFor="feInputState">Województwo</label>
-                  <FormSelect id="feInputState">
-                    <option>Choose...</option>
-                    <option>...</option>
-                  </FormSelect>
-                </Col>
-                {/* Zip Code */}
-                <Col md="2" className="form-group">
-                  <label htmlFor="feZipCode">Kod pocztowy</label>
-                  <FormInput
-                    id="feZipCode"
-                    placeholder="Kod"
                     onChange={() => {}}
                   />
                 </Col>

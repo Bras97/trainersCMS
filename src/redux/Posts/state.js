@@ -5,23 +5,26 @@ const intialState = {
         type: 'POST',
         title: 'Super post',
         id: "1",
-        content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+        content: 'Już jest nowa strona trenerów a o to jej pierwszy post! Hurra! Aż chce się pójść na siłownię wyrobić trochę muskulatury.',
         creator: 1,
-        comments: [
-            {
-                id: '1',
-                content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-                creator: 2,
-                postId: '1',
-            },
-            {
-                id: '2',
-                content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-                creator: 3,
-                postId: '1',
-            },
-        ]
-    }],
+        comments: []
+    },{
+        type: 'POST',
+        title: 'Otwieramy siłownie!',
+        id: "2",
+        content: 'Po zmniejszeniu obostrzeń w kraju możliwe jest ponowne pompowanie i pakowanie. Wszycy na to czekali. Dosłownie każdy, który siedział w domu zbyt długo.',
+        creator: 1,
+        comments: []
+    },
+    {
+        type: 'POST',
+        title: 'Nowe hantle Hantlex 4.0',
+        id: "3",
+        content: 'Hantle Hantlex 4.0 to niebywały cud techniki. Wystarczy tylko je podnieś, zgiąć rękę, potem zgiąć jeszcze raz i tak cały czas, a efekt będzie zdumiewający!',
+        creator: 1,
+        comments: []
+    },
+    ],
     currentPost: null,
     pending: false,
 }

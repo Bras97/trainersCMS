@@ -1,15 +1,14 @@
 import React from "react";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {initPosts} from "../redux/Posts/actions"
 
 import PageTitle from "../components/common/PageTitle";
 
 const PostsList = () => {
 
-  const posts = useSelector(state => state.posts);
-  const dispatch = useDispatch();
+  const {posts} = useSelector(state => state.posts);
   console.log(posts);
 
   return(
@@ -46,19 +45,18 @@ const PostsList = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>{posts.posts[0].id}</td>
-                  <td>{posts.posts[0].title} Otwieramy siłownie!</td>
-                  <td maxlength="20">Po zmniejszeniu obostrzeń możliwe jest...</td>
-                  {/* <td>{{quiz.Internal.quizName | limitChars:20}}</td> */}
-                  <td> <a href="/add-new-post"><FaPen /></a> &ensp; <a href="/posts-list"><FaTrashAlt /> </a></td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Nowe hantle Hantlex 4.0</td>
-                  <td>Hantle Hantlex 4.0 to niebywały cud techniki...</td>
-                  <td> <a href="/add-new-post"><FaPen /></a> &ensp; <FaTrashAlt /> </td>
-                </tr>
+                {posts.map(post => 
+                  <tr>
+                    <td>{post.id}</td>
+                    <td>{post.title}</td>
+                    <td style={{maxWidth: "400px",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis"
+                    }}>{post.content}</td>
+                    <td> <a href={"edit-post/" + post.id}><FaPen /></a> &ensp; <a href="/posts-list"><FaTrashAlt /> </a></td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </CardBody>

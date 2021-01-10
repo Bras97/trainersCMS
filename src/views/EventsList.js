@@ -1,10 +1,17 @@
 import React from "react";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 import PageTitle from "../components/common/PageTitle";
 
-const EventsList = () => (
+const EventsList = () => {
+
+  const {events} = useSelector(state => state.events);
+  console.log(events);
+
+  return(
+
   <Container fluid className="main-content-container px-4">
     {/* Page Header */}
     <Row noGutters className="page-header py-4">
@@ -41,21 +48,19 @@ const EventsList = () => (
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Wspólne sztangowanie</td>
-                  <td >20-02-2021</td>
-                  <td >Zbierzemy się wszyscy w jednej salce, każdy...</td>
-                  {/* <td>{{quiz.Internal.quizName | limitChars:20}}</td> */}
-                  <td> <a href="/add-new-event"><FaPen /></a> &ensp; <FaTrashAlt /> </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Nocny trening</td>
-                  <td>27-02-2021</td>
-                  <td>Zapraszam wszystkich serdecznie na nocny...</td>
-                  <td> <a href="/add-new-event"><FaPen /></a> &ensp; <FaTrashAlt /> </td>
-                </tr>
+                {events.map(event => 
+                  <tr>
+                    <td>{event.id}</td>
+                    <td>{event.title}</td>
+                    <td>{event.date}</td>
+                    <td style={{maxWidth: "400px",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis"
+                    }}>{event.content}</td>
+                    <td> <a href={"edit-event/" + event.id}><FaPen /></a> &ensp; <a href="/posts-list"><FaTrashAlt /> </a></td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </CardBody>
@@ -64,6 +69,7 @@ const EventsList = () => (
     </Row>
 
   </Container>
-);
+  )
+ };
 
 export default EventsList;
