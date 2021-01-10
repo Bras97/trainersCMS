@@ -1,10 +1,18 @@
 import React from "react";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import {initPosts} from "../redux/Posts/actions"
 
 import PageTitle from "../components/common/PageTitle";
 
-const PostsList = () => (
+const PostsList = () => {
+
+  const posts = useSelector(state => state.posts);
+  const dispatch = useDispatch();
+  console.log(posts);
+
+  return(
   <Container fluid className="main-content-container px-4">
     {/* Page Header */}
     <Row noGutters className="page-header py-4">
@@ -39,11 +47,11 @@ const PostsList = () => (
               </thead>
               <tbody>
                 <tr>
-                  <td>1</td>
-                  <td>Otwieramy siłownie!</td>
+                  <td>{posts.posts[0].id}</td>
+                  <td>{posts.posts[0].title} Otwieramy siłownie!</td>
                   <td maxlength="20">Po zmniejszeniu obostrzeń możliwe jest...</td>
                   {/* <td>{{quiz.Internal.quizName | limitChars:20}}</td> */}
-                  <td> <a href="/add-new-post"><FaPen /></a> &ensp; <FaTrashAlt /> </td>
+                  <td> <a href="/add-new-post"><FaPen /></a> &ensp; <a href="/posts-list"><FaTrashAlt /> </a></td>
                 </tr>
                 <tr>
                   <td>2</td>
@@ -59,6 +67,8 @@ const PostsList = () => (
     </Row>
 
   </Container>
-);
+    
+  )
+};
 
 export default PostsList;
