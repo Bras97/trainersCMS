@@ -6,6 +6,7 @@ import Editor from "../components/add-new-post/Editor";
 import SidebarActions from "../components/add-new-post/SidebarActions";
 import SidebarCategories from "../components/add-new-post/SidebarCategories";
 import { Card, CardBody, Form, FormInput, Button } from "shards-react";
+import DateComponent from "../components/add-new-post/DateComponent";
 
 const AddNewEvent = () => (
   <Container fluid className="main-content-container px-4 pb-4">
@@ -21,8 +22,9 @@ const AddNewEvent = () => (
       <CardBody>
         <Form className="add-new-event">
           <FormInput size="lg" className="mb-3" placeholder="Nazwa wydarzenia" />
-          <FormInput size="lg" className="mb-3" placeholder="Data wydarzenia" />
-          <FormInput size="lg" className="mb-3" placeholder="Godzina wydarzenia" />
+          <div className="mb-3 d-flex justify-content-start align-self-center">
+          <h6 className="mt-1 mr-3">Data wydarzenia: </h6><DateComponent size="lg"/>
+          </div>
           <FormInput className="mb-1" style={{minHeight: "200px"}} placeholder="Opis" />
           <Editor />
           <div class="text-center mt-3">

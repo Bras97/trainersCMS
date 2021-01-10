@@ -17,7 +17,7 @@ const PostsList = () => (
         <Card small className="mb-4">
           <CardHeader className="border-bottom">
             <h4 className="m-0">Posty</h4>
-            <h6 className="m-0"><a href="/add-new-post">Dodaj nowy post</a></h6>
+            <h6 className="m-0 mt-1"><a href="/add-new-post">Dodaj nowy post</a></h6>
           </CardHeader>
           <CardBody className="p-0 pb-3">
             <table className="table mb-0">

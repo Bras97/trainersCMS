@@ -28,20 +28,20 @@ const UserAccountDetails = ({ title }) => (
               <Row form>
                 {/* First Name */}
                 <Col md="6" className="form-group">
-                  <label htmlFor="feFirstName">First Name</label>
+                  <label htmlFor="feFirstName">Imię</label>
                   <FormInput
                     id="feFirstName"
-                    placeholder="First Name"
+                    placeholder="Imię"
                     value="Sierra"
                     onChange={() => {}}
                   />
                 </Col>
                 {/* Last Name */}
                 <Col md="6" className="form-group">
-                  <label htmlFor="feLastName">Last Name</label>
+                  <label htmlFor="feLastName">Nazwisko</label>
                   <FormInput
                     id="feLastName"
-                    placeholder="Last Name"
+                    placeholder="Nazwisko"
                     value="Brooks"
                     onChange={() => {}}
                   />
@@ -54,7 +54,7 @@ const UserAccountDetails = ({ title }) => (
                   <FormInput
                     type="email"
                     id="feEmail"
-                    placeholder="Email Address"
+                    placeholder="Adres email"
                     value="sierra@example.com"
                     onChange={() => {}}
                     autoComplete="email"
@@ -62,11 +62,11 @@ const UserAccountDetails = ({ title }) => (
                 </Col>
                 {/* Password */}
                 <Col md="6" className="form-group">
-                  <label htmlFor="fePassword">Password</label>
+                  <label htmlFor="fePassword">Hasło</label>
                   <FormInput
                     type="password"
                     id="fePassword"
-                    placeholder="Password"
+                    placeholder="Hasło"
                     value="EX@MPL#P@$$w0RD"
                     onChange={() => {}}
                     autoComplete="current-password"
@@ -74,10 +74,10 @@ const UserAccountDetails = ({ title }) => (
                 </Col>
               </Row>
               <FormGroup>
-                <label htmlFor="feAddress">Address</label>
+                <label htmlFor="feAddress">Adres</label>
                 <FormInput
                   id="feAddress"
-                  placeholder="Address"
+                  placeholder="Adres"
                   value="1234 Main St."
                   onChange={() => {}}
                 />
@@ -85,16 +85,16 @@ const UserAccountDetails = ({ title }) => (
               <Row form>
                 {/* City */}
                 <Col md="6" className="form-group">
-                  <label htmlFor="feCity">City</label>
+                  <label htmlFor="feCity">Miasto</label>
                   <FormInput
                     id="feCity"
-                    placeholder="City"
+                    placeholder="Miasto"
                     onChange={() => {}}
                   />
                 </Col>
                 {/* State */}
                 <Col md="4" className="form-group">
-                  <label htmlFor="feInputState">State</label>
+                  <label htmlFor="feInputState">Województwo</label>
                   <FormSelect id="feInputState">
                     <option>Choose...</option>
                     <option>...</option>
@@ -102,10 +102,10 @@ const UserAccountDetails = ({ title }) => (
                 </Col>
                 {/* Zip Code */}
                 <Col md="2" className="form-group">
-                  <label htmlFor="feZipCode">Zip</label>
+                  <label htmlFor="feZipCode">Kod pocztowy</label>
                   <FormInput
                     id="feZipCode"
-                    placeholder="Zip"
+                    placeholder="Kod"
                     onChange={() => {}}
                   />
                 </Col>
@@ -113,11 +113,13 @@ const UserAccountDetails = ({ title }) => (
               <Row form>
                 {/* Description */}
                 <Col md="12" className="form-group">
-                  <label htmlFor="feDescription">Description</label>
+                  <label htmlFor="feDescription">Opis</label>
                   <FormTextarea id="feDescription" rows="5" />
                 </Col>
               </Row>
-              <Button theme="accent">Update Account</Button>
+              <div class="text-center">
+                <Button theme="accent">Zaktualizuj dane</Button>
+              </div>
             </Form>
           </Col>
         </Row>

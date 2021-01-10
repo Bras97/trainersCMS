@@ -17,7 +17,7 @@ const EventsList = () => (
         <Card small className="mb-4">
           <CardHeader className="border-bottom">
             <h4 className="m-0">Wydarzenia</h4>
-            <h6 className="m-0"><a href="/add-new-event">Dodaj nowe wydarzenie</a></h6>
+            <h6 className="m-0 mt-1"><a href="/add-new-event">Dodaj nowe wydarzenie</a></h6>
           </CardHeader>
           <CardBody className="p-0 pb-3">
             <table className="table mb-0">
