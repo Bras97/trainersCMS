@@ -11,9 +11,9 @@ export const Post = {
     creator: null,
     content: "",
     comments: null,
-    type: null
+    type: null,
+    image: null
 }
-
 export const PostsState = {
     posts: null,
     currentPost: null,
@@ -23,8 +23,8 @@ export const PostsState = {
 export const SET_POSTS = 'SET_POSTS';
 export const SET_CURRENT_POST = 'SET_CURRENT_POST';
 export const ADD_POST = 'ADD_POST';
+export const EDIT_POST = 'EDIT_POST';
 export const SET_POST_PENDING = 'SET_POST_PENDING';
-export const INIT_POSTS = 'INIT_POSTS';
 
 export const SetPostsAction = (post) => {
     return{

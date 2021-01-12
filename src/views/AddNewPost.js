@@ -1,12 +1,31 @@
 import React from "react";
+import {useState} from "react";
 import { Container, Row, Col,Card, CardBody, Form, FormInput, Button } from "shards-react";
-
+import {useDispatch, useSelector} from "react-redux"
 import PageTitle from "../components/common/PageTitle";
 import Editor from "../components/add-new-post/Editor";
-import SidebarActions from "../components/add-new-post/SidebarActions";
-import SidebarCategories from "../components/add-new-post/SidebarCategories";
+import {addPost} from "../redux/Posts/actions";
 
-const AddNewPost = () => (
+const AddNewPost = () => {
+
+  
+  function Post(id, title, content, image) {
+    this.id = id;
+    this.title = title;
+    this.content = content;
+    this.image = image;
+  }
+
+  const dispatch = useDispatch();
+  const [title, setTitle] = useState();
+  const [content, setContent] = useState();
+  const {posts} = useSelector(state => state.posts);
+  
+
+  console.log("Posts: ", posts)
+
+  return(
+
   <Container fluid className="main-content-container px-4 pb-4">
     {/* Page Header */}
     <Row noGutters className="page-header py-4">
@@ -19,11 +38,22 @@ const AddNewPost = () => (
         <Card small className="mb-3">
           <CardBody>
             <Form className="add-new-post">
-              <FormInput size="lg" className="mb-3" placeholder="Tytuł posta" />
-              <FormInput className="mb-1" style={{minHeight: "200px"}} placeholder="Opis posta" />
+              <FormInput size="lg" className="mb-3" placeholder="Tytuł posta" onChange={e => setTitle(e.target.value)}/>
+              <FormInput className="mb-1" style={{minHeight: "200px"}} placeholder="Opis posta" onChange={e => setContent(e.target.value)} />
               <Editor />
               <div class="text-center mt-3">
-                <Button theme="accent" size="lg">
+                <Button theme="accent" size="lg" href="/posts-list"
+                  onClick={()=> {
+                    const id = posts.length+1;
+                    dispatch(addPost( {
+                    type: 'POST',
+                    title: title,
+                    id: id,
+                    content: content,
+                    creator: 1,
+                    comments: []
+                }));
+                }}>
                   <i className="material-icons">file_copy</i> Zatwierdź
                 </Button>
               </div>
@@ -35,6 +65,7 @@ const AddNewPost = () => (
 
     </Row>
   </Container>
-);
+  )
+};
 
 export default AddNewPost;

@@ -1,4 +1,4 @@
-import { ADD_POST, Post, PostActions, SET_CURRENT_POST, SET_POSTS, SET_POST_PENDING, INIT_POSTS } from "./types";
+import { EDIT_POST, ADD_POST, Post, PostActions, SET_CURRENT_POST, SET_POSTS, SET_POST_PENDING, INIT_POSTS } from "./types";
 
 export const setPosts = (data) => {
     return {
@@ -28,8 +28,10 @@ export const setPending = (data) => {
     };
 }
 
-export const initPosts = () => {
+export const editPost = (post) => {
     return {
-        type: INIT_POSTS,
+        type: EDIT_POST,
+        payload: post
     };
 }
+

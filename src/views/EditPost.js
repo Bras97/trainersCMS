@@ -1,8 +1,9 @@
 import React from "react";
 import {useEffect, useState} from "react";
 import { Container, Row, Col,Card, CardBody, Form, FormInput, Button } from "shards-react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import {editPost} from "../redux/Posts/actions";
 
 import PageTitle from "../components/common/PageTitle";
 import Editor from "../components/add-new-post/Editor";
@@ -12,6 +13,7 @@ const EditPost = () => {
   const {posts} = useSelector(state => state.posts);
   const { id } = useParams();
   const [currentPost, setCurrentPost] = useState();
+  const dispatch = useDispatch();
 
   useEffect(() => {
       if (id) {
@@ -42,7 +44,17 @@ const EditPost = () => {
               <FormInput className="mb-1" style={{minHeight: "200px"}} placeholder="Opis posta" value={currentPost.content} />
               <Editor />
               <div class="text-center mt-3">
-                <Button theme="accent" size="lg">
+                <Button theme="accent" size="lg"
+                  onClick={()=> {
+                    dispatch(editPost( {
+                    type: 'POST',
+                    title: currentPost.title,
+                    id: currentPost.id,
+                    content: currentPost.content,
+                    creator: 1,
+                    comments: []
+                }));
+                }}>
                   <i className="material-icons">file_copy</i> Zatwierdź
                 </Button>
               </div>
