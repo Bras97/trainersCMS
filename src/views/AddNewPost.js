@@ -17,8 +17,6 @@ const AddNewPost = () => {
   const {posts} = useSelector(state => state.posts);
   
 
-  console.log("Posts: ", posts)
-
   return(
 
   <Container fluid className="main-content-container px-4 pb-4">
@@ -39,10 +37,9 @@ const AddNewPost = () => {
               <div className="text-center mt-3">
                 <Link to="/posts-list">
                   <Button  theme="accent" size="lg"
-                  onClick={()=> {
-                    const id = posts.length+1;
-                    dispatch(addPost(new Post(posts.length+1, title, content, null)));                
-                  }}>
+                  onClick={()=> 
+                    dispatch(addPost(new Post(posts.length+1, title, content, null)))                
+                  }>
                   <i className="material-icons">file_copy</i> Zatwierdź
                   </Button>
                 </Link>

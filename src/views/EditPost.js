@@ -37,9 +37,6 @@ const EditPost = () => {
     });
   };
 
-
-
-
   if(!currentPost){
     return <div></div>
   }
@@ -63,9 +60,7 @@ const EditPost = () => {
               <div className="text-center mt-3">
                 <Link to="/posts-list">
                 <Button theme="accent" size="lg"
-                  onClick={()=> 
-                    dispatch(editPost(currentPost))
-                }>
+                  onClick={()=> dispatch(editPost(currentPost))}>
                   
                   <i className="material-icons">file_copy</i> Zatwierdź
                 </Button>

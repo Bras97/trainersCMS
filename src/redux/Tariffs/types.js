@@ -1,49 +1,58 @@
-export const Comment = {
-    id: "",
-    creator: null,
-    content: "",
-    postId: ""
-}
+// export const Comment = {
+//     id: "",
+//     creator: null,
+//     content: "",
+//     tariffId: ""
+// }
 
-export const Tariff = {
-    id: "",
-    title: "",
-    creator: null,
-    price: null,
-    category: "",
-    comments: null,
-    type: null
-}
+// export const Tariff = {
+//     id: "",
+//     title: "",
+//     creator: null,
+//     price: null,
+//     category: "",
+//     comments: null,
+//     type: null
+// }
 
-export const TariffsState = {
-    posts: null,
-    currentTariff: null,
-    pending: false
-}
+// export const TariffsState = {
+//     tariffs: null,
+//     currentTariff: null,
+//     pending: false
+// }
+
+export function Tariff(id, name, category, price) {
+    this.id = id;
+    this.name = name;
+    this.category = category;
+    this.price = price;
+  }
 
 export const SET_TARIFFS = 'SET_TARIFFS';
 export const SET_CURRENT_TARIFF = 'SET_CURRENT_TARIFF';
 export const ADD_TARIFF = 'ADD_TARIFF';
+export const EDIT_TARIFF = 'EDIT_TARIFF';
+export const DELETE_TARIFF = 'DELETE_TARIFF';
 export const SET_TARIFF_PENDING = 'SET_TARIFF_PENDING';
 
-export const SetTariffsAction = (post) => {
+export const SetTariffsAction = (tariff) => {
     return{
         type: SET_TARIFFS,
-        payload: post
+        payload: tariff
     }
 }
 
-export const SetCurrentTariffAction = (post) => {
+export const SetCurrentTariffAction = (tariff) => {
     return{
         type: SET_CURRENT_TARIFF,
-        payload: post
+        payload: tariff
     }
 }
 
-export const AddTariffAction = (post) => {
+export const AddTariffAction = (tariff) => {
     return{
         type: ADD_TARIFF,
-        payload: post
+        payload: tariff
     }
 }
 

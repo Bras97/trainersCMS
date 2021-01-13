@@ -1,21 +1,36 @@
 import React from "react";
+import {useState} from "react";
 import { Container, Row, Col } from "shards-react";
+import { Link } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux"
 
 import PageTitle from "../components/common/PageTitle";
-import Editor from "../components/add-new-post/Editor";
-import SidebarActions from "../components/add-new-post/SidebarActions";
-import SidebarCategories from "../components/add-new-post/SidebarCategories";
 import { Card, CardBody, Form, FormInput,
   InputGroup,
   InputGroupAddon,
   InputGroupText,
   FormSelect, Button } from "shards-react";
 
-const AddNewTariff = () => (
+import {addTariff} from "../redux/Tariffs/actions";
+import { Tariff } from "../redux/Tariffs/types";
+
+
+const AddNewTariff = () => {
+
+
+const dispatch = useDispatch();
+const [name, setName] = useState();
+const [price, setPrice] = useState();
+const [category, setCategory] = useState();
+const {tariffs} = useSelector(state => state.tariffs);
+
+
+return(
+
   <Container fluid className="main-content-container px-4 pb-4">
     {/* Page Header */}
     <Row noGutters className="page-header py-4">
-      <PageTitle sm="4" title="Dodaj nową cenę" subtitle="Blog Posts" className="text-sm-left" />
+      <PageTitle sm="4" title="Dodaj nową cenę" subtitle="Blog Tariffs" className="text-sm-left" />
     </Row>
 
     <Row>
@@ -24,23 +39,28 @@ const AddNewTariff = () => (
       <Card small className="mb-3">
       <CardBody>
         <Form className="add-new-tariff">
-          <FormInput size="lg" className="mb-3" placeholder="Nazwa" />
+          <FormInput size="lg" className="mb-3" placeholder="Nazwa"  onChange={e => setName(e.target.value)}/>
           <InputGroup className="mb-3">
             <InputGroupAddon type="prepend">
               <InputGroupText>Kategorie</InputGroupText>
             </InputGroupAddon>
-            <FormSelect>
+            <FormSelect onChange={e => setCategory(e.target.value)}>
               <option>Bieganie</option>
               <option>Kolarstwo</option>
               <option>Pływanie</option>
               <option>Siłownia</option>
             </FormSelect>
           </InputGroup>
-          <FormInput size="lg" className="mb-3" placeholder="Cena" />
+          <FormInput size="lg" className="mb-3" placeholder="Cena"  onChange={e => setPrice(e.target.value)}/>
           <div className="text-center mt-3">
-            <Button theme="accent" size="lg">
+            <Link to="/tariffs-list">
+              <Button  theme="accent" size="lg"
+              onClick={()=> 
+                dispatch(addTariff(new Tariff(tariffs.length+1, name, category, price)))                
+              }>
               <i className="material-icons">file_copy</i> Zatwierdź
-            </Button>
+              </Button>
+            </Link>
           </div>
         </Form>
       </CardBody>
@@ -48,6 +68,6 @@ const AddNewTariff = () => (
       </Col>
     </Row>
   </Container>
-);
+)};
 
 export default AddNewTariff;

@@ -91,7 +91,7 @@ const UserAccountDetails = ({ title }) => (
                   <FormTextarea id="feDescription" rows="5" />
                 </Col>
               </Row>
-              <div class="text-center">
+              <div className="text-center">
                 <Button theme="accent">Zaktualizuj dane</Button>
               </div>
             </Form>

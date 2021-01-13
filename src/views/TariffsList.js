@@ -1,14 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import PageTitle from "../components/common/PageTitle";
+import { deleteTariff } from "../redux/Tariffs/actions";
 
 const TariffsList = () => {
 
   const {tariffs} = useSelector(state => state.tariffs);
   console.log(tariffs);
+  const dispatch = useDispatch();
 
   return(
   <Container fluid className="main-content-container px-4">
@@ -23,7 +26,7 @@ const TariffsList = () => {
         <Card small className="mb-4">
           <CardHeader className="border-bottom">
             <h4 className="m-0">Cenniki</h4>
-            <h6 className="m-0 mt-1"><a href="/add-new-tariff">Dodaj nowy cennik</a></h6>
+            <h6 className="m-0 mt-1"><Link to="/add-new-tariff">Dodaj nowy cennik</Link></h6>
           </CardHeader>
           <CardBody className="p-0 pb-3">
             <table className="table mb-0">
@@ -50,10 +53,10 @@ const TariffsList = () => {
                 {tariffs.map(tariff => 
                   <tr>
                     <td>{tariff.id}</td>
-                    <td>{tariff.title}</td>
+                    <td>{tariff.name}</td>
                     <td>{tariff.category}</td>
                     <td>{tariff.price}</td>
-                    <td> <a href={"edit-tariff/" + tariff.id}><FaPen /></a> &ensp; <a href="/posts-list"><FaTrashAlt /> </a></td>
+                    <td> <Link to={"edit-tariff/" + tariff.id}><FaPen /></Link> &ensp; <Link onClick={() => dispatch(deleteTariff(tariff))}><FaTrashAlt /> </Link></td>
                   </tr>
                 )}
               </tbody>

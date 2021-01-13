@@ -1,14 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import PageTitle from "../components/common/PageTitle";
+import { deleteEvent } from "../redux/Events/actions";
 
 const EventsList = () => {
 
   const {events} = useSelector(state => state.events);
   console.log(events);
+  const dispatch = useDispatch();
 
   return(
 
@@ -58,7 +61,7 @@ const EventsList = () => {
                     overflow: "hidden",
                     textOverflow: "ellipsis"
                     }}>{event.content}</td>
-                    <td> <a href={"edit-event/" + event.id}><FaPen /></a> &ensp; <a href="/posts-list"><FaTrashAlt /> </a></td>
+                    <td> <Link to={"edit-event/" + event.id}><FaPen /></Link> &ensp; <Link onClick={() => dispatch(deleteEvent(event))}><FaTrashAlt /> </Link></td>
                   </tr>
                 )}
               </tbody>

@@ -1,18 +1,18 @@
 import { Reducer } from 'redux';
 import initialState from './state';
-import {SET_EVENTS, ADD_EVENT, SET_EVENT_PENDING, SET_CURRENT_EVENT } from './types';
+import {SET_EVENTS, ADD_EVENT, SET_EVENT_PENDING, SET_CURRENT_EVENT, EDIT_EVENT, DELETE_EVENT } from './types';
 
 const eventReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_EVENTS:
             return {
                 ...state,
-                posts: action.payload,
+                events: action.payload,
             };
         case ADD_EVENT:
             return {
                 ...state,
-                posts: [...state.posts, action.payload],
+                events: [...state.events, action.payload],
             };
         case SET_CURRENT_EVENT:
             return {
@@ -24,6 +24,24 @@ const eventReducer = (state = initialState, action) => {
                 ...state,
                 pending: action.payload,
             };
+        case EDIT_EVENT:
+            {
+                const eventIndex = state.events.findIndex(event => event.id === action.payload.id)
+                const currentEvents = [...state.events]
+                currentEvents[eventIndex] = action.payload
+                return {
+                    ...state,
+                    events: currentEvents,
+                };
+            }
+        case DELETE_EVENT:
+            {
+                const currentEvents = state.events.filter(function(el) { return el.id !== action.payload.id})
+                return {
+                    ...state,
+                    events: currentEvents,
+                };
+            }
         default:
             return state;
     }

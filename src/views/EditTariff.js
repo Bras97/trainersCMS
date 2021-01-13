@@ -1,10 +1,11 @@
 import React from "react";
 import { Container, Row, Col } from "shards-react";
 import {useEffect, useState} from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, Link } from "react-router-dom";
+import {editTariff} from "../redux/Tariffs/actions";
 
 import PageTitle from "../components/common/PageTitle";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import { Card, CardBody, Form, FormInput,
   InputGroup,
   InputGroupAddon,
@@ -16,6 +17,7 @@ const EditTariff = () =>  {
   const {tariffs} = useSelector(state => state.tariffs);
   const { id } = useParams();
   const [currentTariff, setCurrentTariff] = useState();
+  const dispatch = useDispatch();
 
   useEffect(() => {
       if (id) {
@@ -25,6 +27,28 @@ const EditTariff = () =>  {
       }
   }, [id, tariffs]);
   
+
+  const updateName = e => {
+    setCurrentTariff({
+      ...currentTariff,
+      name: e.target.value
+    });
+  };
+
+  const updateCategory = e => {
+    setCurrentTariff({
+      ...currentTariff,
+      category: e.target.value
+    });
+  };
+
+  const updatePrice = e => {
+    setCurrentTariff({
+      ...currentTariff,
+      price: e.target.value
+    });
+  };
+
   if(!currentTariff){
     return <div></div>
   }
@@ -33,7 +57,7 @@ const EditTariff = () =>  {
   <Container fluid className="main-content-container px-4 pb-4">
     {/* Page Header */}
     <Row noGutters className="page-header py-4">
-      <PageTitle sm="4" title="Dodaj nową cenę" subtitle="Blog Posts" className="text-sm-left" />
+      <PageTitle sm="4" title="Dodaj nową cenę" subtitle="Blog Tariffs" className="text-sm-left" />
     </Row>
 
     <Row>
@@ -42,23 +66,27 @@ const EditTariff = () =>  {
       <Card small className="mb-3">
       <CardBody>
         <Form className="add-new-tariff">
-          <FormInput size="lg" className="mb-3" placeholder="Nazwa" value={currentTariff.title} />
+          <FormInput size="lg" className="mb-3" placeholder="Nazwa" defaultValue={currentTariff.name} onChange={updateName}/>
           <InputGroup className="mb-3">
             <InputGroupAddon type="prepend">
               <InputGroupText>Kategorie</InputGroupText>
             </InputGroupAddon>
-            <FormSelect value={currentTariff.category}> 
+            <FormSelect defaultValue={currentTariff.category} onChange={updateCategory}> 
               <option>Bieganie</option>
               <option>Kolarstwo</option>
               <option>Pływanie</option>
               <option>Siłownia</option>
             </FormSelect>
           </InputGroup>
-          <FormInput size="lg" className="mb-3" placeholder="Cena" value={currentTariff.price} />
+          <FormInput size="lg" className="mb-3" placeholder="Cena" defaultValue={currentTariff.price} onChange={updatePrice}/>
           <div className="text-center mt-3">
-            <Button theme="accent" size="lg">
+            <Link to="/tariffs-list">
+            <Button theme="accent" size="lg"
+              onClick={()=> dispatch(editTariff(currentTariff))}>
+              
               <i className="material-icons">file_copy</i> Zatwierdź
             </Button>
+            </Link>
           </div>
         </Form>
       </CardBody>
