@@ -33,6 +33,7 @@ export const ADD_POST = 'ADD_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const SET_POST_PENDING = 'SET_POST_PENDING';
+export const UPDATE_POST_INDEX = 'UPDATE_POST_INDEX';
 
 export const SetPostsAction = (post) => {
     return{

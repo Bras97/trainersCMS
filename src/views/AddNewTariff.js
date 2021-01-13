@@ -21,7 +21,7 @@ const AddNewTariff = () => {
 const dispatch = useDispatch();
 const [name, setName] = useState();
 const [price, setPrice] = useState();
-const [category, setCategory] = useState();
+const [category, setCategory] = useState("Bieganie");
 const {tariffs} = useSelector(state => state.tariffs);
 
 
@@ -55,9 +55,10 @@ return(
           <div className="text-center mt-3">
             <Link to="/tariffs-list">
               <Button  theme="accent" size="lg"
-              onClick={()=> 
-                dispatch(addTariff(new Tariff(tariffs.length+1, name, category, price)))                
-              }>
+              onClick={()=> {
+                const newIndex = parseInt(tariffs[tariffs.length-1].id)+1;
+                dispatch(addTariff(new Tariff(newIndex, name, category, price)));                
+              }}>
               <i className="material-icons">file_copy</i> Zatwierdź
               </Button>
             </Link>

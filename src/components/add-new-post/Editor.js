@@ -8,12 +8,13 @@ import "../../assets/quill.css";
 
 
 
-const Editor = ({}) => {  
+const Editor = (props) => {  
 
   const [picture, setPicture] = useState("");
 
   const handleOnDrop = (files, pictures) => {
-    setPicture(pictures[0])
+    setPicture(pictures[0]);
+    props.image(pictures[0]);
   }
 
   return(

@@ -4,6 +4,7 @@ import { Container, Row, Col,Card, CardBody, Form, FormInput, Button } from "sha
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import {editPost} from "../redux/Posts/actions";
+import ImageUploader from 'react-images-upload';
 
 import PageTitle from "../components/common/PageTitle";
 import Editor from "../components/add-new-post/Editor";
@@ -37,6 +38,21 @@ const EditPost = () => {
     });
   };
 
+  const updateImage = e => {
+    setCurrentPost({
+      ...currentPost,
+      image: e.target.value[0]
+    });
+  };
+
+  const handleOnDrop = (files, pictures) => {
+    setCurrentPost({
+      ...currentPost,
+      image: pictures[0]
+    })
+  }
+
+
   if(!currentPost){
     return <div></div>
   }
@@ -56,7 +72,17 @@ const EditPost = () => {
             <Form className="add-new-post">
               <FormInput size="lg" className="mb-3" placeholder="Tytuł posta" defaultValue={currentPost.title} onChange={updateTitle}></FormInput>
               <FormInput className="mb-1" style={{minHeight: "200px"}} placeholder="Opis posta" value={currentPost.content} onChange={updateContent} />
-              <Editor />
+              
+              <ImageUploader
+                        withIcon={true}
+                        buttonText='Wybierz zdjęcie'
+                        onChange={(files, pictures) => handleOnDrop(files, pictures)}
+                        imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                        singleImage={true}
+                        maxFileSize={5242880}
+                    />
+              <img src={currentPost.image} style={{ maxWidth: "100%" }}/>
+        
               <div className="text-center mt-3">
                 <Link to="/posts-list">
                 <Button theme="accent" size="lg"

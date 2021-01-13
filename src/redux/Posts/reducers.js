@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import initialState from './state';
-import { SET_POSTS, ADD_POST, SET_POST_PENDING, SET_CURRENT_POST, EDIT_POST, DELETE_POST } from './types';
+import { SET_POSTS, ADD_POST, SET_POST_PENDING, SET_CURRENT_POST, EDIT_POST, DELETE_POST, UPDATE_POST_INDEX } from './types';
 
 const postReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -40,6 +40,14 @@ const postReducer = (state = initialState, action) => {
                 return {
                     ...state,
                     posts: currentPosts,
+                };
+            }
+        case UPDATE_POST_INDEX:
+            {
+                const newMaxIndex = state.maxIndex + 1;
+                return {
+                    ...state,
+                    maxIndex: newMaxIndex,
                 };
             }
         default:

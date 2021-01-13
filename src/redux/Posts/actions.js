@@ -1,4 +1,4 @@
-import { EDIT_POST, ADD_POST, Post, PostActions, SET_CURRENT_POST, SET_POSTS, SET_POST_PENDING, DELETE_POST} from "./types";
+import { EDIT_POST, ADD_POST, Post, PostActions, SET_CURRENT_POST, SET_POSTS, SET_POST_PENDING, DELETE_POST, UPDATE_POST_INDEX} from "./types";
 
 export const setPosts = (data) => {
     return {
@@ -39,6 +39,12 @@ export const deletePost = (post) => {
     return {
         type: DELETE_POST,
         payload: post
+    };
+}
+
+export const updateMaxIndex = () => {
+    return {
+        type: UPDATE_POST_INDEX
     };
 }
 

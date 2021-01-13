@@ -9,6 +9,9 @@ import PageTitle from "../components/common/PageTitle";
 import Editor from "../components/add-new-post/Editor";
 import { Card, CardBody, Form, FormInput, Button } from "shards-react";
 import DateComponent from "../components/add-new-post/DateComponent";
+import {DatePicker} from "shards-react";
+import ImageUploader from 'react-images-upload';
+
 
 const EditEvent = () => {
   
@@ -36,7 +39,7 @@ const EditEvent = () => {
   const updateDate = e => {
     setCurrentEvent({
       ...currentEvent,
-      date: e.target.value
+      date: e
     });
   };
 
@@ -46,6 +49,14 @@ const EditEvent = () => {
       content: e.target.value
     });
   };
+
+  const handleOnDrop = (files, pictures) => {
+    setCurrentEvent({
+      ...currentEvent,
+      image: pictures[0]
+    })
+  }
+
 
   if(!currentEvent){
     return <div></div>
@@ -66,10 +77,26 @@ const EditEvent = () => {
         <Form className="add-new-event">
           <FormInput size="lg" className="mb-3" placeholder="Nazwa wydarzenia" defaultValue={currentEvent.title} onChange={updateTitle} />
           <div className="mb-3 d-flex justify-content-start align-self-center">
-          <h6 className="mt-1 mr-3">Data wydarzenia: </h6><DateComponent size="lg" defaultValue={currentEvent.date} onChange={updateDate} />
+          <h6 className="mt-1 mr-3">Data wydarzenia: </h6>
+          <DatePicker
+            selected={currentEvent.date} 
+            onChange={updateDate} 
+            dateFormat="DD-MM-YYYY hh:mm"
+            showTimeSelect
+            />
           </div>
           <FormInput className="mb-1" style={{minHeight: "200px"}} placeholder="Opis" defaultValue={currentEvent.content} onChange={updateContent} />
-          <Editor />
+          
+          <ImageUploader
+              withIcon={true}
+              buttonText='Wybierz zdjęcie'
+              onChange={(files, pictures) => handleOnDrop(files, pictures)}
+              imgExtension={['.jpg', '.gif', '.png', '.gif']}
+              singleImage={true}
+              maxFileSize={5242880}
+          />
+          <img src={currentEvent.image} style={{ maxWidth: "100%" }}/>
+
           <div className="text-center mt-3">
                 <Link to="/events-list">
             <Button theme="accent" size="lg" onClick={()=> dispatch(editEvent(currentEvent))}>
