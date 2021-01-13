@@ -25,7 +25,6 @@ export const SET_EVENTS = 'SET_EVENTS';
 export const SET_CURRENT_EVENT = 'SET_CURRENT_EVENT';
 export const ADD_EVENT = 'ADD_EVENT';
 export const SET_EVENT_PENDING = 'SET_EVENT_PENDING';
-export const INIT_EVENTS = 'INIT_EVENTS';
 
 export const SetEventsAction = (post) => {
     return{

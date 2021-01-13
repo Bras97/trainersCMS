@@ -1,4 +1,4 @@
-import { ADD_EVENT, Event, EventActions, SET_CURRENT_EVENT, SET_EVENTS, SET_EVENT_PENDING, INIT_EVENTS } from "./types";
+import { ADD_EVENT, Event, EventActions, SET_CURRENT_EVENT, SET_EVENTS, SET_EVENT_PENDING} from "./types";
 
 export const setEvents = (data) => {
     return {
@@ -25,11 +25,5 @@ export const setPending = (data) => {
     return {
         type: SET_EVENT_PENDING,
         payload: data
-    };
-}
-
-export const initEvents = () => {
-    return {
-        type: INIT_EVENTS,
     };
 }

@@ -26,12 +26,7 @@ export default [
     path: "/",
     exact: true,
     layout: DefaultLayout,
-    component: () => <Redirect to="/blog-overview" />
-  },
-  {
-    path: "/blog-overview",
-    layout: DefaultLayout,
-    component: BlogOverview
+    component: () => <Redirect to="/posts-list" />
   },
   {
     path: "/user-profile-lite",
@@ -57,11 +52,6 @@ export default [
     path: "/components-overview",
     layout: DefaultLayout,
     component: ComponentsOverview
-  },
-  {
-    path: "/blog-posts",
-    layout: DefaultLayout,
-    component: BlogPosts
   },
   {
     path: "/posts-list",

@@ -46,7 +46,7 @@ const EditEvent = () => {
           </div>
           <FormInput className="mb-1" style={{minHeight: "200px"}} placeholder="Opis" value={currentEvent.content} />
           <Editor />
-          <div class="text-center mt-3">
+          <div className="text-center mt-3">
             <Button theme="accent" size="lg">
               <i className="material-icons">file_copy</i> Zatwierdź
             </Button>

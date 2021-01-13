@@ -27,7 +27,7 @@ const AddNewEvent = () => (
           </div>
           <FormInput className="mb-1" style={{minHeight: "200px"}} placeholder="Opis" />
           <Editor />
-          <div class="text-center mt-3">
+          <div className="text-center mt-3">
             <Button theme="accent" size="lg">
               <i className="material-icons">file_copy</i> Zatwierdź
             </Button>

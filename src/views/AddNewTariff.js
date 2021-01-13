@@ -37,7 +37,7 @@ const AddNewTariff = () => (
             </FormSelect>
           </InputGroup>
           <FormInput size="lg" className="mb-3" placeholder="Cena" />
-          <div class="text-center mt-3">
+          <div className="text-center mt-3">
             <Button theme="accent" size="lg">
               <i className="material-icons">file_copy</i> Zatwierdź
             </Button>

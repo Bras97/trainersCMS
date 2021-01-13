@@ -2,7 +2,7 @@ import React from "react";
 import {useEffect, useState} from "react";
 import { Container, Row, Col,Card, CardBody, Form, FormInput, Button } from "shards-react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {editPost} from "../redux/Posts/actions";
 
 import PageTitle from "../components/common/PageTitle";
@@ -17,12 +17,29 @@ const EditPost = () => {
 
   useEffect(() => {
       if (id) {
-        
           const post = posts.find(post => post.id == parseInt(id));
           setCurrentPost(post);
       }
   }, [id, posts]);
   
+
+  const updateTitle = e => {
+    setCurrentPost({
+      ...currentPost,
+      title: e.target.value
+    });
+  };
+
+  const updateContent = e => {
+    setCurrentPost({
+      ...currentPost,
+      content: e.target.value
+    });
+  };
+
+
+
+
   if(!currentPost){
     return <div></div>
   }
@@ -40,23 +57,19 @@ const EditPost = () => {
         <Card small className="mb-3">
           <CardBody>
             <Form className="add-new-post">
-              <FormInput size="lg" className="mb-3" placeholder="Tytuł posta" value={currentPost.title}></FormInput>
-              <FormInput className="mb-1" style={{minHeight: "200px"}} placeholder="Opis posta" value={currentPost.content} />
+              <FormInput size="lg" className="mb-3" placeholder="Tytuł posta" defaultValue={currentPost.title} onChange={updateTitle}></FormInput>
+              <FormInput className="mb-1" style={{minHeight: "200px"}} placeholder="Opis posta" value={currentPost.content} onChange={updateContent} />
               <Editor />
-              <div class="text-center mt-3">
+              <div className="text-center mt-3">
+                <Link to="/posts-list">
                 <Button theme="accent" size="lg"
-                  onClick={()=> {
-                    dispatch(editPost( {
-                    type: 'POST',
-                    title: currentPost.title,
-                    id: currentPost.id,
-                    content: currentPost.content,
-                    creator: 1,
-                    comments: []
-                }));
-                }}>
+                  onClick={()=> 
+                    dispatch(editPost(currentPost))
+                }>
+                  
                   <i className="material-icons">file_copy</i> Zatwierdź
                 </Button>
+                </Link>
               </div>
             </Form>
           </CardBody>

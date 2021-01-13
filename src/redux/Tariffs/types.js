@@ -25,7 +25,6 @@ export const SET_TARIFFS = 'SET_TARIFFS';
 export const SET_CURRENT_TARIFF = 'SET_CURRENT_TARIFF';
 export const ADD_TARIFF = 'ADD_TARIFF';
 export const SET_TARIFF_PENDING = 'SET_TARIFF_PENDING';
-export const INIT_TARIFFS = 'INIT_TARIFFS';
 
 export const SetTariffsAction = (post) => {
     return{

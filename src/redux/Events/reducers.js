@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import initialState from './state';
-import { EventsState, EventActions, SET_EVENTS, ADD_EVENT, SET_EVENT_PENDING, SET_CURRENT_EVENT, INIT_EVENTS } from './types';
+import {SET_EVENTS, ADD_EVENT, SET_EVENT_PENDING, SET_CURRENT_EVENT } from './types';
 
 const eventReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -24,8 +24,6 @@ const eventReducer = (state = initialState, action) => {
                 ...state,
                 pending: action.payload,
             };
-        case INIT_EVENTS:
-            return state;
         default:
             return state;
     }

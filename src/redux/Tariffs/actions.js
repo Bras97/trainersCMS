@@ -1,4 +1,4 @@
-import { ADD_TARIFF, Tariff, TariffActions, SET_CURRENT_TARIFF, SET_TARIFFS, SET_TARIFF_PENDING, INIT_TARIFFS } from "./types";
+import { ADD_TARIFF, Tariff, TariffActions, SET_CURRENT_TARIFF, SET_TARIFFS, SET_TARIFF_PENDING } from "./types";
 
 export const setTariffs = (data) => {
     return {
@@ -25,11 +25,5 @@ export const setPending = (data) => {
     return {
         type: SET_TARIFF_PENDING,
         payload: data
-    };
-}
-
-export const initTariffs = () => {
-    return {
-        type: INIT_TARIFFS,
     };
 }

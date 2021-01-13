@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import initialState from './state';
-import { PostsState, PostActions, SET_POSTS, ADD_POST, SET_POST_PENDING, SET_CURRENT_POST, INIT_POSTS, EDIT_POST } from './types';
+import { SET_POSTS, ADD_POST, SET_POST_PENDING, SET_CURRENT_POST, EDIT_POST, DELETE_POST } from './types';
 
 const postReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -29,6 +29,14 @@ const postReducer = (state = initialState, action) => {
                 const postIndex = state.posts.findIndex(post => post.id === action.payload.id)
                 const currentPosts = [...state.posts]
                 currentPosts[postIndex] = action.payload
+                return {
+                    ...state,
+                    posts: currentPosts,
+                };
+            }
+        case DELETE_POST:
+            {
+                const currentPosts = state.posts.filter(function(el) { return el.id !== action.payload.id})
                 return {
                     ...state,
                     posts: currentPosts,

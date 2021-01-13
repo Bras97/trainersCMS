@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import initialState from './state';
-import { TariffsState, TariffActions, SET_TARIFFS, ADD_TARIFF, SET_TARIFF_PENDING, SET_CURRENT_TARIFF, INIT_TARIFFS } from './types';
+import { SET_TARIFFS, ADD_TARIFF, SET_TARIFF_PENDING, SET_CURRENT_TARIFF } from './types';
 
 const tariffReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -24,8 +24,6 @@ const tariffReducer = (state = initialState, action) => {
                 ...state,
                 pending: action.payload,
             };
-        case INIT_TARIFFS:
-            return state;
         default:
             return state;
     }
