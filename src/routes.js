@@ -20,6 +20,9 @@ import BlogPosts from "./views/BlogPosts";
 import EditPost from "./views/EditPost";
 import EditEvent from "./views/EditEvent";
 import EditTariff from "./views/EditTariff";
+import HomeLogin from "./components/Login/HomeLogin";
+import SignUp from "./components/Login/SignUp";
+import Login from "./components/Login/Login";
 
 export default [
   {
@@ -82,5 +85,20 @@ export default [
     path: "/edit-tariff/:id",
     layout: DefaultLayout,
     component: EditTariff
+  },
+  {
+    path: "/home-login",
+    layout: DefaultLayout,
+    component: HomeLogin
+  },
+  {
+    path: "/login",
+    layout: DefaultLayout,
+    component: Login
+  },
+  {
+    path: "/sign-up",
+    layout: DefaultLayout,
+    component: SignUp
   }
 ];

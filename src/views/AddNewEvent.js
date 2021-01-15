@@ -34,8 +34,17 @@ const AddNewEvent = () => {
 
   <Container fluid className="main-content-container px-4 pb-4">
     {/* Page Header */}
-    <Row noGutters className="page-header py-4">
+    <Row noGutters className="page-header py-4 d-flex justify-content-between">
       <PageTitle sm="4" title="Dodaj nowe wydarzenie" subtitle="Blog Posts" className="text-sm-left" />
+      <Link to="/events-list">
+        <Button  theme="accent" size="lg"
+        onClick={()=> {
+          const newIndex = parseInt(events[events.length-1].id)+1;
+          dispatch(addEvent(new Event(newIndex, title, date, content, image)));                
+        }}>
+        <i className="material-icons">file_copy</i> Zatwierdź
+        </Button>
+      </Link>
     </Row>
 
     <Row>
@@ -66,17 +75,6 @@ const AddNewEvent = () => {
                     />
               <img src={image} style={{ maxWidth: "100%" }}/>
 
-          <div className="text-center mt-3">  
-            <Link to="/events-list">
-              <Button  theme="accent" size="lg"
-              onClick={()=> {
-                const newIndex = parseInt(events[events.length-1].id)+1;
-                dispatch(addEvent(new Event(newIndex, title, date, content, image)));                
-              }}>
-              <i className="material-icons">file_copy</i> Zatwierdź
-              </Button>
-            </Link>
-          </div>
         </Form>
       </CardBody>
     </Card>

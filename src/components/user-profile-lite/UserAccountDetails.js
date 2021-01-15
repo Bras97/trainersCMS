@@ -1,5 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {useEffect, useState} from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, Link } from "react-router-dom";
+import {Alert} from "reactstrap"
 import {
   Card,
   CardHeader,
@@ -14,9 +18,72 @@ import {
   FormTextarea,
   Button
 } from "shards-react";
+import { editUser } from "../../redux/Users/actions";
 
-const UserAccountDetails = ({ title }) => (
+const UserAccountDetails = ({ title }) => {
+
+  const {users} = useSelector(state => state.users);
+  const { id } = useParams();
+  const [currentUser, setCurrentUser] = useState();
+  const [isSaved, setIsSaved] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    
+    const user = users[0];
+    setCurrentUser(user);
+  }, [id, users]);
+
+  
+  const updateName = e => {
+    setCurrentUser({
+      ...currentUser,
+      name: e.target.value
+    });
+  };
+  
+  const updateSurname = e => {
+    setCurrentUser({
+      ...currentUser,
+      surname: e.target.value
+    });
+  };
+  
+  const updateEmail = e => {
+    setCurrentUser({
+      ...currentUser,
+      email: e.target.value
+    });
+  };
+  
+  const updatePassword = e => {
+    setCurrentUser({
+      ...currentUser,
+      password: e.target.value
+    });
+  };
+  
+  const updateCity = e => {
+    setCurrentUser({
+      ...currentUser,
+      city: e.target.value
+    });
+  };
+
+  const updateDescription = e => {
+    setCurrentUser({
+      ...currentUser,
+      description: e.target.value
+    });
+  };
+
+  if(!currentUser){
+    return <div></div>
+  }
+
+  return(
   <Card small className="mb-4">
+    <Alert isOpen={isSaved}>Pomyślnie zapisano zmiany</Alert>
     <CardHeader className="border-bottom">
       <h6 className="m-0">{title}</h6>
     </CardHeader>
@@ -29,11 +96,11 @@ const UserAccountDetails = ({ title }) => (
                 {/* First Name */}
                 <Col md="6" className="form-group">
                   <label htmlFor="feFirstName">Imię</label>
-                  <FormInput
+                  <FormInput 
+                    defaultValue={currentUser.name} 
+                    onChange={updateName}
                     id="feFirstName"
                     placeholder="Imię"
-                    value="Sierra"
-                    onChange={() => {}}
                   />
                 </Col>
                 {/* Last Name */}
@@ -42,8 +109,8 @@ const UserAccountDetails = ({ title }) => (
                   <FormInput
                     id="feLastName"
                     placeholder="Nazwisko"
-                    value="Brooks"
-                    onChange={() => {}}
+                    defaultValue={currentUser.surname} 
+                    onChange={updateSurname}
                   />
                 </Col>
               </Row>
@@ -55,8 +122,8 @@ const UserAccountDetails = ({ title }) => (
                     type="email"
                     id="feEmail"
                     placeholder="Adres email"
-                    value="sierra@example.com"
-                    onChange={() => {}}
+                    defaultValue={currentUser.email} 
+                    onChange={updateEmail}
                     autoComplete="email"
                   />
                 </Col>
@@ -67,8 +134,8 @@ const UserAccountDetails = ({ title }) => (
                     type="password"
                     id="fePassword"
                     placeholder="Hasło"
-                    value="EX@MPL#P@$$w0RD"
-                    onChange={() => {}}
+                    defaultValue={currentUser.password} 
+                    onChange={updatePassword}
                     autoComplete="current-password"
                   />
                 </Col>
@@ -80,7 +147,8 @@ const UserAccountDetails = ({ title }) => (
                   <FormInput
                     id="feCity"
                     placeholder="Miasto"
-                    onChange={() => {}}
+                    defaultValue={currentUser.city} 
+                    onChange={updateCity}
                   />
                 </Col>
               </Row>
@@ -88,11 +156,17 @@ const UserAccountDetails = ({ title }) => (
                 {/* Description */}
                 <Col md="12" className="form-group">
                   <label htmlFor="feDescription">Opis</label>
-                  <FormTextarea id="feDescription" rows="5" />
+                  <FormTextarea id="feDescription" rows="5"
+                    defaultValue={currentUser.description} 
+                    onChange={updateDescription} />
                 </Col>
               </Row>
               <div className="text-center">
-                <Button theme="accent">Zaktualizuj dane</Button>
+                <Button theme="accent"
+                onClick={()=> {                
+                dispatch(editUser(currentUser));
+                setIsSaved(true)}}>
+                Zaktualizuj dane</Button>
               </div>
             </Form>
           </Col>
@@ -100,7 +174,9 @@ const UserAccountDetails = ({ title }) => (
       </ListGroupItem>
     </ListGroup>
   </Card>
-);
+
+)
+};
 
 UserAccountDetails.propTypes = {
   /**
@@ -110,7 +186,7 @@ UserAccountDetails.propTypes = {
 };
 
 UserAccountDetails.defaultProps = {
-  title: "Account Details"
+  title: "Szczegóły profilu"
 };
 
 export default UserAccountDetails;

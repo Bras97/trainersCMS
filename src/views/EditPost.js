@@ -1,6 +1,6 @@
 import React from "react";
 import {useEffect, useState} from "react";
-import { Container, Row, Col,Card, CardBody, Form, FormInput, Button } from "shards-react";
+import { Container, Row, Col,Card, CardBody, Form, FormInput, Button, FormTextarea } from "shards-react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import {editPost} from "../redux/Posts/actions";
@@ -60,8 +60,15 @@ const EditPost = () => {
   return(
   <Container fluid className="main-content-container px-4 pb-4">
     {/* Page Header */}
-    <Row noGutters className="page-header py-4">
+    <Row noGutters className="page-header py-4 d-flex justify-content-between">
       <PageTitle sm="4" title="Edytuj post" subtitle="Blog Posts" className="text-sm-left" />
+      <Link to="/posts-list">
+        <Button theme="accent" size="lg"
+          onClick={()=> dispatch(editPost(currentPost))}>
+          
+          <i className="material-icons">file_copy</i> Zatwierdź
+        </Button>
+      </Link>
     </Row>
 
     <Row>
@@ -70,9 +77,14 @@ const EditPost = () => {
         <Card small className="mb-3">
           <CardBody>
             <Form className="add-new-post">
-              <FormInput size="lg" className="mb-3" placeholder="Tytuł posta" defaultValue={currentPost.title} onChange={updateTitle}></FormInput>
-              <FormInput className="mb-1" style={{minHeight: "200px"}} placeholder="Opis posta" value={currentPost.content} onChange={updateContent} />
-              
+                <Col md="12" className="form-group">
+                  <label htmlFor="feDescription">Tytuł</label>
+                  <FormInput size="lg" className="mb-3" placeholder="Tytuł posta" defaultValue={currentPost.title} onChange={updateTitle}></FormInput>
+                </Col>
+                <Col md="12" className="form-group">
+                  <label htmlFor="feDescription">Opis</label>
+                  <FormTextarea rows="5" placeholder="Opis posta" value={currentPost.content} onChange={updateContent} />
+                </Col>
               <ImageUploader
                         withIcon={true}
                         buttonText='Wybierz zdjęcie'
@@ -81,17 +93,7 @@ const EditPost = () => {
                         singleImage={true}
                         maxFileSize={5242880}
                     />
-              <img src={currentPost.image} style={{ maxWidth: "100%" }}/>
-        
-              <div className="text-center mt-3">
-                <Link to="/posts-list">
-                <Button theme="accent" size="lg"
-                  onClick={()=> dispatch(editPost(currentPost))}>
-                  
-                  <i className="material-icons">file_copy</i> Zatwierdź
-                </Button>
-                </Link>
-              </div>
+              <img src={currentPost.image} style={{ width: "100%" }}/>
             </Form>
           </CardBody>
           

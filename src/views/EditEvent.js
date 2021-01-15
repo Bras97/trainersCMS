@@ -6,9 +6,7 @@ import { useParams, Link } from "react-router-dom";
 import {editEvent} from "../redux/Events/actions";
 
 import PageTitle from "../components/common/PageTitle";
-import Editor from "../components/add-new-post/Editor";
-import { Card, CardBody, Form, FormInput, Button } from "shards-react";
-import DateComponent from "../components/add-new-post/DateComponent";
+import { Card, CardBody, Form, FormInput, Button, FormTextarea } from "shards-react";
 import {DatePicker} from "shards-react";
 import ImageUploader from 'react-images-upload';
 
@@ -65,8 +63,13 @@ const EditEvent = () => {
   return(
   <Container fluid className="main-content-container px-4 pb-4">
     {/* Page Header */}
-    <Row noGutters className="page-header py-4">
-      <PageTitle sm="4" title="Dodaj nowe wydarzenie" subtitle="Blog Posts" className="text-sm-left" />
+    <Row noGutters className="page-header py-4 d-flex justify-content-between">
+      <PageTitle sm="4" title="Edytuj wydarzenie" subtitle="Blog Posts" className="text-sm-left" />
+      <Link to="/events-list">
+        <Button theme="accent" size="lg" onClick={()=> dispatch(editEvent(currentEvent))}>
+          <i className="material-icons">file_copy</i> Zatwierdź
+        </Button>
+      </Link>
     </Row>
 
     <Row>
@@ -75,9 +78,12 @@ const EditEvent = () => {
       <Card small className="mb-3">
       <CardBody>
         <Form className="add-new-event">
-          <FormInput size="lg" className="mb-3" placeholder="Nazwa wydarzenia" defaultValue={currentEvent.title} onChange={updateTitle} />
+          <Col md="12" className="form-group">
+            <label htmlFor="feDescription">Nazwa</label>
+            <FormInput size="lg" className="mb-3" placeholder="Nazwa wydarzenia" defaultValue={currentEvent.title} onChange={updateTitle} />    
+          </Col>
           <div className="mb-3 d-flex justify-content-start align-self-center">
-          <h6 className="mt-1 mr-3">Data wydarzenia: </h6>
+          <h6 className="mt-1 mr-3">Data: </h6>
           <DatePicker
             selected={currentEvent.date} 
             onChange={updateDate} 
@@ -85,8 +91,10 @@ const EditEvent = () => {
             showTimeSelect
             />
           </div>
-          <FormInput className="mb-1" style={{minHeight: "200px"}} placeholder="Opis" defaultValue={currentEvent.content} onChange={updateContent} />
-          
+          <Col md="12" className="form-group">
+            <label htmlFor="feDescription">Opis</label>
+            <FormTextarea rows="5" className="mb-1" style={{minHeight: "200px"}} placeholder="Opis" defaultValue={currentEvent.content} onChange={updateContent} />
+          </Col>
           <ImageUploader
               withIcon={true}
               buttonText='Wybierz zdjęcie'
@@ -95,15 +103,8 @@ const EditEvent = () => {
               singleImage={true}
               maxFileSize={5242880}
           />
-          <img src={currentEvent.image} style={{ maxWidth: "100%" }}/>
+          <img src={currentEvent.image} style={{ width: "100%" }}/>
 
-          <div className="text-center mt-3">
-                <Link to="/events-list">
-            <Button theme="accent" size="lg" onClick={()=> dispatch(editEvent(currentEvent))}>
-              <i className="material-icons">file_copy</i> Zatwierdź
-            </Button>
-            </Link>
-          </div>
         </Form>
       </CardBody>
     </Card>

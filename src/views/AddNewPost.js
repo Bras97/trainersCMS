@@ -26,8 +26,19 @@ const AddNewPost = () => {
 
   <Container fluid className="main-content-container px-4 pb-4">
     {/* Page Header */}
-    <Row noGutters className="page-header py-4">
+    <Row noGutters className="page-header py-4 d-flex justify-content-between">
       <PageTitle sm="4" title="Dodaj nowy post" subtitle="Blog Posts" className="text-sm-left" />
+      <Link to="/posts-list">
+        <Button  theme="accent" size="lg"
+        onClick={()=> 
+          {
+            const newIndex = parseInt(posts[posts.length-1].id)+1;
+            dispatch(addPost(new Post(newIndex.toString(), title, content, image)));
+            console.log("Image: ", image);}               
+        }>
+        <i className="material-icons">file_copy</i> Zatwierdź
+        </Button>
+      </Link>
     </Row>
 
     <Row>
@@ -49,20 +60,7 @@ const AddNewPost = () => {
                         maxFileSize={5242880}
                     />
               <img src={image} style={{ maxWidth: "100%" }}/>
-        
-              <div className="text-center mt-3">
-                <Link to="/posts-list">
-                  <Button  theme="accent" size="lg"
-                  onClick={()=> 
-                    {
-                      const newIndex = parseInt(posts[posts.length-1].id)+1;
-                      dispatch(addPost(new Post(newIndex.toString(), title, content, image)));
-                      console.log("Image: ", image);}               
-                  }>
-                  <i className="material-icons">file_copy</i> Zatwierdź
-                  </Button>
-                </Link>
-              </div>
+      
             </Form>
           </CardBody>
           

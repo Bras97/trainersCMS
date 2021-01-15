@@ -29,8 +29,17 @@ return(
 
   <Container fluid className="main-content-container px-4 pb-4">
     {/* Page Header */}
-    <Row noGutters className="page-header py-4">
-      <PageTitle sm="4" title="Dodaj nową cenę" subtitle="Blog Tariffs" className="text-sm-left" />
+    <Row noGutters className="page-header py-4 d-flex justify-content-between">
+      <PageTitle sm="4" title="Dodaj nową cenę" subtitle="Blog Tariffs" />
+      <Link to="/tariffs-list">
+        <Button  theme="accent" size="lg"
+        onClick={()=> {
+          const newIndex = parseInt(tariffs[tariffs.length-1].id)+1;
+          dispatch(addTariff(new Tariff(newIndex, name, category, price)));                
+        }}>
+        <i className="material-icons">file_copy</i> Zatwierdź
+        </Button>
+      </Link>
     </Row>
 
     <Row>
@@ -52,17 +61,7 @@ return(
             </FormSelect>
           </InputGroup>
           <FormInput size="lg" className="mb-3" placeholder="Cena"  onChange={e => setPrice(e.target.value)}/>
-          <div className="text-center mt-3">
-            <Link to="/tariffs-list">
-              <Button  theme="accent" size="lg"
-              onClick={()=> {
-                const newIndex = parseInt(tariffs[tariffs.length-1].id)+1;
-                dispatch(addTariff(new Tariff(newIndex, name, category, price)));                
-              }}>
-              <i className="material-icons">file_copy</i> Zatwierdź
-              </Button>
-            </Link>
-          </div>
+          
         </Form>
       </CardBody>
     </Card>
