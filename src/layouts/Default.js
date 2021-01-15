@@ -4,11 +4,13 @@ import { Container, Row, Col } from "shards-react";
 
 import MainNavbar from "../components/layout/MainNavbar/MainNavbar";
 import MainSidebar from "../components/layout/MainSidebar/MainSidebar";
+import HomeLogin from "../components/Login/HomeLogin"
 
-const DefaultLayout = ({ children, noNavbar, noFooter }) => (
-  <Container fluid>
-    <Row>
-      <MainSidebar />
+const DefaultLayout = ({ children, noNavbar, noFooter, isLogged }) => (
+  
+    <Container fluid>
+    <Row>     
+      <MainSidebar/>
       <Col
         className="main-content p-0"
         lg={{ size: 10, offset: 2 }}
@@ -21,6 +23,7 @@ const DefaultLayout = ({ children, noNavbar, noFooter }) => (
       </Col>
     </Row>
   </Container>
+
 );
 
 DefaultLayout.propTypes = {
@@ -31,7 +34,7 @@ DefaultLayout.propTypes = {
   /**
    * Whether to display the footer, or not.
    */
-  noFooter: PropTypes.bool
+  noFooter: PropTypes.bool,
 };
 
 DefaultLayout.defaultProps = {

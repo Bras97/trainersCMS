@@ -38,14 +38,8 @@ const EditPost = () => {
     });
   };
 
-  const updateImage = e => {
-    setCurrentPost({
-      ...currentPost,
-      image: e.target.value[0]
-    });
-  };
 
-  const handleOnDrop = (files, pictures) => {
+  const updateImage = (files, pictures) => {
     setCurrentPost({
       ...currentPost,
       image: pictures[0]
@@ -88,7 +82,7 @@ const EditPost = () => {
               <ImageUploader
                         withIcon={true}
                         buttonText='Wybierz zdjęcie'
-                        onChange={(files, pictures) => handleOnDrop(files, pictures)}
+                        onChange={(files, pictures) => updateImage(files, pictures)}
                         imgExtension={['.jpg', '.gif', '.png', '.gif']}
                         singleImage={true}
                         maxFileSize={5242880}

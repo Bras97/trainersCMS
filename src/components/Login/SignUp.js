@@ -1,36 +1,39 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom"
 import "./style.css"
 
 export default class SignUp extends Component {
     render() {
         return (
-            <form>
-                <h3>Sign Up</h3>
+            <form class="row justify-content-center" style={{marginTop: "100px"}}>
+            <div className="col-4">
+                <h3>Zarejestruj się</h3>
 
                 <div className="form-group">
-                    <label>First name</label>
-                    <input type="text" className="form-control" placeholder="First name" />
+                    <label>Imię</label>
+                    <input type="text" className="form-control" placeholder="Imię" />
                 </div>
 
                 <div className="form-group">
-                    <label>Last name</label>
-                    <input type="text" className="form-control" placeholder="Last name" />
+                    <label>Nazwisko</label>
+                    <input type="text" className="form-control" placeholder="Nazwisko" />
                 </div>
 
                 <div className="form-group">
-                    <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
+                    <label>Adres email</label>
+                    <input type="email" className="form-control" placeholder="Adres email" />
                 </div>
 
                 <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
+                    <label>Hasło</label>
+                    <input type="password" className="form-control" placeholder="Hasło" />
                 </div>
 
-                <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
+                <button type="submit" className="btn btn-primary btn-block">Zarejestruj się</button>
                 <p className="forgot-password text-right">
-                    Already registered <a href="#">sign in?</a>
+                    Masz już <Link to="/login">konto?</Link>
                 </p>
+                </div>
             </form>
         );
     }

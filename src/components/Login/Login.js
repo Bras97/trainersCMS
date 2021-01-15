@@ -1,33 +1,40 @@
 import React, { Component } from "react";
 import "./style.css"
+import DefaultLayout from "../../layouts/Default"
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom"
 
 export default class Login extends Component {
+    
+
     render() {
         return (
-            <form>
-                <h3>Sign In</h3>
+            <form class="row justify-content-center" style={{marginTop: "100px"}}>
+              <div className="col-4">
+                <h3>Zaloguj się</h3>
 
                 <div className="form-group">
-                    <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
+                    <label>Adres email</label>
+                    <input type="email" className="form-control" placeholder="Adres email" />
                 </div>
 
                 <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
+                    <label>Hasło</label>
+                    <input type="password" className="form-control" placeholder="Hasło" />
                 </div>
 
                 <div className="form-group">
                     <div className="custom-control custom-checkbox">
                         <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                        <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
+                        <label className="custom-control-label" htmlFor="customCheck1">Zapamiętaj mnie</label>
                     </div>
                 </div>
 
-                <button type="submit" className="btn btn-primary btn-block">Submit</button>
+                <Link to="posts-list"><button type="submit" className="btn btn-primary btn-block">Zaloguj</button></Link>
                 <p className="forgot-password text-right">
-                    Forgot <a href="#">password?</a>
+                    Zapomniałeś <Link to="#">hasła?</Link>
                 </p>
+                </div>
             </form>
         );
     }
