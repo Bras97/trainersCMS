@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import initialState from './state';
-import { ADD_USER, EDIT_USER, DELETE_USER } from './types';
+import { ADD_USER, EDIT_USER, DELETE_USER, SET_LOGGED_STATUS } from './types';
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -25,6 +25,15 @@ const userReducer = (state = initialState, action) => {
                 return {
                     ...state,
                     user: currentUser,
+                };
+            }
+        case SET_LOGGED_STATUS:
+            {
+                const currentUsers = [...state.users]
+                currentUsers[0].isLogged = action.payload
+                return {
+                    ...state,
+                    users: currentUsers,
                 };
             }
         default:

@@ -8,7 +8,8 @@ const intialState = {
         "janowak@wp.pl",
         "janinaNowak123",
         "Sosnowiec",
-        "Trener osobisty - pływanie i bieganie"
+        "Trener osobisty - pływanie i bieganie",
+        false
     )
     ]
 }

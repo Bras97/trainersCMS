@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import "./style.css"
-import DefaultLayout from "../../layouts/Default"
-import { useSelector, useDispatch } from "react-redux";
+import "./styleForLogin.css"
 import { Link } from "react-router-dom"
+import { setUserLoggedStatus} from "../../redux/Users/actions"
+import {useDispatch, useSelector} from "react-redux"
 
-export default class Login extends Component {
+const Login = () => {
     
-
-    render() {
+    
+        const {users} = useSelector(state => state.users);
+        const dispatch = useDispatch();
         return (
             <form class="row justify-content-center" style={{marginTop: "100px"}}>
               <div className="col-4">
@@ -30,12 +31,15 @@ export default class Login extends Component {
                     </div>
                 </div>
 
-                <Link to="posts-list"><button type="submit" className="btn btn-primary btn-block">Zaloguj</button></Link>
+                <Link to="posts-list"><button type="submit" className="btn btn-primary btn-block"
+                onClick={()=> dispatch(setUserLoggedStatus(true))}>Zaloguj</button></Link>
                 <p className="forgot-password text-right">
                     Zapomniałeś <Link to="#">hasła?</Link>
                 </p>
                 </div>
             </form>
         );
-    }
+    
 }
+
+export default Login;

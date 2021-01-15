@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {Alert} from "reactstrap"
 import {
   Card,
