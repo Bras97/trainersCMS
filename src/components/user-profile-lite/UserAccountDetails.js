@@ -79,8 +79,39 @@ const UserAccountDetails = ({ title }) => {
     return <div></div>
   }
 
+  const updateAvatar = e => {
+    setCurrentUser({
+      ...currentUser,
+      avatar: e.target.files[0]
+    });
+  }
+  
+  const handleSubmit = e => {
+    e.preventDefault();
+    // TODO: do something with -> this.state.file
+  }
+
+  const handleImageChange = e => {
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      setCurrentUser({
+        ...currentUser,
+        avatar: reader.result
+      });
+    }
+
+    reader.readAsDataURL(file)
+  }
+
+
   return(
+
   <Card small className="mb-4">
+
     <Alert isOpen={isSaved}>Pomyślnie zapisano zmiany</Alert>
     <CardHeader className="border-bottom">
       <h6 className="m-0">{title}</h6>
@@ -152,12 +183,32 @@ const UserAccountDetails = ({ title }) => {
               </Row>
               <Row form>
                 {/* Description */}
-                <Col md="12" className="form-group">
+                <Col md="8" className="form-group">
                   <label htmlFor="feDescription">Opis</label>
-                  <FormTextarea id="feDescription" rows="5"
+                  <FormTextarea id="feDescription" rows="7"
                     defaultValue={currentUser.description} 
                     onChange={updateDescription} />
                 </Col>
+                <Col className="form-group">
+                  <CardHeader className="text-center" >
+                    <div className="mb-3 mx-auto">
+                      <img
+                        className="rounded-circle"
+                        src={currentUser.avatar}
+                        alt={currentUser.name}
+                        width="110"
+                        height="110"
+                      />
+                    </div>
+                    
+                    <form onSubmit={handleSubmit} className="text-center"  style={{maxWidth: "400px"}}>
+                      <FormInput className="mb-2 text-center" style={{color: "green", maxWidth: "400px",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis"}} type="file" onChange={handleImageChange} />
+                    </form>
+                  </CardHeader>
+                  </Col>
               </Row>
               <div className="text-center">
                 <Button theme="accent"

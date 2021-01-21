@@ -6,18 +6,14 @@ import { DefaultLayout } from "./layouts";
 import  LoginLayout  from "./layouts/LoginLayout";
 
 // Route Views
-import BlogOverview from "./views/BlogOverview";
 import UserProfileLite from "./views/UserProfileLite";
 import AddNewPost from "./views/AddNewPost";
 import AddNewTariff from "./views/AddNewTariff";
 import AddNewEvent from "./views/AddNewEvent";
-import Errors from "./views/Errors";
 import ComponentsOverview from "./views/ComponentsOverview";
-import Tables from "./views/Tables";
 import PostsList from "./views/PostsList";
 import TariffsList from "./views/TariffsList";
 import EventsList from "./views/EventsList";
-import BlogPosts from "./views/BlogPosts";
 import EditPost from "./views/EditPost";
 import EditEvent from "./views/EditEvent";
 import EditTariff from "./views/EditTariff";

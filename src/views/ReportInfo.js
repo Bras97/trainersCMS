@@ -3,51 +3,51 @@ import {useEffect, useState} from "react";
 import { Container, Row, Col,Card, CardBody, Form, FormInput, Button, FormTextarea } from "shards-react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
-import {editPost} from "../redux/Posts/actions";
+import {editReport} from "../redux/Reports/actions";
 import ImageUploader from 'react-images-upload';
 
 import PageTitle from "../components/common/PageTitle";
-import Editor from "../components/add-new-post/Editor";
+import Editor from "../components/add-new-report/Editor";
 
-const EditPost = () => {
+const ReportInfo = () => {
   
-  const {posts} = useSelector(state => state.posts);
+  const {reports} = useSelector(state => state.reports);
   const { id } = useParams();
-  const [currentPost, setCurrentPost] = useState();
+  const [currentReport, setCurrentReport] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
       if (id) {
-          const post = posts.find(post => post.id == parseInt(id));
-          setCurrentPost(post);
+          const report = reports.find(report => report.id == parseInt(id));
+          setCurrentReport(report);
       }
-  }, [id, posts]);
+  }, [id, reports]);
   
 
   const updateTitle = e => {
-    setCurrentPost({
-      ...currentPost,
+    setCurrentReport({
+      ...currentReport,
       title: e.target.value
     });
   };
 
   const updateContent = e => {
-    setCurrentPost({
-      ...currentPost,
+    setCurrentReport({
+      ...currentReport,
       content: e.target.value
     });
   };
 
 
   const updateImage = (files, pictures) => {
-    setCurrentPost({
-      ...currentPost,
+    setCurrentReport({
+      ...currentReport,
       image: pictures[0]
     })
   }
 
 
-  if(!currentPost){
+  if(!currentReport){
     return <div></div>
   }
 
@@ -55,10 +55,10 @@ const EditPost = () => {
   <Container fluid className="main-content-container px-4 pb-4">
     {/* Page Header */}
     <Row noGutters className="page-header py-4 d-flex justify-content-between">
-      <PageTitle sm="4" title="Edytuj post" subtitle="Blog Posts" className="text-sm-left" />
-      <Link to="/posts-list">
+      <PageTitle sm="4" title="Szczegóły zgłoszenia" subtitle="Blog Reports" className="text-sm-left" />
+      <Link to="/reports-list">
         <Button theme="accent" size="lg"
-          onClick={()=> dispatch(editPost(currentPost))}>
+          onClick={()=> dispatch(editReport(currentReport))}>
           
           <i className="material-icons">file_copy</i> Zatwierdź
         </Button>
@@ -70,14 +70,14 @@ const EditPost = () => {
       <Col lg="12" md="12">
         <Card small className="mb-3">
           <CardBody>
-            <Form className="add-new-post">
+            <Form className="add-new-report">
                 <Col md="12" className="form-group">
                   <label htmlFor="feDescription">Tytuł</label>
-                  <FormInput size="lg" className="mb-3" placeholder="Tytuł posta" defaultValue={currentPost.title} onChange={updateTitle}></FormInput>
+                  <FormInput size="lg" className="mb-3" placeholder="Tytuł reporta" defaultValue={currentReport.title} onChange={updateTitle}></FormInput>
                 </Col>
                 <Col md="12" className="form-group">
                   <label htmlFor="feDescription">Opis</label>
-                  <FormTextarea rows="5" placeholder="Opis posta" value={currentPost.content} onChange={updateContent} />
+                  <FormTextarea rows="5" placeholder="Opis reporta" value={currentReport.content} onChange={updateContent} />
                 </Col>
               <ImageUploader
                         withIcon={true}
@@ -87,7 +87,7 @@ const EditPost = () => {
                         singleImage={true}
                         maxFileSize={5242880}
                     />
-              <img src={currentPost.image} style={{ width: "100%" }}/>
+              <img src={currentReport.image} style={{ width: "100%" }}/>
             </Form>
           </CardBody>
           
@@ -98,4 +98,4 @@ const EditPost = () => {
   </Container>
 )};
 
-export default EditPost;
+export default ReportInfo;

@@ -6,19 +6,19 @@ import { useSelector, useDispatch } from "react-redux";
 
 
 import PageTitle from "../components/common/PageTitle";
-import { deletePost } from "../redux/Posts/actions";
+import { deleteReport } from "../redux/Reports/actions";
 
-const PostsList = () => {
+const ReportsList = () => {
 
-  const {posts} = useSelector(state => state.posts);
-  console.log(posts);
+  const {reports} = useSelector(state => state.reports);
+  console.log(reports);
   const dispatch = useDispatch();
 
   return(
   <Container fluid className="main-content-container px-4">
     {/* Page Header */}
     <Row noGutters className="page-header py-4">
-      <PageTitle sm="4" title="Lista postów" subtitle="Blog Posts" className="text-sm-left" />
+      <PageTitle sm="4" title="Lista reportów" subtitle="Blog Reports" className="text-sm-left" />
     </Row>
 
     {/* Default Light Table */}
@@ -26,8 +26,8 @@ const PostsList = () => {
       <Col>
         <Card small className="mb-4">
           <CardHeader className="border-bottom">
-            <h4 className="m-0">Posty</h4>
-            <h6 className="m-0 mt-1"><Link to="/add-new-post">Dodaj nowy post</Link></h6>
+            <h4 className="m-0">Reporty</h4>
+            <h6 className="m-0 mt-1"><Link to="/add-new-report">Dodaj nowy report</Link></h6>
           </CardHeader>
           <CardBody className="p-0 pb-3">
             <table className="table mb-0">
@@ -48,16 +48,16 @@ const PostsList = () => {
                 </tr>
               </thead>
               <tbody>
-                {posts.map(post => 
-                  <tr key={post.id}>
-                    <td>{post.id}</td>
-                    <td>{post.title}</td>
+                {reports.map(report => 
+                  <tr key={report.id}>
+                    <td>{report.id}</td>
+                    <td>{report.title}</td>
                     <td style={{maxWidth: "400px",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     textOverflow: "ellipsis"
-                    }}>{post.content}</td>
-                    <td> <Link to={"edit-post/" + post.id}><FaPen /></Link> &ensp;<Link onClick={() => dispatch(deletePost(post))}><FaTrashAlt /></Link></td>
+                    }}>{report.content}</td>
+                    <td> <Link to={"edit-report/" + report.id}><FaPen /></Link> &ensp;<Link onClick={() => dispatch(deleteReport(report))}><FaTrashAlt /></Link></td>
                   </tr>
                 )}
               </tbody>
@@ -72,4 +72,4 @@ const PostsList = () => {
   )
 };
 
-export default PostsList;
+export default ReportsList;

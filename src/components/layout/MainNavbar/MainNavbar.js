@@ -19,7 +19,6 @@ const MainNavbar = ({ layout, stickyTop }) => {
       <Container className="p-0">
         <Navbar type="light" className="flex-lg-row-reverse flex-md-nowrap p-0">
           <NavbarNav />
-          <NavbarToggle />
         </Navbar>
       </Container>
     </div>

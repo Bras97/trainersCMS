@@ -1,5 +1,5 @@
 
-export function User(id, name, surname, email, password, city, description, isLogged) {
+export function User(id, name, surname, email, password, city, description, avatar, isLogged) {
     this.id = id;
     this.name = name;
     this.surname = surname;
@@ -7,6 +7,7 @@ export function User(id, name, surname, email, password, city, description, isLo
     this.password = password;
     this.city = city;
     this.description = description;
+    this.avatar = avatar;
     this.isLogged = isLogged;
   }
 
