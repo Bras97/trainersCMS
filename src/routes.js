@@ -30,7 +30,7 @@ export default [
     path: "/",
     exact: true,
     layout: DefaultLayout,
-    component: () => <Redirect to="/posts-list" />
+    component: () => <Redirect to="/login" />
   },
   {
     path: "/user-profile-lite",

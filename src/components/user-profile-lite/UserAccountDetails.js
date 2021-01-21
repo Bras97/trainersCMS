@@ -12,9 +12,7 @@ import {
   Row,
   Col,
   Form,
-  FormGroup,
   FormInput,
-  FormSelect,
   FormTextarea,
   Button
 } from "shards-react";

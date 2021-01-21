@@ -73,7 +73,7 @@ const AddNewEvent = () => {
                         singleImage={true}
                         maxFileSize={5242880}
                     />
-              <img src={image} style={{ maxWidth: "100%" }}/>
+              <img src={image} style={{ width: "100%" }}/>
 
         </Form>
       </CardBody>

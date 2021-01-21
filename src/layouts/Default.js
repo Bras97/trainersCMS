@@ -4,9 +4,8 @@ import { Container, Row, Col } from "shards-react";
 
 import MainNavbar from "../components/layout/MainNavbar/MainNavbar";
 import MainSidebar from "../components/layout/MainSidebar/MainSidebar";
-import HomeLogin from "../components/Login/HomeLogin"
 
-const DefaultLayout = ({ children, noNavbar, noFooter, isLogged }) => (
+const DefaultLayout = ({ children, noNavbar }) => (
   
     <Container fluid>
     <Row>     
