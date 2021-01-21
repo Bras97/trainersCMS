@@ -4,8 +4,7 @@ import { Link } from "react-router-dom";
 import { Container, Row, Col,Card, CardBody, Form, FormInput, Button } from "shards-react";
 import {useDispatch, useSelector} from "react-redux"
 import PageTitle from "../components/common/PageTitle";
-import Editor from "../components/add-new-post/Editor";
-import {addPost, updateMaxIndex} from "../redux/Posts/actions";
+import {addPost} from "../redux/Posts/actions";
 import { Post } from "../redux/Posts/types";
 import ImageUploader from 'react-images-upload';
 

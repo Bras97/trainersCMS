@@ -7,7 +7,6 @@ import {editPost} from "../redux/Posts/actions";
 import ImageUploader from 'react-images-upload';
 
 import PageTitle from "../components/common/PageTitle";
-import Editor from "../components/add-new-post/Editor";
 
 const EditPost = () => {
   

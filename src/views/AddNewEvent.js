@@ -2,12 +2,10 @@ import React from "react";
 import { Container, Row, Col } from "shards-react";
 
 import PageTitle from "../components/common/PageTitle";
-import Editor from "../components/add-new-post/Editor";
 import {useDispatch, useSelector} from "react-redux"
 import {useState} from "react";
 import { Link } from "react-router-dom";
 import { Card, CardBody, Form, FormInput, Button } from "shards-react";
-import DateComponent from "../components/add-new-post/DateComponent";
 import {addEvent} from "../redux/Events/actions";
 import { Event } from "../redux/Events/types";
 import {DatePicker} from "shards-react";
