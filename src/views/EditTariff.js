@@ -15,6 +15,7 @@ import { Card, CardBody, Form, FormInput,
 const EditTariff = () =>  {
   
   const {tariffs} = useSelector(state => state.tariffs);
+  const {faculties} = useSelector(state => state.faculties);
   const { id } = useParams();
   const [currentTariff, setCurrentTariff] = useState();
   const dispatch = useDispatch();
@@ -79,12 +80,13 @@ const EditTariff = () =>  {
             <InputGroupAddon type="prepend">
               <InputGroupText>Kategorie</InputGroupText>
             </InputGroupAddon>
-            <FormSelect defaultValue={currentTariff.category} onChange={updateCategory}> 
-              <option>Bieganie</option>
-              <option>Kolarstwo</option>
-              <option>Pływanie</option>
-              <option>Siłownia</option>
-            </FormSelect>
+              <FormSelect
+                defaultValue={currentTariff.category} 
+                onChange={updateCategory}>
+                {faculties.map(faculty => 
+                  <option>{faculty}</option>
+                )}
+              </FormSelect>
           </InputGroup>
           <label htmlFor="feDescription">Cena</label>
           <FormInput type="number" size="lg" className="mb-3" placeholder="Cena" defaultValue={currentTariff.price} onChange={updatePrice}/>
