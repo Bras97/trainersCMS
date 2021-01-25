@@ -4,10 +4,8 @@ import { Container, Row, Col,Card, CardBody, Form, FormInput, Button, FormTextar
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import {editReport} from "../redux/Reports/actions";
-import ImageUploader from 'react-images-upload';
 
 import PageTitle from "../components/common/PageTitle";
-import Editor from "../components/add-new-report/Editor";
 
 const ReportInfo = () => {
   
@@ -51,16 +49,30 @@ const ReportInfo = () => {
     return <div></div>
   }
 
+  let link = 
+          <Col md="12" className="form-group" hide={currentReport.type != "post"}>
+            <label htmlFor="feDescription">Opis</label>
+            <FormTextarea rows="5" placeholder="Opis zgłoszeniaa" value={currentReport.content} onChange={updateContent} />
+          </Col>
+
   return(
   <Container fluid className="main-content-container px-4 pb-4">
     {/* Page Header */}
     <Row noGutters className="page-header py-4 d-flex justify-content-between">
       <PageTitle sm="4" title="Szczegóły zgłoszenia" subtitle="Blog Reports" className="text-sm-left" />
       <Link to="/reports-list">
-        <Button theme="accent" size="lg"
-          onClick={()=> dispatch(editReport(currentReport))}>
-          
-          <i className="material-icons">file_copy</i> Zatwierdź
+        <Button theme="accent" size="lg">          
+          <i className="material-icons">file_copy</i> Powrót do listy
+        </Button>
+      </Link>
+      <Link to="/reports-list">
+        <Button theme="accent" size="lg">          
+          <i className="material-icons">file_copy</i> Usuń zgłoszoną treść
+        </Button>
+      </Link>
+      <Link to="/reports-list">
+        <Button theme="accent" size="lg">          
+          <i className="material-icons">file_copy</i> Usuń zgłoszenie
         </Button>
       </Link>
     </Row>
@@ -72,22 +84,41 @@ const ReportInfo = () => {
           <CardBody>
             <Form className="add-new-report">
                 <Col md="12" className="form-group">
-                  <label htmlFor="feDescription">Tytuł</label>
-                  <FormInput size="lg" className="mb-3" placeholder="Tytuł reporta" defaultValue={currentReport.title} onChange={updateTitle}></FormInput>
-                </Col>
-                <Col md="12" className="form-group">
                   <label htmlFor="feDescription">Opis</label>
-                  <FormTextarea rows="5" placeholder="Opis reporta" value={currentReport.content} onChange={updateContent} />
+                  <FormTextarea rows="5"  size="lg" className="mb-3" placeholder="Tytuł reporta" defaultValue={currentReport.description} disabled="true"></FormTextarea>
                 </Col>
-              <ImageUploader
-                        withIcon={true}
-                        buttonText='Wybierz zdjęcie'
-                        onChange={(files, pictures) => updateImage(files, pictures)}
-                        imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                        singleImage={true}
-                        maxFileSize={5242880}
-                    />
-              <img src={currentReport.image} style={{ width: "100%" }}/>
+
+                {currentReport.type == "post" || currentReport.type == "comment" ? 
+                <Col md="12" className="form-group">
+                  <Link to={"/edit-post/" + currentReport.objectId} style={{fontWeight: "bold"}} >Podejrzyj post</Link>
+                </Col>
+                : null}
+
+                {currentReport.type == "review" ? 
+                <Col md="12" className="form-group">
+                  <Link to={"/show-user/" + currentReport.objectId} style={{fontWeight: "bold"}}>Link do trenera</Link>
+                </Col>
+                : null}
+                
+                {currentReport.type == "review" ? 
+                <Row className="ml-1 mr-1"> 
+                  <Col md="9" className="form-group">
+                    <label htmlFor="feDescription">Treść recenzji</label>
+                    <FormTextarea value={currentReport.objectContent} disabled="true"/>
+                  </Col>
+                  <Col md="3" className="form-group">
+                    <label htmlFor="feDescription">Ocena</label>
+                    <FormTextarea type="number" value={currentReport.objectRate} disabled="true"/>
+                  </Col>
+                </Row>
+                : null}
+
+                {currentReport.type == "comment" ? 
+                <Col md="12" className="form-group">
+                  <label htmlFor="feDescription">Treść komentarza</label>
+                  <FormTextarea rows="5" value={currentReport.objectContent} onChange={updateContent}  disabled="true"/>
+                </Col>
+                : null}
             </Form>
           </CardBody>
           

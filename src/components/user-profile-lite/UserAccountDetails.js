@@ -16,21 +16,19 @@ import {
   FormTextarea,
   Button
 } from "shards-react";
-import { editUser } from "../../redux/Users/actions";
+import { editCurrentUser } from "../../redux/CurrentUser/actions";
 
 const UserAccountDetails = ({ title }) => {
 
-  const {users} = useSelector(state => state.users);
+  const {currentUsers} = useSelector(state => state.currentUsers);
   const { id } = useParams();
   const [currentUser, setCurrentUser] = useState();
   const [isSaved, setIsSaved] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    
-    const user = users[0];
-    setCurrentUser(user);
-  }, [id, users]);
+    setCurrentUser(currentUsers[0]);
+  }, [id, currentUsers]);
 
   
   const updateName = e => {
@@ -213,7 +211,7 @@ const UserAccountDetails = ({ title }) => {
               <div className="text-center">
                 <Button theme="accent"
                 onClick={()=> {                
-                dispatch(editUser(currentUser));
+                dispatch(editCurrentUser(currentUser));
                 setIsSaved(true)}}>
                 Zaktualizuj dane</Button>
               </div>

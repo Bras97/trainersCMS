@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
-import { FaTrashAlt, FaPen } from "react-icons/fa";
+import { FaCheckCircle, FaInfoCircle, FaTimesCircle } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 
 
@@ -18,7 +18,7 @@ const ReportsList = () => {
   <Container fluid className="main-content-container px-4">
     {/* Page Header */}
     <Row noGutters className="page-header py-4">
-      <PageTitle sm="4" title="Lista reportów" subtitle="Blog Reports" className="text-sm-left" />
+      <PageTitle sm="4" title="Lista zgłoszeń" subtitle="Blog Reports" className="text-sm-left" />
     </Row>
 
     {/* Default Light Table */}
@@ -26,8 +26,7 @@ const ReportsList = () => {
       <Col>
         <Card small className="mb-4">
           <CardHeader className="border-bottom">
-            <h4 className="m-0">Reporty</h4>
-            <h6 className="m-0 mt-1"><Link to="/add-new-report">Dodaj nowy report</Link></h6>
+            <h4 className="m-0">Zgłoszenia</h4>
           </CardHeader>
           <CardBody className="p-0 pb-3">
             <table className="table mb-0">
@@ -37,7 +36,7 @@ const ReportsList = () => {
                     #
                   </th>
                   <th scope="col" className="border-0">
-                    Tytuł
+                    Typ
                   </th>
                   <th scope="col" className="border-0">
                     Krótki opis
@@ -50,14 +49,14 @@ const ReportsList = () => {
               <tbody>
                 {reports.map(report => 
                   <tr key={report.id}>
-                    <td>{report.id}</td>
-                    <td>{report.title}</td>
+                  <td>{report.id}</td>
+                    <td>{report.type}</td>
                     <td style={{maxWidth: "400px",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     textOverflow: "ellipsis"
-                    }}>{report.content}</td>
-                    <td> <Link to={"edit-report/" + report.id}><FaPen /></Link> &ensp;<Link onClick={() => dispatch(deleteReport(report))}><FaTrashAlt /></Link></td>
+                    }}>{report.description}</td>
+                    <td> <Link to={"info-report/" + report.id}><FaInfoCircle /></Link> &ensp; <Link to={"info-report/" + report.id}><FaCheckCircle /></Link> &ensp;<Link onClick={() => dispatch(deleteReport(report))}><FaTimesCircle /></Link></td>
                   </tr>
                 )}
               </tbody>

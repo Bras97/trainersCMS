@@ -5,12 +5,12 @@ const intialState = {
         "1",
         '1h personalny trening',
         'Pływanie',
-        "60zł"
+        "60"
     ),new Tariff(
         "2",
         '1h personalny trening',
         'Siłownia',
-        "50zł"
+        "50"
     )
     ]
 }

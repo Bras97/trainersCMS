@@ -17,6 +17,8 @@ import EventsList from "./views/EventsList";
 import EditPost from "./views/EditPost";
 import EditEvent from "./views/EditEvent";
 import EditTariff from "./views/EditTariff";
+import ReportInfo from "./views/ReportInfo";
+import ReportsList from "./views/ReportsList";
 import HomeLogin from "./components/Login/HomeLogin";
 import SignUp from "./components/Login/SignUp";
 import Login from "./components/Login/Login";
@@ -82,6 +84,16 @@ export default [
     path: "/edit-tariff/:id",
     layout: DefaultLayout,
     component: EditTariff
+  },
+  {
+    path: "/info-report/:id",
+    layout: DefaultLayout,
+    component: ReportInfo
+  },
+  {
+    path: "/reports-list",
+    layout: DefaultLayout,
+    component: ReportsList
   },
   {
     path: "/home-login",

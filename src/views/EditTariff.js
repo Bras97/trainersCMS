@@ -87,7 +87,7 @@ const EditTariff = () =>  {
             </FormSelect>
           </InputGroup>
           <label htmlFor="feDescription">Cena</label>
-          <FormInput size="lg" className="mb-3" placeholder="Cena" defaultValue={currentTariff.price} onChange={updatePrice}/>
+          <FormInput type="number" size="lg" className="mb-3" placeholder="Cena" defaultValue={currentTariff.price} onChange={updatePrice}/>
         </Form>
       </CardBody>
     </Card>

@@ -17,7 +17,9 @@ export default class UserActions extends React.Component {
     this.state = {
       visible: false
     };
-    this.user = props.user;
+    this.avatar = props.user.avatar;
+    this.name = props.user.name;
+    this.surname = props.user.surname;
 
     this.toggleUserActions = this.toggleUserActions.bind(this);
   }
@@ -34,10 +36,10 @@ export default class UserActions extends React.Component {
         <DropdownToggle caret tag={NavLink} className="text-nowrap px-3">
           <img
             className="user-avatar rounded-circle mr-2"
-            src={this.user.avatar}
+            src={this.avatar}
             alt="User Avatar"
           />{" "}
-          <span className="d-none d-md-inline-block">{this.user.name} {this.user.surname}</span>
+          <span className="d-none d-md-inline-block">{this.name} {this.surname}</span>
         </DropdownToggle>
         <Collapse tag={DropdownMenu} right small open={this.state.visible}>
           <DropdownItem tag={Link} to="/login" className="text-danger">

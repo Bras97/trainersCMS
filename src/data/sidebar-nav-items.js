@@ -19,6 +19,11 @@ export default function() {
       title: "Wydarzenia",
       htmlBefore: '<i class="material-icons">event</i>',
       to: "/events-list",
+    },
+    {
+      title: "Zgłoszenia",
+      htmlBefore: '<i class="material-icons">report</i>',
+      to: "/reports-list",
     }
   ];
 }

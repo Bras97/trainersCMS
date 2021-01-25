@@ -60,7 +60,7 @@ return(
               <option>Siłownia</option>
             </FormSelect>
           </InputGroup>
-          <FormInput size="lg" className="mb-3" placeholder="Cena"  onChange={e => setPrice(e.target.value)}/>
+          <FormInput type="number" size="lg" className="mb-3" placeholder="Cena"  onChange={e => setPrice(e.target.value)}/>
           
         </Form>
       </CardBody>

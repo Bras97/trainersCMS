@@ -14,6 +14,7 @@ const EditPost = () => {
   const { id } = useParams();
   const [currentPost, setCurrentPost] = useState();
   const dispatch = useDispatch();
+  const { showMode, setShowMode } = useState(false);
 
   useEffect(() => {
       if (id) {
@@ -50,6 +51,7 @@ const EditPost = () => {
     return <div></div>
   }
 
+
   return(
   <Container fluid className="main-content-container px-4 pb-4">
     {/* Page Header */}
@@ -72,7 +74,8 @@ const EditPost = () => {
             <Form className="add-new-post">
                 <Col md="12" className="form-group">
                   <label htmlFor="feDescription">Tytuł</label>
-                  <FormInput size="lg" className="mb-3" placeholder="Tytuł posta" defaultValue={currentPost.title} onChange={updateTitle}></FormInput>
+                  <FormInput size="lg" className="mb-3" placeholder="Tytuł posta" defaultValue={currentPost.title} onChange={updateTitle}
+                  ></FormInput>
                 </Col>
                 <Col md="12" className="form-group">
                   <label htmlFor="feDescription">Opis</label>

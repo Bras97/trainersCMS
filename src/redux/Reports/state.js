@@ -3,19 +3,32 @@ import { Report } from './types';
 const intialState = {
     reports: [new Report(
         "1",
-        'Super report',
-        'Już jest nowa strona trenerów a o to jej pierwszy report! Hurra! Aż chce się pójść na siłownię wyrobić trochę muskulatury.',
+        'Post nie spełnia wymogów RODO. saf a dsad asd sadx fafsafsafsa  xzcsa w awrwadw adawdwa',
+        "post",
+        "1",
+        null,
         null)
     , new Report(
         "2",
-        'Otwieramy siłownie!',
-        'Po zmniejszeniu obostrzeń w kraju możliwe jest ponowne pompowanie i pakowanie. Wszycy na to czekali. Dosłownie każdy, który siedział w domu zbyt długo.',
+        'Post nie spełnia wymogów RODO. saf a dsad asd sadx fafsafsafsa  xzcsa w awrwadw adawdwa',
+        'post',
+        "3",
+        null,
         null)
     , new Report(
         "3",
-        'Nowe hantle Hantlex 4.0',
-        'Hantle Hantlex 4.0 to niebywały cud techniki. Wystarczy tylko je podnieś, zgiąć rękę, potem zgiąć jeszcze raz i tak cały czas, a efekt będzie zdumiewający!',
+        'Komentarz jest wulgarny. saf a dsad asd sadx fafsafsafsa  xzcsa w awrwadw adawdwa',
+        'comment',
+        null,
+        "Ty niewyduekowany bdslabsjlasdl cxzclxzmclz zxkldsajldsa asdsadasfsad !!!! abcddefs",
         null)    
+    , new Report(
+        "4",
+        'Recenzja jest niesłusznie wystawiona. saf a dsad asd sadx fafsafsafsa  xzcsa w awrwadw adawdwa',
+        'review',
+        null,
+        "Wystawiam 1.0 bo tak!",
+        "1")    
     ]
 }
 

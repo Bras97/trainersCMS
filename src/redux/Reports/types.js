@@ -20,11 +20,13 @@
 //     pending: false
 // }
   
-export function Report(id, title, content, image) {
+export function Report(id, description, type, objectId, objectContent, objectRate) {
     this.id = id;
-    this.title = title;
-    this.content = content;
-    this.image = image;
+    this.description = description;
+    this.type = type;
+    this.objectId = objectId;
+    this.objectContent = objectContent;
+    this.objectRate = objectRate;
   }
 
 export const SET_REPORTS = 'SET_REPORTS';

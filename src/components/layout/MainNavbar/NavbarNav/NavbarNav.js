@@ -5,10 +5,16 @@ import { useSelector} from "react-redux";
 
 export default () => {
 
-  const {users} = useSelector(state => state.users);
+  const {currentUsers} = useSelector(state => state.currentUsers);
+
+
+  if(!currentUsers){
+    return <div></div>
+  }
+
   return(
     <Nav navbar className="border-left flex-row">
-      <UserActions user={users[0]}/>
+      <UserActions user={currentUsers[0]}/>
     </Nav>
   )
 };
