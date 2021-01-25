@@ -14,7 +14,6 @@ const EditPost = () => {
   const { id } = useParams();
   const [currentPost, setCurrentPost] = useState();
   const dispatch = useDispatch();
-  const { showMode, setShowMode } = useState(false);
 
   useEffect(() => {
       if (id) {

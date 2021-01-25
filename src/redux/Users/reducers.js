@@ -21,10 +21,10 @@ const userReducer = (state = initialState, action) => {
             }
         case DELETE_USER:
             {
-                const currentUser = state.user.filter(function(el) { return el.id !== action.payload.id})
+                const currentUser = state.users.filter(function(el) { return el.id !== action.payload.id})
                 return {
                     ...state,
-                    user: currentUser,
+                    users: currentUser,
                 };
             }
         case SET_LOGGED_STATUS:

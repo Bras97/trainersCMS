@@ -24,6 +24,11 @@ export default function() {
       title: "Zgłoszenia",
       htmlBefore: '<i class="material-icons">report</i>',
       to: "/reports-list",
+    },
+    {
+      title: "Użytkownicy",
+      htmlBefore: '<i class="material-icons">people</i>',
+      to: "/users-list",
     }
   ];
 }

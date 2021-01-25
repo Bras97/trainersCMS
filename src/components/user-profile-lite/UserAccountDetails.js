@@ -21,14 +21,31 @@ import { editCurrentUser } from "../../redux/CurrentUser/actions";
 const UserAccountDetails = ({ title }) => {
 
   const {currentUsers} = useSelector(state => state.currentUsers);
+  const {users} = useSelector(state => state.users);
   const { id } = useParams();
   const [currentUser, setCurrentUser] = useState();
   const [isSaved, setIsSaved] = useState(false);
   const dispatch = useDispatch();
+  const [showMode, setShowMode] = useState(false);
+  
 
   useEffect(() => {
-    setCurrentUser(currentUsers[0]);
-  }, [id, currentUsers]);
+      if (id) {
+          const user = users.find(user => user.id == parseInt(id));
+          console.log("Found id!")
+          console.log(id)
+          console.log(user);
+          setCurrentUser(user);
+          setShowMode(true);
+      }
+      else{
+        console.log("Not found id!")
+        setCurrentUser(currentUsers[0]);
+      }
+  }, [id, users, currentUsers]);
+  
+  console.log(currentUser)
+
 
   
   const updateName = e => {
@@ -126,18 +143,18 @@ const UserAccountDetails = ({ title }) => {
                   <FormInput 
                     defaultValue={currentUser.name} 
                     onChange={updateName}
-                    id="feFirstName"
                     placeholder="Imię"
+                    disabled={showMode}
                   />
                 </Col>
                 {/* Last Name */}
                 <Col md="6" className="form-group">
                   <label htmlFor="feLastName">Nazwisko</label>
                   <FormInput
-                    id="feLastName"
                     placeholder="Nazwisko"
                     defaultValue={currentUser.surname} 
                     onChange={updateSurname}
+                    disabled={showMode}
                   />
                 </Col>
               </Row>
@@ -147,11 +164,11 @@ const UserAccountDetails = ({ title }) => {
                   <label htmlFor="feEmail">Email</label>
                   <FormInput
                     type="email"
-                    id="feEmail"
                     placeholder="Adres email"
                     defaultValue={currentUser.email} 
                     onChange={updateEmail}
                     autoComplete="email"
+                    disabled={showMode}
                   />
                 </Col>
                 {/* Password */}
@@ -159,11 +176,11 @@ const UserAccountDetails = ({ title }) => {
                   <label htmlFor="fePassword">Hasło</label>
                   <FormInput
                     type="password"
-                    id="fePassword"
                     placeholder="Hasło"
                     defaultValue={currentUser.password} 
                     onChange={updatePassword}
                     autoComplete="current-password"
+                    disabled={showMode}
                   />
                 </Col>
               </Row>
@@ -172,10 +189,10 @@ const UserAccountDetails = ({ title }) => {
                 <Col md="12" className="form-group">
                   <label htmlFor="feCity">Miasto</label>
                   <FormInput
-                    id="feCity"
                     placeholder="Miasto"
                     defaultValue={currentUser.city} 
                     onChange={updateCity}
+                    disabled={showMode}
                   />
                 </Col>
               </Row>
@@ -183,9 +200,10 @@ const UserAccountDetails = ({ title }) => {
                 {/* Description */}
                 <Col md="8" className="form-group">
                   <label htmlFor="feDescription">Opis</label>
-                  <FormTextarea id="feDescription" rows="7"
+                  <FormTextarea rows="7"
                     defaultValue={currentUser.description} 
-                    onChange={updateDescription} />
+                    onChange={updateDescription} 
+                    disabled={showMode}/>
                 </Col>
                 <Col className="form-group">
                   <CardHeader className="text-center" >
@@ -203,7 +221,8 @@ const UserAccountDetails = ({ title }) => {
                       <FormInput className="mb-2 text-center" style={{color: "green", maxWidth: "400px",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
-                    textOverflow: "ellipsis"}} type="file" onChange={handleImageChange} />
+                    textOverflow: "ellipsis"}} type="file" onChange={handleImageChange} 
+                    disabled={showMode}/>
                     </form>
                   </CardHeader>
                   </Col>
@@ -212,7 +231,8 @@ const UserAccountDetails = ({ title }) => {
                 <Button theme="accent"
                 onClick={()=> {                
                 dispatch(editCurrentUser(currentUser));
-                setIsSaved(true)}}>
+                setIsSaved(true)}}
+                disabled={showMode}>
                 Zaktualizuj dane</Button>
               </div>
             </Form>

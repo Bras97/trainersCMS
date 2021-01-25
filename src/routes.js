@@ -19,6 +19,7 @@ import EditEvent from "./views/EditEvent";
 import EditTariff from "./views/EditTariff";
 import ReportInfo from "./views/ReportInfo";
 import ReportsList from "./views/ReportsList";
+import UsersList from "./views/UsersList";
 import HomeLogin from "./components/Login/HomeLogin";
 import SignUp from "./components/Login/SignUp";
 import Login from "./components/Login/Login";
@@ -109,5 +110,15 @@ export default [
     path: "/sign-up",
     layout: LoginLayout,
     component: SignUp
+  },
+  {
+    path: "/users-list",
+    layout: DefaultLayout,
+    component: UsersList
+  },
+  {
+    path: "/user-profile/:id",
+    layout: DefaultLayout,
+    component: UserProfileLite
   }
 ];

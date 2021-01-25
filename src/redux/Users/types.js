@@ -1,5 +1,5 @@
 
-export function User(id, name, surname, email, password, city, description, avatar, isLogged) {
+export function User(id, name, surname, email, password, city, description, avatar, isLogged, type) {
     this.id = id;
     this.name = name;
     this.surname = surname;
@@ -9,6 +9,7 @@ export function User(id, name, surname, email, password, city, description, avat
     this.description = description;
     this.avatar = avatar;
     this.isLogged = isLogged;
+    this.type = type;
   }
 
 export const ADD_USER = 'ADD_USER';
