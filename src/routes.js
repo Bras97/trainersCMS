@@ -20,6 +20,8 @@ import EditTariff from "./views/EditTariff";
 import ReportInfo from "./views/ReportInfo";
 import ReportsList from "./views/ReportsList";
 import UsersList from "./views/UsersList";
+import CitiesList from "./views/CitiesList";
+import FacultiesList from "./views/FacultiesList";
 import HomeLogin from "./components/Login/HomeLogin";
 import SignUp from "./components/Login/SignUp";
 import Login from "./components/Login/Login";
@@ -120,5 +122,15 @@ export default [
     path: "/user-profile/:id",
     layout: DefaultLayout,
     component: UserProfileLite
+  },
+  {
+    path: "/cities-list",
+    layout: DefaultLayout,
+    component: CitiesList
+  },
+  {
+    path: "/faculties-list",
+    layout: DefaultLayout,
+    component: FacultiesList
   }
 ];

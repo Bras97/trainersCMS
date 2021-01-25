@@ -14,7 +14,8 @@ import {
   Form,
   FormInput,
   FormTextarea,
-  Button
+  Button,
+  FormSelect
 } from "shards-react";
 import { editCurrentUser } from "../../redux/CurrentUser/actions";
 
@@ -22,6 +23,7 @@ const UserAccountDetails = ({ title }) => {
 
   const {currentUsers} = useSelector(state => state.currentUsers);
   const {users} = useSelector(state => state.users);
+  const {cities} = useSelector(state => state.cities);
   const { id } = useParams();
   const [currentUser, setCurrentUser] = useState();
   const [isSaved, setIsSaved] = useState(false);
@@ -188,12 +190,14 @@ const UserAccountDetails = ({ title }) => {
                 {/* City */}
                 <Col md="12" className="form-group">
                   <label htmlFor="feCity">Miasto</label>
-                  <FormInput
-                    placeholder="Miasto"
+                  <FormSelect
                     defaultValue={currentUser.city} 
                     onChange={updateCity}
-                    disabled={showMode}
-                  />
+                    disabled={showMode}>
+                    {cities.map(city => 
+                      <option>{city}</option>
+                    )}
+                  </FormSelect>
                 </Col>
               </Row>
               <Row form>

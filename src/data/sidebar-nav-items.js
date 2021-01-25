@@ -29,6 +29,16 @@ export default function() {
       title: "Użytkownicy",
       htmlBefore: '<i class="material-icons">people</i>',
       to: "/users-list",
+    },
+    {
+      title: "Miasta",
+      htmlBefore: '<i class="material-icons">house</i>',
+      to: "/cities-list",
+    },
+    {
+      title: "Specjalności",
+      htmlBefore: '<i class="material-icons">model_training</i>',
+      to: "/faculties-list",
     }
   ];
 }
