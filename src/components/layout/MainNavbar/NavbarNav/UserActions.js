@@ -38,6 +38,8 @@ export default class UserActions extends React.Component {
             className="user-avatar rounded-circle mr-2"
             src={this.avatar}
             alt="User Avatar"
+            height = "40"
+            width = "40"
           />{" "}
           <span className="d-none d-md-inline-block">{this.name} {this.surname}</span>
         </DropdownToggle>

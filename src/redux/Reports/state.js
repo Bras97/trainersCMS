@@ -19,14 +19,14 @@ const intialState = {
         "3",
         'Komentarz jest wulgarny. saf a dsad asd sadx fafsafsafsa  xzcsa w awrwadw adawdwa',
         'comment',
-        null,
+        "2",
         "Ty niewyduekowany bdslabsjlasdl cxzclxzmclz zxkldsajldsa asdsadasfsad !!!! abcddefs",
         null)    
     , new Report(
         "4",
         'Recenzja jest niesłusznie wystawiona. saf a dsad asd sadx fafsafsafsa  xzcsa w awrwadw adawdwa',
         'review',
-        null,
+        "2",
         "Wystawiam 1.0 bo tak!",
         "1")    
     ]

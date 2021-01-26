@@ -4,6 +4,7 @@ import { Container, Row, Col, Card, CardHeader, CardBody, FormInput, Button } fr
 import { FaTrashAlt, FaPen } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import {addCity} from "../redux/Cities/actions";
+import { Redirect } from "react-router-dom";
 
 import PageTitle from "../components/common/PageTitle";
 import { deleteCity } from "../redux/Cities/actions";
@@ -12,6 +13,7 @@ const CitiesList = () => {
 
   const {cities} = useSelector(state => state.cities);
   const [ cityName, setCityName ] = useState();
+  const isLogged = false;
   console.log(cities);
   const dispatch = useDispatch();
 
@@ -19,6 +21,11 @@ const CitiesList = () => {
   const updateCityName = e => {
     setCityName(e.target.value);
   }
+
+  // if(!isLogged){
+  //   return <Redirect to="/login" /> 
+  // }
+
   return(
   <Container fluid className="main-content-container px-4">
     {/* Page Header */}

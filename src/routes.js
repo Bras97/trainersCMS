@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Redirect } from "react-router-dom";
 
 // Layout Types
@@ -31,7 +31,7 @@ export default [
     path: "/",
     exact: true,
     layout: DefaultLayout,
-    component: () => <Redirect to="/login" />
+    component: () => <Redirect to="/login" /> 
   },
   {
     path: "/user-profile-lite",

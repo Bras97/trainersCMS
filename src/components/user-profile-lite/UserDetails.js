@@ -18,6 +18,7 @@ const UserDetails = ({ userDetails }) => (
           src={userDetails.avatar}
           alt={userDetails.name}
           width="110"
+          height="110"
         />
       </div>
       <h4 className="mb-0">{userDetails.name}</h4>

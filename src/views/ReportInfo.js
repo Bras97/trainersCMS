@@ -65,11 +65,23 @@ const ReportInfo = () => {
           <i className="material-icons">file_copy</i> Powrót do listy
         </Button>
       </Link>
+
+      {currentReport.type == "post" || currentReport.type == "comment" ? 
       <Link to="/reports-list">
         <Button theme="accent" size="lg">          
           <i className="material-icons">file_copy</i> Usuń zgłoszoną treść
         </Button>
       </Link>
+      :null}
+      
+      {currentReport.type == "review" ? 
+      <Link to="/reports-list">
+        <Button theme="accent" size="lg">          
+          <i className="material-icons">file_copy</i> Zbanuj użytkownika
+        </Button>
+      </Link>
+      :null}
+
       <Link to="/reports-list">
         <Button theme="accent" size="lg">          
           <i className="material-icons">file_copy</i> Usuń zgłoszenie
@@ -96,7 +108,7 @@ const ReportInfo = () => {
 
                 {currentReport.type == "review" ? 
                 <Col md="12" className="form-group">
-                  <Link to={"/show-user/" + currentReport.objectId} style={{fontWeight: "bold"}}>Link do trenera</Link>
+                  <Link to={"/user-profile/" + currentReport.objectId} style={{fontWeight: "bold"}}>Link do trenera</Link>
                 </Col>
                 : null}
                 
