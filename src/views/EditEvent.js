@@ -83,8 +83,9 @@ const EditEvent = () => {
             <FormInput size="lg" className="mb-3" placeholder="Nazwa wydarzenia" defaultValue={currentEvent.title} onChange={updateTitle} />    
           </Col>
           <div className="mb-3 d-flex justify-content-start align-self-center">
-          <h6 className="mt-1 mr-3">Data: </h6>
+          <h6 className="ml-3">Data: </h6>
           <DatePicker
+            className="ml-3"
             selected={currentEvent.date} 
             onChange={updateDate} 
             dateFormat="DD-MM-YYYY hh:mm"

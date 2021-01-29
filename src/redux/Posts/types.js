@@ -1,24 +1,3 @@
-// export const Comment = {
-//     id: "",
-//     creator: null,
-//     content: "",
-//     postId: ""
-// }
-
-// export const Post = {
-//     id: "",
-//     title: "",
-//     creator: null,
-//     content: "",
-//     comments: null,
-//     type: null,
-//     image: null
-// }
-// export const PostsState = {
-//     posts: null,
-//     currentPost: null,
-//     pending: false
-// }
   
 export function Post(id, title, content, image) {
     this.id = id;

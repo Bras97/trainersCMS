@@ -1,18 +1,25 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
+import * as postThunks from "../redux/Posts/thunks";
 
 
 import PageTitle from "../components/common/PageTitle";
 import { deletePost } from "../redux/Posts/actions";
+import { useHttpErrorHandler } from '../utils/hooks/useHttpErrorHandler';
 
 const PostsList = () => {
 
   const {posts} = useSelector(state => state.posts);
   console.log(posts);
   const dispatch = useDispatch();
+  const handler = useHttpErrorHandler();
+
+  useEffect(() => {
+        dispatch(postThunks.fetchPosts(2, handler));
+  });
 
   return(
   <Container fluid className="main-content-container px-4">
