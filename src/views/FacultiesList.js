@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, CardHeader, CardBody, FormInput, Button } from "shards-react";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
@@ -7,6 +7,7 @@ import {addFaculty} from "../redux/Faculties/actions";
 
 import PageTitle from "../components/common/PageTitle";
 import { deleteFaculty } from "../redux/Faculties/actions";
+import * as facultiesThunks from "../redux/Faculties/thunks";
 
 const FacultiesList = () => {
 
@@ -14,6 +15,14 @@ const FacultiesList = () => {
   const [ facultyName, setFacultyName ] = useState();
   console.log(faculties);
   const dispatch = useDispatch();
+
+  const { authorization } = useSelector(state => state.authorizationUsers);
+
+  useEffect(() => {
+    if (authorization != null) {
+        dispatch(facultiesThunks.fetchFaculties());
+    }
+  }, [authorization, faculties]);
 
 
   const updateFacultyName = e => {

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, CardHeader, CardBody, FormInput, Button } from "shards-react";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
@@ -8,6 +8,8 @@ import { Redirect } from "react-router-dom";
 
 import PageTitle from "../components/common/PageTitle";
 import { deleteCity } from "../redux/Cities/actions";
+import * as citiesThunks from "../redux/Cities/thunks";
+import { useHttpErrorHandler } from '../utils/hooks/useHttpErrorHandler';
 
 const CitiesList = () => {
 
@@ -16,6 +18,14 @@ const CitiesList = () => {
   const isLogged = false;
   console.log(cities);
   const dispatch = useDispatch();
+
+  const { authorization } = useSelector(state => state.authorizationUsers);
+
+  useEffect(() => {
+    if (authorization != null) {
+        dispatch(citiesThunks.fetchCities());
+    }
+  }, [authorization, cities]);
 
 
   const updateCityName = e => {

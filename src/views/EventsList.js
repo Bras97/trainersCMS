@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
@@ -6,12 +6,23 @@ import { useSelector, useDispatch } from "react-redux";
 
 import PageTitle from "../components/common/PageTitle";
 import { deleteEvent } from "../redux/Events/actions";
+import * as eventsThunks from "../redux/Events/thunks";
+import { useHttpErrorHandler } from '../utils/hooks/useHttpErrorHandler';
 
 const EventsList = () => {
 
   const {events} = useSelector(state => state.events);
   console.log(events);
   const dispatch = useDispatch();
+
+  const handler = useHttpErrorHandler();
+  const { authorization } = useSelector(state => state.authorizationUsers);
+
+  useEffect(() => {
+    if (authorization != null && authorization.user != null && authorization.user._id != null) {
+        dispatch(eventsThunks.fetchEvents(authorization.user._id, handler));
+    }
+  }, [authorization, events]);
 
   return(
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
@@ -6,12 +6,24 @@ import { useSelector, useDispatch } from "react-redux";
 
 import PageTitle from "../components/common/PageTitle";
 import { deleteTariff } from "../redux/Tariffs/actions";
+import * as tariffsThunks from "../redux/Tariffs/thunks";
+import { useHttpErrorHandler } from '../utils/hooks/useHttpErrorHandler';
 
 const TariffsList = () => {
 
   const {tariffs} = useSelector(state => state.tariffs);
   console.log(tariffs);
   const dispatch = useDispatch();
+
+  const handler = useHttpErrorHandler();
+  const { authorization } = useSelector(state => state.authorizationUsers);
+
+  useEffect(() => {
+    if (authorization != null && authorization.user != null && authorization.user._id != null) {
+        dispatch(tariffsThunks.fetchTariffs(authorization.user._id, handler));
+    }
+  }, [authorization, tariffs]);
+
 
   return(
   <Container fluid className="main-content-container px-4">

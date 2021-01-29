@@ -1,10 +1,8 @@
 import {setPosts} from './actions';
-import {Comment, Post} from './types';
 import kyClient from "../../api/kyClient";
 
 export const fetchPosts = (id, handler) => async (
-    dispatch,
-    getState
+    dispatch
 ) => {
     try {
         const response = await kyClient.get(`trainer/${id}/posts`);
