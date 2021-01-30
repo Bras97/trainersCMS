@@ -12,12 +12,7 @@ import EventsList from "../../views/EventsList"
 const Login = () => {
 
 
-    const {users} = useSelector(state => state.users);
     const { authorization, pending, error } = useSelector(state => state.authorizationUsers);
-    // const values = {
-    //     email: "",
-    //     password: ""
-    // }
     const [values, setValues] = useState();
     const dispatch = useDispatch();
     const handleOnSubmit = () => {

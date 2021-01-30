@@ -12,7 +12,6 @@ import { useHttpErrorHandler } from '../utils/hooks/useHttpErrorHandler';
 const EventsList = () => {
 
   const {events} = useSelector(state => state.events);
-  console.log(events);
   const dispatch = useDispatch();
 
   const handler = useHttpErrorHandler();

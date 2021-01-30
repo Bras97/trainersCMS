@@ -66,7 +66,7 @@ const PostsList = () => {
                     overflow: "hidden",
                     textOverflow: "ellipsis"
                     }}>{post.content}</td>
-                    <td> <Link to={"edit-post/" + post.id}><FaPen /></Link> &ensp;<Link onClick={() => dispatch(deletePost(post))}><FaTrashAlt /></Link></td>
+                    <td> <Link to={"edit-post/" + post._id}><FaPen /></Link> &ensp;<Link onClick={() => dispatch(deletePost(post))}><FaTrashAlt /></Link></td>
                   </tr>
                 )}
               </tbody>

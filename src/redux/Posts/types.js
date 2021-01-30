@@ -1,9 +1,9 @@
   
-export function Post(id, title, content, image) {
-    this.id = id;
+export function Post(title, content, type,  eventsDetails) {
     this.title = title;
     this.content = content;
-    this.image = image;
+    this.type = type;
+    this.eventDetails = eventsDetails;
   }
 
 export const SET_POSTS = 'SET_POSTS';

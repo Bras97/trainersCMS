@@ -58,8 +58,8 @@ export const register = (newUser) => async (
     dispatch,
     getState
 ) => {
-    dispatch(setAuthorizationUserPending(true));
     try {
+        console.log(newUser)
         const response = await kyClient.post('user/register', {json: newUser});
         const data = await response.json();
         if (data) {
@@ -71,8 +71,29 @@ export const register = (newUser) => async (
     } catch (e) {
         dispatch(setError(true));
     }
-    dispatch(setAuthorizationUserPending(false));
 };
+
+export const updateUser = (user) => async (
+    dispatch,
+    getState
+) => {
+    try {
+        console.log("Do aktualizacji: ", user)
+        const response = await kyClient.put('user', {json: user});
+        const userResponse = await kyClient.get('user');
+        const userData = await userResponse.json();
+        console.log("Po aktualizacji: ", userData)
+        if (userData) {
+            dispatch(setAuthorizationUser(userData));
+            dispatch(setError(false));
+            saveAuthorizationUserInLocalStorage(userData);
+        }
+
+    } catch (e) {
+        dispatch(setError(true));
+    }
+};
+
 
 export const saveAuthorizationUser = (user) => async (
     dispatch,

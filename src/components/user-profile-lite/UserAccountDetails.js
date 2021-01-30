@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import * as authorizationThunks from '../../redux/Authorization/thunks';
 import {Alert} from "reactstrap"
 import {
   Card,
@@ -29,38 +30,42 @@ const UserAccountDetails = ({ title }) => {
   const [isSaved, setIsSaved] = useState(false);
   const dispatch = useDispatch();
   const [showMode, setShowMode] = useState(false);
+  const { authorization } = useSelector(state => state.authorizationUsers);
   
 
   useEffect(() => {
       if (id) {
           const user = users.find(user => user.id == parseInt(id));
-          console.log("Found id!")
-          console.log(id)
-          console.log(user);
           setCurrentUser(user);
           setShowMode(true);
       }
-      else{
-        console.log("Not found id!")
-        setCurrentUser(currentUsers[0]);
+      if(authorization){
+        console.log(authorization)
+        setCurrentUser(authorization.user);
       }
   }, [id, users, currentUsers]);
   
-  console.log(currentUser)
 
 
   
   const updateName = e => {
+
+    const userDetails = currentUser.userDetails
+    userDetails.firstName = e.target.value
+
     setCurrentUser({
-      ...currentUser,
-      name: e.target.value
+      ...currentUser.userDetails,
+      userDetails: userDetails
     });
   };
   
   const updateSurname = e => {
+
+    const userDetails = currentUser.userDetails
+    userDetails.lastName = e.target.value
     setCurrentUser({
       ...currentUser,
-      surname: e.target.value
+      userDetails: userDetails
     });
   };
   
@@ -79,16 +84,35 @@ const UserAccountDetails = ({ title }) => {
   };
   
   const updateCity = e => {
+
+    const userDetails = currentUser.userDetails
+    userDetails.city = e.target.value
+
     setCurrentUser({
-      ...currentUser,
-      city: e.target.value
+      ...currentUser.userDetails,
+      userDetails: userDetails
     });
   };
 
   const updateDescription = e => {
+
+    const userDetails = currentUser.userDetails
+    userDetails.description = e.target.value
+
     setCurrentUser({
-      ...currentUser,
-      description: e.target.value
+      ...currentUser.userDetails,
+      userDetails: userDetails
+    });
+  };
+
+  const updatePhone = e => {
+
+    const userDetails = currentUser.userDetails
+    userDetails.phone = e.target.value
+
+    setCurrentUser({
+      ...currentUser.userDetails,
+      userDetails: userDetails
     });
   };
 
@@ -98,7 +122,7 @@ const UserAccountDetails = ({ title }) => {
 
   const updateAvatar = e => {
     setCurrentUser({
-      ...currentUser,
+      ...currentUser.userDetails,
       avatar: e.target.files[0]
     });
   }
@@ -143,7 +167,7 @@ const UserAccountDetails = ({ title }) => {
                 <Col md="6" className="form-group">
                   <label htmlFor="feFirstName">Imię</label>
                   <FormInput 
-                    defaultValue={currentUser.name} 
+                    defaultValue={currentUser.userDetails.firstName} 
                     onChange={updateName}
                     placeholder="Imię"
                     disabled={showMode}
@@ -154,7 +178,7 @@ const UserAccountDetails = ({ title }) => {
                   <label htmlFor="feLastName">Nazwisko</label>
                   <FormInput
                     placeholder="Nazwisko"
-                    defaultValue={currentUser.surname} 
+                    defaultValue={currentUser.userDetails.lastName} 
                     onChange={updateSurname}
                     disabled={showMode}
                   />
@@ -165,23 +189,22 @@ const UserAccountDetails = ({ title }) => {
                 <Col md="6" className="form-group">
                   <label htmlFor="feEmail">Email</label>
                   <FormInput
+                    disabled="true"
                     type="email"
                     placeholder="Adres email"
                     defaultValue={currentUser.email} 
                     onChange={updateEmail}
                     autoComplete="email"
-                    disabled={showMode}
                   />
                 </Col>
                 {/* Password */}
                 <Col md="6" className="form-group">
-                  <label htmlFor="fePassword">Hasło</label>
+                  <label htmlFor="fePassword">Telefon</label>
                   <FormInput
-                    type="password"
-                    placeholder="Hasło"
-                    defaultValue={currentUser.password} 
-                    onChange={updatePassword}
-                    autoComplete="current-password"
+                    type="phone"
+                    placeholder="Telefon"
+                    defaultValue={currentUser.userDetails.phone} 
+                    onChange={updatePhone}
                     disabled={showMode}
                   />
                 </Col>
@@ -191,7 +214,7 @@ const UserAccountDetails = ({ title }) => {
                 <Col md="12" className="form-group">
                   <label htmlFor="feCity">Miasto</label>
                   <FormSelect
-                    defaultValue={currentUser.city} 
+                    defaultValue={currentUser.userDetails.city} 
                     onChange={updateCity}
                     disabled={showMode}>
                     {cities.map(city => 
@@ -205,7 +228,7 @@ const UserAccountDetails = ({ title }) => {
                 <Col md="8" className="form-group">
                   <label htmlFor="feDescription">Opis</label>
                   <FormTextarea rows="7"
-                    defaultValue={currentUser.description} 
+                    defaultValue={currentUser.userDetails.description} 
                     onChange={updateDescription} 
                     disabled={showMode}/>
                 </Col>
@@ -234,7 +257,7 @@ const UserAccountDetails = ({ title }) => {
               <div className="text-center">
                 <Button theme="accent"
                 onClick={()=> {                
-                dispatch(editCurrentUser(currentUser));
+                dispatch(authorizationThunks.updateUser(currentUser.userDetails));
                 setIsSaved(true)}}
                 disabled={showMode}>
                 Zaktualizuj dane</Button>

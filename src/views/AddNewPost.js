@@ -7,6 +7,8 @@ import PageTitle from "../components/common/PageTitle";
 import {addPost} from "../redux/Posts/actions";
 import { Post } from "../redux/Posts/types";
 import ImageUploader from 'react-images-upload';
+import * as postThunks from "../redux/Posts/thunks";
+import { useHttpErrorHandler } from '../utils/hooks/useHttpErrorHandler';
 
 const AddNewPost = () => {
 
@@ -16,6 +18,15 @@ const AddNewPost = () => {
   const [content, setContent] = useState();
   const [image, setImage] = useState();
   const {posts} = useSelector(state => state.posts);
+
+
+  const { authorization } = useSelector(state => state.authorizationUsers);
+
+  const handleNewPost = () => {
+    if (authorization != null && authorization.user != null && authorization.user._id != null) {
+        dispatch(postThunks.addPost(new Post(title,content, "POST", image, null)));
+      }
+  };
   
   const handleOnDrop = (files, pictures) => {
     setImage(pictures[0]);
@@ -28,13 +39,7 @@ const AddNewPost = () => {
     <Row noGutters className="page-header py-4 d-flex justify-content-between">
       <PageTitle sm="4" title="Dodaj nowy post" subtitle="Blog Posts" className="text-sm-left" />
       <Link to="/posts-list">
-        <Button  theme="accent" size="lg"
-        onClick={()=> 
-          {
-            const newIndex = parseInt(posts[posts.length-1].id)+1;
-            dispatch(addPost(new Post(newIndex.toString(), title, content, image)));
-            console.log("Image: ", image);}               
-        }>
+        <Button  theme="accent" size="lg" onClick={handleNewPost}>
         <i className="material-icons">file_copy</i> Zatwierdź
         </Button>
       </Link>

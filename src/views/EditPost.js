@@ -17,7 +17,7 @@ const EditPost = () => {
 
   useEffect(() => {
       if (id) {
-          const post = posts.find(post => post.id == parseInt(id));
+          const post = posts.find(post => post._id == id);
           setCurrentPost(post);
       }
   }, [id, posts]);
