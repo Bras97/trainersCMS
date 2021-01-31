@@ -6,11 +6,11 @@ const kyClient = ky.extend({
     hooks: {
         beforeRequest: [
             (config) => {
-                const token = store.getState().authorizationUsers.authorization.token;
-                if (token) {
-                    config.headers.set('Authorization', `Bearer ${token}`);
-                    config.headers.set('Content-Type', 'application/json');
+                const authorizationUsers = store.getState().authorizationUsers;
+                if (authorizationUsers.authorization && authorizationUsers.authorization.token) {
+                    config.headers.set('Authorization', `Bearer ${authorizationUsers.authorization.token}`);
                 }
+                config.headers.set('Content-Type', 'application/json');
             }
         ]
     }

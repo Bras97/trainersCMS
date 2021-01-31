@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Container, Row, Col } from "shards-react";
+import { Container } from "shards-react";
 
 import HomeLogin from "../components/Login/HomeLogin"
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {
   Dropdown,
   DropdownToggle,
@@ -9,19 +9,23 @@ import {
   NavItem,
   NavLink
 } from "shards-react";
+import {connect} from "react-redux";
+import {clearCurrentAuthorizationUser} from "../../../../redux/Authorization/thunks";
 
-export default class UserActions extends React.Component {
+class UserActions extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      visible: false
+      visible: false,
+      redirect: false,
     };
     this.avatar = props.user.avatar;
     this.name = props.user.name;
     this.surname = props.user.surname;
 
     this.toggleUserActions = this.toggleUserActions.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   toggleUserActions() {
@@ -30,7 +34,18 @@ export default class UserActions extends React.Component {
     });
   }
 
+  handleLogout() {
+    this.props.logout();
+    this.setState({
+      redirect: true
+    });
+  }
+
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/login" />;
+    }
+
     return (
       <NavItem tag={Dropdown} caret toggle={this.toggleUserActions}>
         <DropdownToggle caret tag={NavLink} className="text-nowrap px-3">
@@ -44,7 +59,7 @@ export default class UserActions extends React.Component {
           <span className="d-none d-md-inline-block">{this.name} {this.surname}</span>
         </DropdownToggle>
         <Collapse tag={DropdownMenu} right small open={this.state.visible}>
-          <DropdownItem tag={Link} to="/login" className="text-danger">
+          <DropdownItem className="text-danger" onClick={this.handleLogout}>
             <i className="material-icons text-danger">&#xE879;</i> Logout
           </DropdownItem>
         </Collapse>
@@ -52,3 +67,7 @@ export default class UserActions extends React.Component {
     );
   }
 }
+
+export default connect(null, dispatch => ({
+  logout: () => dispatch(clearCurrentAuthorizationUser()),
+}))(UserActions);

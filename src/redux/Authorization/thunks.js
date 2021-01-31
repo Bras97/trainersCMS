@@ -37,6 +37,7 @@ export const login = (user) => async (
         }
 
     } catch (e) {
+      console.log(e);
         dispatch(setError(true));
     }
 };
