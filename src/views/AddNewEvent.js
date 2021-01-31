@@ -10,6 +10,9 @@ import {addEvent} from "../redux/Events/actions";
 import { Event } from "../redux/Events/types";
 import {DatePicker} from "shards-react";
 import ImageUploader from 'react-images-upload';
+import { Post } from "../redux/Posts/types";
+import { EventDetails } from "../redux/Events/types";
+import * as eventThunks from "../redux/Events/thunks";
 
 const AddNewEvent = () => {
 
@@ -17,6 +20,7 @@ const AddNewEvent = () => {
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
   const [date, setDate] = useState(new Date());
+  const [place, setPlace] = useState("Poznań");
   const [image, setImage] = useState();
   const {events} = useSelector(state => state.events);
 
@@ -28,6 +32,16 @@ const AddNewEvent = () => {
     setDate(date);
   };
 
+  const { authorization } = useSelector(state => state.authorizationUsers);
+
+  const handleNewEvent = () => {
+    if (authorization != null && authorization.user != null && authorization.user._id != null) {
+        const eventDetails = new EventDetails(place, date);
+        dispatch(eventThunks.addEventToDatabase(new Post(title, content, "EVENT", null, eventDetails), image));
+      }
+  };
+  
+
   return(
 
   <Container fluid className="main-content-container px-4 pb-4">
@@ -36,10 +50,7 @@ const AddNewEvent = () => {
       <PageTitle sm="4" title="Dodaj nowe wydarzenie" subtitle="Blog Posts" className="text-sm-left" />
       <Link to="/events-list">
         <Button  theme="accent" size="lg"
-        onClick={()=> {
-          const newIndex = parseInt(events[events.length-1].id)+1;
-          dispatch(addEvent(new Event(newIndex, title, date, content, image)));                
-        }}>
+        onClick={handleNewEvent}>
         <i className="material-icons">file_copy</i> Zatwierdź
         </Button>
       </Link>

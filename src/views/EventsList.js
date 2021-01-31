@@ -21,7 +21,7 @@ const EventsList = () => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
         dispatch(eventsThunks.fetchEvents(authorization.user._id, handler));
     }
-  }, [authorization, events]);
+  }, [authorization]);
 
   return(
 
@@ -61,11 +61,11 @@ const EventsList = () => {
                 </tr>
               </thead>
               <tbody>
-                {events.map(event => 
-                  <tr>
-                    <td>{event.id}</td>
+                {events.map((event,idx) => 
+                  <tr key={idx+1}>
+                    <td>{idx+1}</td>
                     <td>{event.title}</td>
-                    <td>{event.date.toLocaleDateString("pl-PL")} {event.date.getHours()}:{event.date.getMinutes()}</td>
+                    <td>{event.eventDetails.dateTime.toString()}</td>
                     <td style={{maxWidth: "400px",
                     whiteSpace: "nowrap",
                     overflow: "hidden",

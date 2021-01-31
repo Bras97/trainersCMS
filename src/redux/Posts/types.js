@@ -1,8 +1,9 @@
   
-export function Post(title, content, type,  eventsDetails) {
+export function Post(title, content, type, featuredImage, eventsDetails) {
     this.title = title;
     this.content = content;
     this.type = type;
+    this.featuredImage = featuredImage;
     this.eventDetails = eventsDetails;
   }
 

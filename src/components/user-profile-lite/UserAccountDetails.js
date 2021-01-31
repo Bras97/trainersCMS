@@ -43,7 +43,7 @@ const UserAccountDetails = ({ title }) => {
         console.log(authorization)
         setCurrentUser(authorization.user);
       }
-  }, [id, users, currentUsers]);
+  }, [id, users]);
   
 
 
@@ -256,7 +256,8 @@ const UserAccountDetails = ({ title }) => {
               </Row>
               <div className="text-center">
                 <Button theme="accent"
-                onClick={()=> {                
+                onClick={()=> {            
+                  console.log("CLICKED")    
                 dispatch(authorizationThunks.updateUser(currentUser.userDetails));
                 setIsSaved(true)}}
                 disabled={showMode}>

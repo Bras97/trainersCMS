@@ -24,7 +24,7 @@ const AddNewPost = () => {
 
   const handleNewPost = () => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
-        dispatch(postThunks.addPost(new Post(title,content, "POST", image, null)));
+        dispatch(postThunks.addPostToDatabase(new Post(title,content, "POST", null, null), image));
       }
   };
   

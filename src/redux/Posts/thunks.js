@@ -1,4 +1,4 @@
-import {setPosts} from './actions';
+import {setPosts, addPost} from './actions';
 import kyClient from "../../api/kyClient";
 
 export const fetchPosts = (id, handler) => async (
@@ -7,25 +7,25 @@ export const fetchPosts = (id, handler) => async (
     try {
         const response = await kyClient.get(`trainer/${id}/posts`);
         const data = await response.json();
-        console.log("DATA", data);
         if (data) {
             dispatch(setPosts(data.data));
         }
     } catch(e){
         handler();
     }
-
 };
 
-export const addPost = (post) => async (
+export const addPostToDatabase = (post, image) => async (
     dispatch
 ) => {
     try {
         const response = await kyClient.post('post', {json: post});
         const data = await response.json();
-        console.log("DATA", data);
+        if(image != null){
+            const responseImage = await kyClient.post(`post/${data.featuredImage}/featuredImage`, {json: image});
+        }
         if (data) {
-            dispatch(addPost(data));
+            dispatch(addPost(data.data));
         }
 
     } catch (e) {
