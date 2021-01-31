@@ -22,7 +22,7 @@ const TariffsList = () => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
         dispatch(tariffsThunks.fetchTariffs(authorization.user._id, handler));
     }
-  }, [authorization, tariffs]);
+  }, [authorization]);
 
 
   return(
@@ -62,9 +62,9 @@ const TariffsList = () => {
                 </tr>
               </thead>
               <tbody>
-                {tariffs.map(tariff => 
-                  <tr>
-                    <td>{tariff.id}</td>
+                {tariffs.map((tariff, idx) => 
+                  <tr key={idx+1}>
+                    <td>{idx+1}</td>
                     <td>{tariff.name}</td>
                     <td>{tariff.category}</td>
                     <td>{tariff.price} zł</td>

@@ -9,8 +9,8 @@ const kyClient = ky.extend({
                 const token = store.getState().authorizationUsers.authorization.token;
                 if (token) {
                     config.headers.set('Authorization', `Bearer ${token}`);
-                    config.headers.set('Content-Type', 'application/json');
                 }
+                config.headers.set('Content-Type', 'application/json');
             }
         ]
     }

@@ -25,7 +25,7 @@ const CitiesList = () => {
     if (authorization != null) {
         dispatch(citiesThunks.fetchCities());
     }
-  }, [authorization, cities]);
+  }, [authorization]);
 
 
   const updateCityName = e => {

@@ -22,7 +22,7 @@ const FacultiesList = () => {
     if (authorization != null) {
         dispatch(facultiesThunks.fetchFaculties());
     }
-  }, [authorization, faculties]);
+  }, [authorization]);
 
 
   const updateFacultyName = e => {

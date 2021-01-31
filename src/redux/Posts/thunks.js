@@ -21,10 +21,10 @@ export const addPostToDatabase = (post, image) => async (
     try {
         const response = await kyClient.post('post', {json: post});
         const data = await response.json();
-        const responseImage = await kyClient.post(`post/${data.featuredImage}/featuredImage`, {json: image});
-        const dataImage = await responseImage.json();
-        console.log("DATA", data);
-        if (data && dataImage) {
+        if(image != null){
+            const responseImage = await kyClient.post(`post/${data.featuredImage}/featuredImage`, {json: image});
+        }
+        if (data) {
             dispatch(addPost(data.data));
         }
 

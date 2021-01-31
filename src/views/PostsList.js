@@ -57,9 +57,9 @@ const PostsList = () => {
                 </tr>
               </thead>
               <tbody>
-                {posts.map(post =>
-                  <tr key={post.id}>
-                    <td>{post.id}</td>
+                {posts.map((post, idx) =>
+                  <tr key={idx+1}>
+                    <td>{idx+1}</td>
                     <td>{post.title}</td>
                     <td style={{maxWidth: "400px",
                     whiteSpace: "nowrap",

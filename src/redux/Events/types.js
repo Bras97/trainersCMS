@@ -30,6 +30,10 @@ export function Event(id, title, date, content, image) {
     this.image = image;
   }
 
+  export function EventDetails(place, dateTime) {
+      this.place = place;
+      this.dateTime = dateTime;
+  }
 
 export const SET_EVENTS = 'SET_EVENTS';
 export const SET_CURRENT_EVENT = 'SET_CURRENT_EVENT';
