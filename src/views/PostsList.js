@@ -21,7 +21,7 @@ const PostsList = () => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
         dispatch(postThunks.fetchPosts(authorization.user._id, handler));
     }
-}, [authorization, posts]);
+}, [authorization]);
 
   return(
   <Container fluid className="main-content-container px-4">
@@ -57,7 +57,7 @@ const PostsList = () => {
                 </tr>
               </thead>
               <tbody>
-                {posts.map(post => 
+                {posts.map(post =>
                   <tr key={post.id}>
                     <td>{post.id}</td>
                     <td>{post.title}</td>
@@ -77,7 +77,7 @@ const PostsList = () => {
     </Row>
 
   </Container>
-    
+
   )
 };
 
