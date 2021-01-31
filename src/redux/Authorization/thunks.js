@@ -2,14 +2,13 @@ import {
     clearCurrentAuthorizationUser as clearCurrentAuthorizationUserAction, setAuthorizationUser,
     setAuthorizationUserPending, setError,
 } from './actions';
-import {AuthorizationUser} from './types';
 import {
     readAuthorizationUserFromLocalStorage,
     removeAuthorizationUserFromLocalStorage,
     saveAuthorizationUserInLocalStorage
 } from "./utils";
 import kyClient from "../../api/kyClient";
-import {User} from "../Users/types";
+import {useSelector} from "react-redux"
 
 export const fetchCurrentAuthorizationUser = () => async (
     dispatch,
@@ -78,15 +77,16 @@ export const updateUser = (user) => async (
     getState
 ) => {
     try {
+        const authorizationUser = useSelector(state => state.authorizationUsers)
         console.log("Do aktualizacji: ", user)
         const response = await kyClient.put('user', {json: user});
-        const userResponse = await kyClient.get('user');
-        const userData = await userResponse.json();
+        const userData = await response.json();
         console.log("Po aktualizacji: ", userData)
+        authorizationUser.user = userData
         if (userData) {
-            dispatch(setAuthorizationUser(userData));
+            dispatch(setAuthorizationUser(authorizationUser));
             dispatch(setError(false));
-            saveAuthorizationUserInLocalStorage(userData);
+            saveAuthorizationUserInLocalStorage(authorizationUser);
         }
 
     } catch (e) {

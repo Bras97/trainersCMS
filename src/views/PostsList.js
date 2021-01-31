@@ -21,7 +21,7 @@ const PostsList = () => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
         dispatch(postThunks.fetchPosts(authorization.user._id, handler));
     }
-}, [authorization, posts]);
+}, [authorization]);
 
   return(
   <Container fluid className="main-content-container px-4">

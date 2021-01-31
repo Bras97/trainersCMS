@@ -4,17 +4,16 @@ import "./styleForLogin.css"
 import { Button } from "shards-react";
 import {useDispatch, useSelector} from "react-redux"
 import * as authorizationThunks from '../../redux/Authorization/thunks';
+import {Alert} from "reactstrap"
 
 const SignUp = () => {
 
     const { authorization, pending, error } = useSelector(state => state.authorizationUsers);
-    const [values, setValues] = useState({phone: "",
-    city: "",
+    const [values, setValues] = useState({phone: "1",
+    city: "Poznań",
     specializations: [],
-    description: ""});
+    description: "1"});
     const dispatch = useDispatch();
-
-
 
     const handleOnSubmit = () => {
         dispatch(authorizationThunks.register(values))
@@ -63,6 +62,7 @@ const SignUp = () => {
     return (
         <form class="row justify-content-center" style={{marginTop: "100px"}}>
         <div className="col-4">
+            {(error) && <Alert color="warning" severity="error">Wypełnij wszystkie dane</Alert>}
             <h3>Zarejestruj się</h3>
 
             <div className="form-group">

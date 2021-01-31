@@ -7,8 +7,9 @@ export const fetchTariffs = (id, handler) => async (
     try {
         const response = await kyClient.get(`trainer/${id}/pricing`);
         const data = await response.json();
+        console.log("TARIFFS: ", data)
         if (data) {
-            dispatch(setTariffs(data.data));
+            dispatch(setTariffs(data));
         }
     } catch (e) {
         handler();
