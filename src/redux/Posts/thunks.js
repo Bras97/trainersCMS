@@ -7,8 +7,9 @@ export const fetchPosts = (id, handler) => async (
     try {
         const response = await kyClient.get(`trainer/${id}/posts`);
         const data = await response.json();
+        console.log("DATA", data);
         if (data) {
-            dispatch(setPosts(data));
+            dispatch(setPosts(data.data));
         }
     } catch(e){
         handler();
@@ -22,6 +23,7 @@ export const addPost = (post) => async (
     try {
         const response = await kyClient.post('post', {json: post});
         const data = await response.json();
+        console.log("DATA", data);
         if (data) {
             dispatch(addPost(data));
         }

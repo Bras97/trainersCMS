@@ -10,7 +10,7 @@ export const fetchEvents = (id, handler) => async (
         const response = await kyClient.get(`trainer/${id}/events`);
         const data = await response.json();
         if (data) {
-            dispatch(setEvents(data));
+            dispatch(setEvents(data.data));
         }
     } catch (e) {
         handler();

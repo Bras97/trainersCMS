@@ -66,21 +66,11 @@ const ReportInfo = () => {
         </Button>
       </Link>
 
-      {currentReport.type == "post" || currentReport.type == "comment" ? 
       <Link to="/reports-list">
         <Button theme="accent" size="lg">          
           <i className="material-icons">file_copy</i> Usuń zgłoszoną treść
         </Button>
       </Link>
-      :null}
-      
-      {currentReport.type == "review" ? 
-      <Link to="/reports-list">
-        <Button theme="accent" size="lg">          
-          <i className="material-icons">file_copy</i> Zbanuj użytkownika
-        </Button>
-      </Link>
-      :null}
 
       <Link to="/reports-list">
         <Button theme="accent" size="lg">          
@@ -97,7 +87,7 @@ const ReportInfo = () => {
             <Form className="add-new-report">
                 <Col md="12" className="form-group">
                   <label htmlFor="feDescription">Opis</label>
-                  <FormTextarea rows="5"  size="lg" className="mb-3" placeholder="Tytuł reporta" defaultValue={currentReport.description} disabled="true"></FormTextarea>
+                  <FormTextarea rows="5"  size="lg" className="mb-3" placeholder="Tytuł zgłoszenia" defaultValue={currentReport.description} disabled="true"></FormTextarea>
                 </Col>
 
                 {currentReport.type == "post" || currentReport.type == "comment" ? 
