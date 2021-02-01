@@ -36,7 +36,7 @@ const eventReducer = (state = initialState, action) => {
             }
         case DELETE_EVENT:
             {
-                const currentEvents = state.events.filter(function(el) { return el.id !== action.payload.id})
+                const currentEvents = state.events.filter(function(el) { return el._id !== action.payload._id})
                 return {
                     ...state,
                     events: currentEvents,

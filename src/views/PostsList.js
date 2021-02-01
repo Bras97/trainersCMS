@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
@@ -22,6 +22,13 @@ const PostsList = () => {
         dispatch(postThunks.fetchPosts(authorization.user._id, handler));
     }
 }, [authorization]);
+
+const handleDeletePost = (selectedPost) => {
+  if (authorization != null && authorization.user != null && authorization.user._id != null) {
+    console.log("SELECTED ID:", selectedPost)
+      dispatch(postThunks.deletePostFromDatabase(selectedPost));
+    }
+};
 
   return(
   <Container fluid className="main-content-container px-4">
@@ -66,7 +73,9 @@ const PostsList = () => {
                     overflow: "hidden",
                     textOverflow: "ellipsis"
                     }}>{post.content}</td>
-                    <td> <Link to={"edit-post/" + post._id}><FaPen /></Link> &ensp;<Link onClick={() => dispatch(deletePost(post))}><FaTrashAlt /></Link></td>
+                    <td> <Link to={"edit-post/" + post._id}><FaPen /></Link> &ensp;<Link onClick={()=>{
+                      handleDeletePost(post);
+                    }}><FaTrashAlt /></Link></td>
                   </tr>
                 )}
               </tbody>

@@ -36,7 +36,10 @@ const tariffReducer = (state = initialState, action) => {
             }
         case DELETE_TARIFF:
             {
-                const currentTariffs = state.tariffs.filter(function(el) { return el.id !== action.payload.id})
+                const currentTariffs = state.tariffs.filter(function(el) 
+                { return el.price != action.payload.price && 
+                    el.category != action.payload.category && 
+                    el.title != action.payload.title })
                 return {
                     ...state,
                     tariffs: currentTariffs,

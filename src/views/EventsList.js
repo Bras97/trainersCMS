@@ -23,6 +23,13 @@ const EventsList = () => {
     }
   }, [authorization]);
 
+  const handleDeleteEvent = (selectedEvent) => {
+    if (authorization != null && authorization.user != null && authorization.user._id != null) {
+      console.log("SELECTED ID:", selectedEvent)
+        dispatch(eventsThunks.deleteEventFromDatabase(selectedEvent));
+      }
+  };
+
   return(
 
   <Container fluid className="main-content-container px-4">
@@ -71,7 +78,7 @@ const EventsList = () => {
                     overflow: "hidden",
                     textOverflow: "ellipsis"
                     }}>{event.content}</td>
-                    <td> <Link to={"edit-event/" + event._id}><FaPen /></Link> &ensp; <Link onClick={() => dispatch(deleteEvent(event))}><FaTrashAlt /> </Link></td>
+                    <td> <Link to={"edit-event/" + event._id}><FaPen /></Link> &ensp; <Link onClick={() =>handleDeleteEvent(event)}><FaTrashAlt /> </Link></td>
                   </tr>
                 )}
               </tbody>

@@ -36,7 +36,7 @@ const postReducer = (state = initialState, action) => {
             }
         case DELETE_POST:
             {
-                const currentPosts = state.posts.filter(function(el) { return el.id !== action.payload.id})
+                const currentPosts = state.posts.filter(function(el) { return el._id !== action.payload._id})
                 return {
                     ...state,
                     posts: currentPosts,

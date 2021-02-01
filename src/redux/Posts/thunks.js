@@ -1,4 +1,4 @@
-import {setPosts, addPost, editPost} from './actions';
+import {setPosts, addPost, editPost, deletePost} from './actions';
 import {Post} from './types';
 import kyClient from "../../api/kyClient";
 
@@ -28,7 +28,7 @@ export const addPostToDatabase = (post, image) => async (
             image = await responseImage.json();
         }
         if (data) {
-            dispatch(addPost(data));
+            await dispatch(addPost(data));
         }
 
     } catch (e) {
@@ -50,6 +50,21 @@ export const updatePostInDatabase = (post, id, image) => async (
         }
         if (data) {
             dispatch(editPost(data));
+        }
+
+    } catch (e) {
+        console.log("ERROR")
+    }
+};
+
+export const deletePostFromDatabase = (post) => async (
+    dispatch
+) => {
+    try {
+        const response = await kyClient.delete(`post/${post._id}`, {json: post});
+        const data = await response.json();
+        if (data) {
+            dispatch(deletePost(data));
         }
 
     } catch (e) {

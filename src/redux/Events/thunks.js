@@ -1,4 +1,4 @@
-import {setEventPending, setEvents, addEvent, editEvent} from './actions';
+import {setEventPending, setEvents, addEvent, editEvent, deleteEvent} from './actions';
 import kyClient from "../../api/kyClient";
 import {Event } from './types';
 import {
@@ -56,6 +56,22 @@ export const updateEventInDatabase = (event, id, image) => async (
         }
         if (data) {
             dispatch(editEvent(data));
+        }
+
+    } catch (e) {
+        console.log("ERROR")
+    }
+};
+
+
+export const deleteEventFromDatabase = (event) => async (
+    dispatch
+) => {
+    try {
+        const response = await kyClient.delete(`post/${event._id}`, {json: event});
+        const data = await response.json();
+        if (data) {
+            dispatch(deleteEvent(data));
         }
 
     } catch (e) {

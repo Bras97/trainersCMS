@@ -68,7 +68,7 @@ const AddNewEvent = () => {
           <DatePicker
             selected={date} 
             onChange={updateDate} 
-            dateFormat="DD-MM-YYYY hh:mm"
+            dateFormat="dd-MM-YYYY hh:mm"
             showTimeSelect
             />
           </div>

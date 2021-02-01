@@ -12,7 +12,6 @@ import { useHttpErrorHandler } from '../utils/hooks/useHttpErrorHandler';
 const TariffsList = () => {
 
   const {tariffs} = useSelector(state => state.tariffs);
-  console.log(tariffs);
   const dispatch = useDispatch();
 
   const handler = useHttpErrorHandler();
@@ -24,6 +23,13 @@ const TariffsList = () => {
     }
   }, [authorization]);
 
+  const handleDeleteTariff = (idx) => {
+    if (authorization != null && authorization.user != null && authorization.user._id != null) {
+      console.log("0", tariffs);
+        tariffs.splice(idx,1)
+        dispatch(tariffsThunks.deleteTariffFromDatabase(tariffs));
+      }
+  };
 
   return(
   <Container fluid className="main-content-container px-4">
@@ -68,7 +74,7 @@ const TariffsList = () => {
                     <td>{tariff.title}</td>
                     <td>{tariff.category}</td>
                     <td>{tariff.price} zł</td>
-                    <td><Link onClick={() => dispatch(deleteTariff(tariff))}><FaTrashAlt /> </Link></td>
+                    <td><Link onClick={() => handleDeleteTariff(idx)}><FaTrashAlt /> </Link></td>
                   </tr>
                 )}
               </tbody>
