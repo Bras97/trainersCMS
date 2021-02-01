@@ -137,6 +137,10 @@ const UserAccountDetails = ({ title }) => {
     });
   }
 
+  const avatarUrl = (avatar) => {
+    return `http://localhost:3000/avatars/${avatar}`;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     await dispatch(authorizationThunks.updateUser(currentUser.userDetails));
@@ -150,6 +154,11 @@ const UserAccountDetails = ({ title }) => {
       const user = await response.json();
       const authorizationUser = JSON.parse(readAuthorizationUserFromLocalStorage());
       authorizationUser.user = user
+      console.log("New avatar: ", user.userDetails.avatar);
+      setCurrentUser({
+        ...currentUser,
+        userDetails: user.userDetails
+      });
       if (user) {
         dispatch(setAuthorizationUser(authorizationUser));
         dispatch(setError(false));
@@ -168,9 +177,11 @@ const UserAccountDetails = ({ title }) => {
     setCurrentAvatarFile(file);
 
     reader.onloadend = () => {
+      const userDetails = currentUser.userDetails;
+      userDetails.avatar = reader.result;
       setCurrentUser({
         ...currentUser,
-        avatar: reader.result
+        userDetails: userDetails
       });
     }
 
@@ -266,8 +277,8 @@ const UserAccountDetails = ({ title }) => {
                     <div className="mb-3 mx-auto">
                       <img
                         className="rounded-circle"
-                        src={currentUser.avatar}
-                        alt={currentUser.name}
+                        src={ currentUser.userDetails.avatar != null ? avatarUrl(currentUser.userDetails.avatar) : null}
+                        alt={currentUser.userDetails.name}
                         width="110"
                         height="110"
                       />
