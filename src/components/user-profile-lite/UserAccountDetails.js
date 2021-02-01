@@ -35,11 +35,11 @@ const UserAccountDetails = ({ title }) => {
 
   useEffect(() => {
       if (id) {
-          const user = users.find(user => user.id == parseInt(id));
+          const user = users.find(user => user._id == id);
           setCurrentUser(user);
           setShowMode(true);
       }
-      if(authorization){
+      else if(authorization){
         console.log(authorization)
         setCurrentUser(authorization.user);
       }

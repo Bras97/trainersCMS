@@ -1,4 +1,11 @@
-import { ADD_USER, EDIT_USER, DELETE_USER, SET_LOGGED_STATUS } from "./types";
+import { ADD_USER, EDIT_USER, DELETE_USER, SET_LOGGED_STATUS, SET_USERS } from "./types";
+
+export const setUsers = (data) => {
+    return {
+        type: SET_USERS,
+        payload: data
+    };
+}
 
 export const addUser = (data) => {
     return {

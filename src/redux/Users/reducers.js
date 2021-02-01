@@ -1,9 +1,14 @@
 import { Reducer } from 'redux';
 import initialState from './state';
-import { ADD_USER, EDIT_USER, DELETE_USER, SET_LOGGED_STATUS } from './types';
+import { ADD_USER, EDIT_USER, DELETE_USER, SET_LOGGED_STATUS, SET_USERS } from './types';
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
+        case SET_USERS:
+            return {
+                ...state,
+                users: action.payload,
+            };
         case ADD_USER:
             return {
                 ...state,
@@ -21,7 +26,7 @@ const userReducer = (state = initialState, action) => {
             }
         case DELETE_USER:
             {
-                const currentUser = state.users.filter(function(el) { return el.id !== action.payload.id})
+                const currentUser = state.users.filter(function(el) { return el._id !== action.payload._id})
                 return {
                     ...state,
                     users: currentUser,

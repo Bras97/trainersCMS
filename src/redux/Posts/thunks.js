@@ -28,7 +28,7 @@ export const addPostToDatabase = (post, image) => async (
             image = await responseImage.json();
         }
         if (data) {
-            await dispatch(addPost(data));
+            dispatch(addPost(data));
         }
 
     } catch (e) {

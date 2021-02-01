@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import { FaCheckCircle, FaInfoCircle, FaTimesCircle } from "react-icons/fa";
@@ -7,12 +7,34 @@ import { useSelector, useDispatch } from "react-redux";
 
 import PageTitle from "../components/common/PageTitle";
 import { deleteUser } from "../redux/Users/actions";
+import * as usersThunks from "../redux/Users/thunks";
+import { useHttpErrorHandler } from '../utils/hooks/useHttpErrorHandler';
 
 const UsersList = () => {
 
   const {users} = useSelector(state => state.users);
   console.log(users);
   const dispatch = useDispatch();
+
+  const handler = useHttpErrorHandler();
+  const { authorization } = useSelector(state => state.authorizationUsers);
+
+  useEffect(() => {
+    if (authorization != null && authorization.user != null && authorization.user._id != null) {
+        dispatch(usersThunks.fetchUsers(handler));
+    }
+  }, [authorization]);
+
+  const handleDeleteUser = (selectedUser) => {
+    if (authorization != null && authorization.user != null && authorization.user._id != null) {
+      console.log("SELECTED ID:", selectedUser)
+        dispatch(usersThunks.deleteUserFromDatabase(selectedUser));
+      }
+  };
+
+  if(!users){
+    return <div></div>
+  }
 
   return(
   <Container fluid className="main-content-container px-4">
@@ -47,13 +69,13 @@ const UsersList = () => {
                 </tr>
               </thead>
               <tbody>
-                {users.map(user => 
-                  <tr key={user.id}>
-                  <td>{user.id}</td>
-                    <td>{user.name}</td>
-                    <td>{user.surname}</td>
+                {users.map((user, idx) => 
+                  <tr key={idx+1}>
+                  <td>{idx+1}</td>
+                    <td>{user.userDetails.firstName}</td>
+                    <td>{user.userDetails.lastName}</td>
                     <td>{user.type}</td>
-                    <td> <Link to={"user-profile/" + user.id}><FaInfoCircle /></Link> &ensp;<Link onClick={() => dispatch(deleteUser(user))}><FaTimesCircle /></Link></td>
+                    <td> <Link to={"user-profile/" + user._id}><FaInfoCircle /></Link> &ensp;<Link onClick={() => handleDeleteUser(user)}><FaTimesCircle /></Link></td>
                   </tr>
                 )}
               </tbody>
