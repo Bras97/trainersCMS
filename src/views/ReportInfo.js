@@ -16,7 +16,7 @@ const ReportInfo = () => {
 
   useEffect(() => {
       if (id) {
-          const report = reports.find(report => report.id == parseInt(id));
+          const report = reports.find(report => report._id == id);
           setCurrentReport(report);
       }
   }, [id, reports]);
@@ -50,7 +50,7 @@ const ReportInfo = () => {
   }
 
   let link = 
-          <Col md="12" className="form-group" hide={currentReport.type != "post"}>
+          <Col md="12" className="form-group" hide={currentReport.objectType != "POST"}>
             <label htmlFor="feDescription">Opis</label>
             <FormTextarea rows="5" placeholder="Opis zgłoszeniaa" value={currentReport.content} onChange={updateContent} />
           </Col>
@@ -90,19 +90,19 @@ const ReportInfo = () => {
                   <FormTextarea rows="5"  size="lg" className="mb-3" placeholder="Tytuł zgłoszenia" defaultValue={currentReport.description} disabled="true"></FormTextarea>
                 </Col>
 
-                {currentReport.type == "post" || currentReport.type == "comment" ? 
+                {currentReport.objectType == "POST" || currentReport.objectType == "COMMENT" ? 
                 <Col md="12" className="form-group">
                   <Link to={"/edit-post/" + currentReport.objectId} style={{fontWeight: "bold"}} >Podejrzyj post</Link>
                 </Col>
                 : null}
 
-                {currentReport.type == "review" ? 
+                {currentReport.objectType == "REVIEW" ? 
                 <Col md="12" className="form-group">
                   <Link to={"/user-profile/" + currentReport.objectId} style={{fontWeight: "bold"}}>Link do trenera</Link>
                 </Col>
                 : null}
                 
-                {currentReport.type == "review" ? 
+                {currentReport.objectType == "REVIEW" ? 
                 <Row className="ml-1 mr-1"> 
                   <Col md="9" className="form-group">
                     <label htmlFor="feDescription">Treść recenzji</label>
@@ -115,7 +115,7 @@ const ReportInfo = () => {
                 </Row>
                 : null}
 
-                {currentReport.type == "comment" ? 
+                {currentReport.objectType == "COMMENT" ? 
                 <Col md="12" className="form-group">
                   <label htmlFor="feDescription">Treść komentarza</label>
                   <FormTextarea rows="5" value={currentReport.objectContent} onChange={updateContent}  disabled="true"/>

@@ -36,7 +36,7 @@ const reportReducer = (state = initialState, action) => {
             }
         case DELETE_REPORT:
             {
-                const currentReports = state.reports.filter(function(el) { return el.id !== action.payload.id})
+                const currentReports = state.reports.filter(function(el) { return el._id !== action.payload._id})
                 return {
                     ...state,
                     reports: currentReports,

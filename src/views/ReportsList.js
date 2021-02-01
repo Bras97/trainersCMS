@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import { FaCheckCircle, FaInfoCircle, FaTimesCircle } from "react-icons/fa";
@@ -7,12 +7,31 @@ import { useSelector, useDispatch } from "react-redux";
 
 import PageTitle from "../components/common/PageTitle";
 import { deleteReport } from "../redux/Reports/actions";
+import * as reportsThunks from "../redux/Reports/thunks";
+import { useHttpErrorHandler } from '../utils/hooks/useHttpErrorHandler';
+
+
 
 const ReportsList = () => {
 
   const {reports} = useSelector(state => state.reports);
   console.log(reports);
   const dispatch = useDispatch();
+  const handler = useHttpErrorHandler();
+  const { authorization } = useSelector(state => state.authorizationUsers);
+
+  useEffect(() => {
+    if (authorization != null && authorization.user != null && authorization.user._id != null) {
+        dispatch(reportsThunks.fetchReports(handler));
+    }
+  }, [authorization]);
+
+  const handleDeleteReport = (selectedReport) => {
+    if (authorization != null && authorization.user != null && authorization.user._id != null) {
+      console.log("SELECTED ID:", selectedReport)
+        dispatch(reportsThunks.deleteReportFromDatabase(selectedReport));
+      }
+  };
 
   return(
   <Container fluid className="main-content-container px-4">
@@ -47,16 +66,16 @@ const ReportsList = () => {
                 </tr>
               </thead>
               <tbody>
-                {reports.map(report => 
-                  <tr key={report.id}>
-                  <td>{report.id}</td>
-                    <td>{report.type}</td>
+                {reports.map((report, idx) => 
+                  <tr key={idx+1}>
+                  <td>{idx+1}</td>
+                    <td>{report.objectType}</td>
                     <td style={{maxWidth: "400px",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     textOverflow: "ellipsis"
                     }}>{report.description}</td>
-                    <td> <Link to={"info-report/" + report.id}><FaInfoCircle /></Link> &ensp; <Link to={"info-report/" + report.id}><FaCheckCircle /></Link> &ensp;<Link onClick={() => dispatch(deleteReport(report))}><FaTimesCircle /></Link></td>
+                    <td> <Link to={"info-report/" + report._id}><FaInfoCircle /></Link> &ensp; <Link to={"info-report/" + report.id}><FaCheckCircle /></Link> &ensp;<Link onClick={() => handleDeleteReport(report)}><FaTimesCircle /></Link></td>
                   </tr>
                 )}
               </tbody>
