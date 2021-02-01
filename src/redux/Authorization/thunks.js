@@ -80,6 +80,7 @@ export const updateUser = (user) => async (
     try {
         console.log("Do aktualizacji: ", user)
         const authorizationUser = readAuthorizationUserFromLocalStorage();
+        user.avatar = undefined;
         const response = await kyClient.put('user', {json: user});
         const userData = await response.json();
         console.log("Po aktualizacji: ", userData)

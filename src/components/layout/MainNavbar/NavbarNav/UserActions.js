@@ -73,15 +73,20 @@ import {
   NavItem,
   NavLink
 } from "shards-react";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import * as authorizationThunks from "../../../../redux/Authorization/thunks";
+import kyClient from "../../../../api/kyClient";
+
+const avatarUrl = (avatar) => {
+  return `http://localhost:3000/avatars/${avatar}`;
+}
 
 const UserActions = (props) => {
+  const user = useSelector(state => state.authorizationUsers.authorization.user);
 
-
-  const avatar = props.user.avatar;
-  const name = props.user.name;
-  const surname = props.user.surname;
+  const avatar = user && user.userDetails && user.userDetails.avatar && avatarUrl(user.userDetails.avatar) || "https://p1.hiclipart.com/preview/559/959/587/girl-user-computer-user-profile-child-avatar-face-cartoon-png-clipart.jpg";
+  const name = user && user.userDetails && user.userDetails.firstName;
+  const surname = user && user.userDetails && user.userDetails.lastName;
 
   const [visible, setVisible] = useState(false);
 
