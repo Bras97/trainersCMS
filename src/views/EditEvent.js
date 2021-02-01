@@ -12,13 +12,18 @@ import { Card, CardBody, Form, FormInput, Button, FormTextarea } from "shards-re
 import {DatePicker} from "shards-react";
 import ImageUploader from 'react-images-upload';
 
+const featuredImageUrl = (featuredImage) => {
+  return `http://localhost:3000/featured-images/${featuredImage}`;
+}
 
 const EditEvent = () => {
-  
-  
+
+
   const {events} = useSelector(state => state.events);
   const { id } = useParams();
   const [currentEvent, setCurrentEvent] = useState();
+  const [image, setImage] = useState();
+  const [imagePreview, setImagePreview] = useState();
   const dispatch = useDispatch();
 
 
@@ -26,8 +31,8 @@ const EditEvent = () => {
 
   const handleEditEvent = () => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
-        const eventDetails = {place: null, dateTime: currentEvent.date} 
-        dispatch(eventThunks.updateEventInDatabase({title: currentEvent.title, content: currentEvent.content, eventDetails:eventDetails}, id, currentEvent.image));
+        const eventDetails = {place: null, dateTime: currentEvent.eventDetails.dateTime}
+        dispatch(eventThunks.updateEventInDatabase({title: currentEvent.title, content: currentEvent.content, eventDetails:eventDetails}, id, image));
       }
   };
 
@@ -37,7 +42,7 @@ const EditEvent = () => {
           setCurrentEvent(event);
       }
   }, [id, events]);
-  
+
 
   const updateTitle = e => {
     setCurrentEvent({
@@ -49,7 +54,10 @@ const EditEvent = () => {
   const updateDate = e => {
     setCurrentEvent({
       ...currentEvent,
-      date: e
+      eventDetails: {
+        ...currentEvent.eventDetails,
+        dateTime: e,
+      }
     });
   };
 
@@ -61,10 +69,8 @@ const EditEvent = () => {
   };
 
   const handleOnDrop = (files, pictures) => {
-    setCurrentEvent({
-      ...currentEvent,
-      image: pictures[0]
-    })
+    setImage(files[0]);
+    setImagePreview(pictures[0]);
   }
 
 
@@ -92,14 +98,14 @@ const EditEvent = () => {
         <Form className="add-new-event">
           <Col md="12" className="form-group">
             <label htmlFor="feDescription">Nazwa</label>
-            <FormInput size="lg" className="mb-3" placeholder="Nazwa wydarzenia" defaultValue={currentEvent.title} onChange={updateTitle} />    
+            <FormInput size="lg" className="mb-3" placeholder="Nazwa wydarzenia" defaultValue={currentEvent.title} onChange={updateTitle} />
           </Col>
           <div className="mb-3 d-flex justify-content-start align-self-center">
           <h6 className="ml-3">Data: </h6>
           <DatePicker
             className="ml-3"
-            selected={currentEvent.date} 
-            onChange={updateDate} 
+            selected={currentEvent.eventDetails.dateTime}
+            onChange={updateDate}
             dateFormat="dd-MM-YYYY hh:mm"
             showTimeSelect
             />
@@ -116,7 +122,7 @@ const EditEvent = () => {
               singleImage={true}
               maxFileSize={5242880}
           />
-          <img src={currentEvent.image} style={{ width: "100%" }}/>
+          <img src={imagePreview || featuredImageUrl(currentEvent.featuredImage)} style={{ width: "100%" }}/>
 
         </Form>
       </CardBody>

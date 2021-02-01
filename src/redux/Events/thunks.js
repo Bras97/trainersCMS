@@ -28,10 +28,15 @@ export const addEventToDatabase = (event, image) => async (
     try {
         console.log("EVENT: ",event)
         const response = await kyClient.post('post', {json: event});
-        const data = await response.json();
+        let data = await response.json();
         console.log("EVENT2: ",data)
         if(image != null){
-            const responseImage = await kyClient.post(`post/${data.featuredImage}/featuredImage`, {json: image});
+          const formData = new FormData();
+          formData.append('featuredImage', image);
+          const responseImage = await kyClient.post(`post/${data._id}/featuredImage`, {
+            body: formData
+          });
+          data = await responseImage.json();
         }
         if (data) {
             dispatch(addEvent(data));
@@ -49,10 +54,15 @@ export const updateEventInDatabase = (event, id, image) => async (
     try {
         console.log(id, "Post to update: ", event);
         const response = await kyClient.put(`post/${id}`, {json: event});
-        const data = await response.json();
+        let data = await response.json();
         console.log("Post after update: ", data);
         if(image != null){
-            const responseImage = await kyClient.post(`post/${data.featuredImage}/featuredImage`, {json: image});
+          const formData = new FormData();
+          formData.append('featuredImage', image);
+          const responseImage = await kyClient.post(`post/${data._id}/featuredImage`, {
+            body: formData
+          });
+          data = await responseImage.json();
         }
         if (data) {
             dispatch(editEvent(data));

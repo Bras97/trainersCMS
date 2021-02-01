@@ -62,7 +62,7 @@
 
 
 
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import { Redirect, Link } from "react-router-dom";
 import {
   Dropdown,
@@ -73,18 +73,22 @@ import {
   NavItem,
   NavLink
 } from "shards-react";
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import * as authorizationThunks from "../../../../redux/Authorization/thunks";
+import kyClient from "../../../../api/kyClient";
+
+const avatarUrl = (avatar) => {
+  return `http://localhost:3000/avatars/${avatar}`;
+}
 
 const UserActions = (props) => {
+  const user = useSelector(state => state.authorizationUsers.authorization.user);
 
-
-  const avatar = props.user.avatar;
-  const name = props.user.name;
-  const surname = props.user.surname;
+  const avatar = user && user.userDetails && user.userDetails.avatar && avatarUrl(user.userDetails.avatar) || "https://p1.hiclipart.com/preview/559/959/587/girl-user-computer-user-profile-child-avatar-face-cartoon-png-clipart.jpg";
+  const name = user && user.userDetails && user.userDetails.firstName;
+  const surname = user && user.userDetails && user.userDetails.lastName;
 
   const [visible, setVisible] = useState(false);
-  const [currentUser, setCurrentUser] = useState();
 
 
   const toggleUserActions = () => {
@@ -98,19 +102,6 @@ const UserActions = (props) => {
     window.location.assign('login');
   }
 
-  const { authorization } = useSelector(state => state.authorizationUsers);
-  useEffect(() => {
-      if(authorization){
-        console.log(authorization)
-        setCurrentUser(authorization.user);
-      }
-  }, [authorization]);
-
-
-  if(!currentUser){
-    return <div></div>
-  }
-
   return (
     <NavItem>
       <DropdownToggle caret tag={NavLink} className="text-nowrap px-3" onClick={toggleUserActions}>
@@ -121,7 +112,7 @@ const UserActions = (props) => {
           height = "40"
           width = "40"
         />{" "}
-        <span className="d-none d-md-inline-block">{currentUser.userDetails.firstName} {currentUser.userDetails.lastName}</span>
+        <span className="d-none d-md-inline-block">{name} {surname}</span>
       </DropdownToggle>
       <Collapse tag={DropdownMenu} right small open={visible} style={{width: "180px"}}>
         <Link to="/login" onClick={logout}>

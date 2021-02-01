@@ -10,7 +10,7 @@ const kyClient = ky.extend({
                 if (authorizationUsers.authorization && authorizationUsers.authorization.token) {
                     config.headers.set('Authorization', `Bearer ${authorizationUsers.authorization.token}`);
                 }
-                config.headers.set('Content-Type', 'application/json');
+                // config.headers.set('Content-Type', 'application/json');
             }
         ]
     }

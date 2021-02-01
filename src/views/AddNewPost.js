@@ -16,19 +16,21 @@ const AddNewPost = () => {
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
   const [image, setImage] = useState();
+  const [imagePreview, setImagePreview] = useState();
   const {posts} = useSelector(state => state.posts);
 
 
   const { authorization } = useSelector(state => state.authorizationUsers);
 
-  const handleNewPost = () => {
+  const handleNewPost = async () => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
         dispatch(postThunks.addPostToDatabase(new Post(title,content, "POST", null, null), image));
       }
   };
-  
+
   const handleOnDrop = (files, pictures) => {
-    setImage(pictures[0]);
+    setImage(files[0]);
+    setImagePreview(pictures[0]);
   }
 
   return(
@@ -52,8 +54,8 @@ const AddNewPost = () => {
             <Form className="add-new-post">
               <FormInput size="lg" className="mb-3" placeholder="Tytuł posta" onChange={e => setTitle(e.target.value)}/>
               <FormInput className="mb-1" style={{minHeight: "200px"}} placeholder="Opis posta" onChange={e => setContent(e.target.value)} />
-      
-      
+
+
               <ImageUploader
                         withIcon={true}
                         buttonText='Wybierz zdjęcie'
@@ -62,11 +64,11 @@ const AddNewPost = () => {
                         singleImage={true}
                         maxFileSize={5242880}
                     />
-              <img src={image} style={{ width: "100%" }}/>
-      
+              <img src={imagePreview} style={{ width: "100%" }}/>
+
             </Form>
           </CardBody>
-          
+
         </Card>
       </Col>
 

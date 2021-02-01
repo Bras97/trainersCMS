@@ -19,6 +19,15 @@ import {
   FormSelect
 } from "shards-react";
 import { editCurrentUser } from "../../redux/CurrentUser/actions";
+import kyClient from "../../api/kyClient";
+import {
+  readAuthorizationUserFromLocalStorage,
+  saveAuthorizationUserInLocalStorage
+} from "../../redux/Authorization/utils";
+import {
+  setAuthorizationUser,
+  setError
+} from "../../redux/Authorization/actions";
 
 const UserAccountDetails = ({ title }) => {
 
@@ -30,8 +39,9 @@ const UserAccountDetails = ({ title }) => {
   const [isSaved, setIsSaved] = useState(false);
   const dispatch = useDispatch();
   const [showMode, setShowMode] = useState(false);
+  const [currentAvatarFile, setCurrentAvatarFile] = useState(null);
   const { authorization } = useSelector(state => state.authorizationUsers);
-  
+
 
   useEffect(() => {
       if (id) {
@@ -44,10 +54,10 @@ const UserAccountDetails = ({ title }) => {
         setCurrentUser(authorization.user);
       }
   }, [id, users]);
-  
 
 
-  
+
+
   const updateName = e => {
 
     const userDetails = currentUser.userDetails
@@ -58,7 +68,7 @@ const UserAccountDetails = ({ title }) => {
       userDetails: userDetails
     });
   };
-  
+
   const updateSurname = e => {
 
     const userDetails = currentUser.userDetails
@@ -68,21 +78,21 @@ const UserAccountDetails = ({ title }) => {
       userDetails: userDetails
     });
   };
-  
+
   const updateEmail = e => {
     setCurrentUser({
       ...currentUser,
       email: e.target.value
     });
   };
-  
+
   const updatePassword = e => {
     setCurrentUser({
       ...currentUser,
       password: e.target.value
     });
   };
-  
+
   const updateCity = e => {
 
     const userDetails = currentUser.userDetails
@@ -126,10 +136,28 @@ const UserAccountDetails = ({ title }) => {
       avatar: e.target.files[0]
     });
   }
-  
-  const handleSubmit = e => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: do something with -> this.state.file
+    await dispatch(authorizationThunks.updateUser(currentUser.userDetails));
+
+    if (currentAvatarFile) {
+      const formData = new FormData();
+      formData.append('avatar', currentAvatarFile);
+      const response = await kyClient.post('user/avatar', {
+        body: formData
+      });
+      const user = await response.json();
+      const authorizationUser = JSON.parse(readAuthorizationUserFromLocalStorage());
+      authorizationUser.user = user
+      if (user) {
+        dispatch(setAuthorizationUser(authorizationUser));
+        dispatch(setError(false));
+        saveAuthorizationUserInLocalStorage(authorizationUser);
+      }
+    }
+
+    setIsSaved(true)
   }
 
   const handleImageChange = e => {
@@ -137,6 +165,7 @@ const UserAccountDetails = ({ title }) => {
 
     let reader = new FileReader();
     let file = e.target.files[0];
+    setCurrentAvatarFile(file);
 
     reader.onloadend = () => {
       setCurrentUser({
@@ -166,8 +195,8 @@ const UserAccountDetails = ({ title }) => {
                 {/* First Name */}
                 <Col md="6" className="form-group">
                   <label htmlFor="feFirstName">Imię</label>
-                  <FormInput 
-                    defaultValue={currentUser.userDetails.firstName} 
+                  <FormInput
+                    defaultValue={currentUser.userDetails.firstName}
                     onChange={updateName}
                     placeholder="Imię"
                     disabled={showMode}
@@ -178,7 +207,7 @@ const UserAccountDetails = ({ title }) => {
                   <label htmlFor="feLastName">Nazwisko</label>
                   <FormInput
                     placeholder="Nazwisko"
-                    defaultValue={currentUser.userDetails.lastName} 
+                    defaultValue={currentUser.userDetails.lastName}
                     onChange={updateSurname}
                     disabled={showMode}
                   />
@@ -192,7 +221,7 @@ const UserAccountDetails = ({ title }) => {
                     disabled="true"
                     type="email"
                     placeholder="Adres email"
-                    defaultValue={currentUser.email} 
+                    defaultValue={currentUser.email}
                     onChange={updateEmail}
                     autoComplete="email"
                   />
@@ -203,7 +232,7 @@ const UserAccountDetails = ({ title }) => {
                   <FormInput
                     type="phone"
                     placeholder="Telefon"
-                    defaultValue={currentUser.userDetails.phone} 
+                    defaultValue={currentUser.userDetails.phone}
                     onChange={updatePhone}
                     disabled={showMode}
                   />
@@ -214,10 +243,10 @@ const UserAccountDetails = ({ title }) => {
                 <Col md="12" className="form-group">
                   <label htmlFor="feCity">Miasto</label>
                   <FormSelect
-                    defaultValue={currentUser.userDetails.city} 
+                    defaultValue={currentUser.userDetails.city}
                     onChange={updateCity}
                     disabled={showMode}>
-                    {cities.map(city => 
+                    {cities.map(city =>
                       <option>{city}</option>
                     )}
                   </FormSelect>
@@ -228,8 +257,8 @@ const UserAccountDetails = ({ title }) => {
                 <Col md="8" className="form-group">
                   <label htmlFor="feDescription">Opis</label>
                   <FormTextarea rows="7"
-                    defaultValue={currentUser.userDetails.description} 
-                    onChange={updateDescription} 
+                    defaultValue={currentUser.userDetails.description}
+                    onChange={updateDescription}
                     disabled={showMode}/>
                 </Col>
                 <Col className="form-group">
@@ -243,22 +272,20 @@ const UserAccountDetails = ({ title }) => {
                         height="110"
                       />
                     </div>
-                    
-                    <form onSubmit={handleSubmit} className="text-center"  style={{maxWidth: "400px"}}>
+
+                    <div className="text-center"  style={{maxWidth: "400px"}}>
                       <FormInput className="mb-2 text-center" style={{color: "green", maxWidth: "400px",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
-                    textOverflow: "ellipsis"}} type="file" onChange={handleImageChange} 
+                    textOverflow: "ellipsis"}} type="file" onChange={handleImageChange}
                     disabled={showMode}/>
-                    </form>
+                    </div>
                   </CardHeader>
                   </Col>
               </Row>
               <div className="text-center">
                 <Button theme="accent"
-                onClick={()=> {              
-                dispatch(authorizationThunks.updateUser(currentUser.userDetails));
-                setIsSaved(true)}}
+                onClick={handleSubmit}
                 disabled={showMode}>
                 Zaktualizuj dane</Button>
               </div>

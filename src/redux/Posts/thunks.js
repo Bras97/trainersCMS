@@ -21,11 +21,15 @@ export const addPostToDatabase = (post, image) => async (
 ) => {
     try {
         const response = await kyClient.post('post', {json: post});
-        const data = await response.json();
+        let data = await response.json();
         console.log("post to add:", data)
         if(image != null){
-            const responseImage = await kyClient.post(`post/${data.featuredImage}/featuredImage`, {json: image});
-            image = await responseImage.json();
+            const formData = new FormData();
+            formData.append('featuredImage', image);
+            const responseImage = await kyClient.post(`post/${data._id}/featuredImage`, {
+              body: formData
+            });
+            data = await responseImage.json();
         }
         if (data) {
             dispatch(addPost(data));
@@ -43,10 +47,15 @@ export const updatePostInDatabase = (post, id, image) => async (
     try {
         console.log(id, "Post to update: ", post);
         const response = await kyClient.put(`post/${id}`, {json: post});
-        const data = await response.json();
+        let data = await response.json();
         console.log("Post after update: ", data);
         if(image != null){
-            const responseImage = await kyClient.post(`post/${data.featuredImage}/featuredImage`, {json: image});
+          const formData = new FormData();
+          formData.append('featuredImage', image);
+          const responseImage = await kyClient.post(`post/${data._id}/featuredImage`, {
+            body: formData
+          });
+          data = await responseImage.json();
         }
         if (data) {
             dispatch(editPost(data));
