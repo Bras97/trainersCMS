@@ -26,7 +26,7 @@ const postReducer = (state = initialState, action) => {
             };
         case EDIT_POST:
             {
-                const postIndex = state.posts.findIndex(post => post.id === action.payload.id)
+                const postIndex = state.posts.findIndex(post => post._id === action.payload._id)
                 const currentPosts = [...state.posts]
                 currentPosts[postIndex] = action.payload
                 return {

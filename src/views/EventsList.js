@@ -71,7 +71,7 @@ const EventsList = () => {
                     overflow: "hidden",
                     textOverflow: "ellipsis"
                     }}>{event.content}</td>
-                    <td> <Link to={"edit-event/" + event.id}><FaPen /></Link> &ensp; <Link onClick={() => dispatch(deleteEvent(event))}><FaTrashAlt /> </Link></td>
+                    <td> <Link to={"edit-event/" + event._id}><FaPen /></Link> &ensp; <Link onClick={() => dispatch(deleteEvent(event))}><FaTrashAlt /> </Link></td>
                   </tr>
                 )}
               </tbody>

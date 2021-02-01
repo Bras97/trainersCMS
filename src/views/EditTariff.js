@@ -29,10 +29,10 @@ const EditTariff = () =>  {
   }, [id, tariffs]);
   
 
-  const updateName = e => {
+  const updateTitle = e => {
     setCurrentTariff({
       ...currentTariff,
-      name: e.target.value
+      title: e.target.value
     });
   };
 
@@ -75,7 +75,7 @@ const EditTariff = () =>  {
       <CardBody>
         <Form className="edit-tariff">
           <label htmlFor="feDescription">Nazwa</label>
-          <FormInput size="lg" className="mb-3" placeholder="Nazwa" defaultValue={currentTariff.name} onChange={updateName}/>
+          <FormInput size="lg" className="mb-3" placeholder="Nazwa" defaultValue={currentTariff.title} onChange={updateTitle}/>
           <InputGroup className="mb-3">
             <InputGroupAddon type="prepend">
               <InputGroupText>Kategorie</InputGroupText>

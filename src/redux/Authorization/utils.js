@@ -1,5 +1,3 @@
-import {AuthorizationUser} from "./types";
-
 export const saveAuthorizationUserInLocalStorage = (user) => {
     const userString = JSON.stringify(user);
     localStorage.setItem('authorization', userString);

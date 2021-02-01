@@ -68,7 +68,7 @@ const TariffsList = () => {
                     <td>{tariff.title}</td>
                     <td>{tariff.category}</td>
                     <td>{tariff.price} zł</td>
-                    <td> <Link to={"edit-tariff/" + tariff.id}><FaPen /></Link> &ensp; <Link onClick={() => dispatch(deleteTariff(tariff))}><FaTrashAlt /> </Link></td>
+                    <td><Link onClick={() => dispatch(deleteTariff(tariff))}><FaTrashAlt /> </Link></td>
                   </tr>
                 )}
               </tbody>

@@ -26,7 +26,7 @@ const eventReducer = (state = initialState, action) => {
             };
         case EDIT_EVENT:
             {
-                const eventIndex = state.events.findIndex(event => event.id === action.payload.id)
+                const eventIndex = state.events.findIndex(event => event._id === action.payload._id)
                 const currentEvents = [...state.events]
                 currentEvents[eventIndex] = action.payload
                 return {

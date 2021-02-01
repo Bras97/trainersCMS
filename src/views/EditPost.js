@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import {editPost} from "../redux/Posts/actions";
 import ImageUploader from 'react-images-upload';
+import * as postThunks from "../redux/Posts/thunks";
+import { Post } from "../redux/Posts/types";
 
 import PageTitle from "../components/common/PageTitle";
 
@@ -14,6 +16,15 @@ const EditPost = () => {
   const { id } = useParams();
   const [currentPost, setCurrentPost] = useState();
   const dispatch = useDispatch();
+
+
+  const { authorization } = useSelector(state => state.authorizationUsers);
+
+  const handleEditPost = () => {
+    if (authorization != null && authorization.user != null && authorization.user._id != null) {
+        dispatch(postThunks.updatePostInDatabase({title: currentPost.title, content: currentPost.content, eventDetails:null}, id, currentPost.image));
+      }
+  };
 
   useEffect(() => {
       if (id) {
@@ -58,7 +69,7 @@ const EditPost = () => {
       <PageTitle sm="4" title="Edytuj post" subtitle="Blog Posts" className="text-sm-left" />
       <Link to="/posts-list">
         <Button theme="accent" size="lg"
-          onClick={()=> dispatch(editPost(currentPost))}>
+          onClick={handleEditPost}>
           
           <i className="material-icons">file_copy</i> Zatwierdź
         </Button>

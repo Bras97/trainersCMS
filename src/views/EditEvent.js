@@ -4,6 +4,8 @@ import { Container, Row, Col } from "shards-react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import {editEvent} from "../redux/Events/actions";
+import * as eventThunks from "../redux/Events/thunks";
+import { Event } from "../redux/Posts/types";
 
 import PageTitle from "../components/common/PageTitle";
 import { Card, CardBody, Form, FormInput, Button, FormTextarea } from "shards-react";
@@ -19,9 +21,19 @@ const EditEvent = () => {
   const [currentEvent, setCurrentEvent] = useState();
   const dispatch = useDispatch();
 
+
+  const { authorization } = useSelector(state => state.authorizationUsers);
+
+  const handleEditEvent = () => {
+    if (authorization != null && authorization.user != null && authorization.user._id != null) {
+        const eventDetails = {place: null, dateTime: currentEvent.date} 
+        dispatch(eventThunks.updateEventInDatabase({title: currentEvent.title, content: currentEvent.content, eventDetails:eventDetails}, id, currentEvent.image));
+      }
+  };
+
   useEffect(() => {
       if (id) {
-          const event = events.find(event => event.id == parseInt(id));
+          const event = events.find(event => event._id == id);
           setCurrentEvent(event);
       }
   }, [id, events]);
@@ -66,7 +78,7 @@ const EditEvent = () => {
     <Row noGutters className="page-header py-4 d-flex justify-content-between">
       <PageTitle sm="4" title="Edytuj wydarzenie" subtitle="Blog Posts" className="text-sm-left" />
       <Link to="/events-list">
-        <Button theme="accent" size="lg" onClick={()=> dispatch(editEvent(currentEvent))}>
+        <Button theme="accent" size="lg" onClick={handleEditEvent}>
           <i className="material-icons">file_copy</i> Zatwierdź
         </Button>
       </Link>
@@ -88,7 +100,7 @@ const EditEvent = () => {
             className="ml-3"
             selected={currentEvent.date} 
             onChange={updateDate} 
-            dateFormat="DD-MM-YYYY hh:mm"
+            dateFormat="dd-MM-YYYY hh:mm"
             showTimeSelect
             />
           </div>
