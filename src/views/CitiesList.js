@@ -49,16 +49,6 @@ const CitiesList = () => {
         <Card small className="mb-4">
           <CardHeader className="border-bottom">
             <h4 className="m-0">Miasta</h4>
-            <h6 className="m-0 mt-1">Dodaj nowe miasto</h6>
-            <Row md="12">
-              <Col md="11">
-                <FormInput value={cityName}
-                    onChange={updateCityName} ></FormInput>
-              </Col>
-              <Col md="1">
-                <Button theme="accent" onClick={() => dispatch(addCity(cityName))}>Dodaj</Button>
-              </Col>
-            </Row>
           </CardHeader>
           <CardBody className="p-0 pb-3">
             <table className="table mb-0">
@@ -70,9 +60,6 @@ const CitiesList = () => {
                   <th scope="col" className="border-0">
                     Nazwa miasta
                   </th>
-                  <th scope="col" className="border-0">
-                    Narzędzia
-                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -80,7 +67,6 @@ const CitiesList = () => {
                   <tr>
                     <td>{index+1}</td>
                     <td>{city}</td>
-                    <td><Link onClick={() => dispatch(deleteCity(city))}><FaTrashAlt /> </Link></td>
                   </tr>
                 )}
               </tbody>

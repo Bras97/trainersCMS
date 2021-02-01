@@ -19,7 +19,13 @@ const PostsList = () => {
 
   useEffect(() => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
+      
+      if(authorization.user.type == "ADMIN"){
+        dispatch(postThunks.fetchAllPosts())
+      }
+      else{
         dispatch(postThunks.fetchPosts(authorization.user._id, handler));
+      }
     }
 }, [authorization]);
 

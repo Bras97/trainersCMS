@@ -68,21 +68,20 @@ export const deletePostFromDatabase = (post) => async (
         }
 
     } catch (e) {
-        console.log("ERROR")
+        console.log("ERROR");
     }
 };
 
-// export const fetchObservePosts = (handler)  => async (
-//     dispatch,
-//     getState
-// ) => {
-//     try {
-//         const response = await kyClient.get(`user/posts`);
-//         const data = await response.json();
-//         if (data) {
-//             dispatch(setObservePosts(data));
-//         }
-//     } catch(e){
-//         // handler();
-//     }
-// };
+export const fetchAllPosts = () => async (
+    dispatch
+) => {
+    try {
+        const response = await kyClient.get(`admin/posts`);
+        const data = await response.json();
+        if (data) {
+            dispatch(setPosts(data));
+        }
+    } catch(e){
+        console.log("ERROR");
+    }
+};

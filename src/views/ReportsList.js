@@ -28,8 +28,13 @@ const ReportsList = () => {
 
   const handleDeleteReport = (selectedReport) => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
-      console.log("SELECTED ID:", selectedReport)
         dispatch(reportsThunks.deleteReportFromDatabase(selectedReport));
+      }
+  };
+
+  const handleApproveReport = (selectedReport) => {
+    if (authorization != null && authorization.user != null && authorization.user._id != null) {
+        dispatch(reportsThunks.approveReport(selectedReport));
       }
   };
 
@@ -58,6 +63,9 @@ const ReportsList = () => {
                     Typ
                   </th>
                   <th scope="col" className="border-0">
+                    Kategoria
+                  </th>
+                  <th scope="col" className="border-0">
                     Krótki opis
                   </th>
                   <th scope="col" className="border-0">
@@ -70,12 +78,13 @@ const ReportsList = () => {
                   <tr key={idx+1}>
                   <td>{idx+1}</td>
                     <td>{report.objectType}</td>
+                    <td>{report.category}</td>
                     <td style={{maxWidth: "400px",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     textOverflow: "ellipsis"
                     }}>{report.description}</td>
-                    <td> <Link to={"info-report/" + report._id}><FaInfoCircle /></Link> &ensp; <Link to={"info-report/" + report.id}><FaCheckCircle /></Link> &ensp;<Link onClick={() => handleDeleteReport(report)}><FaTimesCircle /></Link></td>
+                    <td> <Link to={"info-report/" + report._id}><FaInfoCircle /></Link> &ensp; <Link onClick={() => handleApproveReport(report)}><FaCheckCircle /></Link> &ensp;<Link onClick={() => handleDeleteReport(report)}><FaTimesCircle /></Link></td>
                   </tr>
                 )}
               </tbody>

@@ -41,16 +41,6 @@ const FacultiesList = () => {
         <Card small className="mb-4">
           <CardHeader className="border-bottom">
             <h4 className="m-0">Specjalności</h4>
-            <h6 className="m-0 mt-1">Dodaj nową specjalność</h6>
-            <Row md="12">
-              <Col md="11">
-                <FormInput value={facultyName}
-                    onChange={updateFacultyName} ></FormInput>
-              </Col>
-              <Col md="1">
-                <Button theme="accent" onClick={() => dispatch(addFaculty(facultyName))}>Dodaj</Button>
-              </Col>
-            </Row>
           </CardHeader>
           <CardBody className="p-0 pb-3">
             <table className="table mb-0">
@@ -62,17 +52,13 @@ const FacultiesList = () => {
                   <th scope="col" className="border-0">
                     Nazwa specjalności
                   </th>
-                  <th scope="col" className="border-0">
-                    Narzędzia
-                  </th>
                 </tr>
               </thead>
               <tbody>
                 {faculties.map((faculty, index) => 
-                  <tr>
+                  <tr key={index+1}>
                     <td>{index+1}</td>
                     <td>{faculty}</td>
-                    <td><Link onClick={() => dispatch(deleteFaculty(faculty))}><FaTrashAlt /> </Link></td>
                   </tr>
                 )}
               </tbody>

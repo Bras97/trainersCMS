@@ -64,6 +64,20 @@ export const updateEventInDatabase = (event, id, image) => async (
 };
 
 
+export const fetchAllEvents = () => async (
+    dispatch
+) => {
+    try {
+        const response = await kyClient.get(`admin/events`);
+        const data = await response.json();
+        if (data) {
+            dispatch(setEvents(data));
+        }
+    } catch(e){
+        console.log("ERROR");
+    }
+};
+
 export const deleteEventFromDatabase = (event) => async (
     dispatch
 ) => {

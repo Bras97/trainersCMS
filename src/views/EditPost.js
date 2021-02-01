@@ -28,11 +28,20 @@ const EditPost = () => {
 
   useEffect(() => {
       if (id) {
-          const post = posts.find(post => post._id == id);
-          setCurrentPost(post);
+            console.log("ID: ", id);
+            console.log("POSTS: ", posts);
+            const post = posts.find(post => post._id == id);
+            console.log("POST: ", post);
+            setCurrentPost(post);
+          
       }
   }, [id, posts]);
   
+  useEffect(() =>{
+    if(authorization != null && authorization.user != null && authorization.user.type == "ADMIN"){
+      dispatch(postThunks.fetchAllPosts())
+    }
+  },[authorization])
 
   const updateTitle = e => {
     setCurrentPost({

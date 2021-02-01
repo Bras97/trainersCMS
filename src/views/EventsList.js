@@ -19,7 +19,13 @@ const EventsList = () => {
 
   useEffect(() => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
+      
+      if(authorization.user.type == "ADMIN"){
+        dispatch(eventsThunks.fetchAllEvents())
+      }
+      else{
         dispatch(eventsThunks.fetchEvents(authorization.user._id, handler));
+      }
     }
   }, [authorization]);
 
@@ -29,6 +35,7 @@ const EventsList = () => {
         dispatch(eventsThunks.deleteEventFromDatabase(selectedEvent));
       }
   };
+
 
   return(
 
@@ -72,7 +79,7 @@ const EventsList = () => {
                   <tr key={idx+1}>
                     <td>{idx+1}</td>
                     <td>{event.title}</td>
-                    <td>{event.eventDetails.dateTime.toString()}</td>
+                    <td>{event.eventDetails.dateTime != null ? event.eventDetails.dateTime.toString() : null}</td>
                     <td style={{maxWidth: "400px",
                     whiteSpace: "nowrap",
                     overflow: "hidden",

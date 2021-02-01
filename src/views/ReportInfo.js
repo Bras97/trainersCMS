@@ -4,6 +4,7 @@ import { Container, Row, Col,Card, CardBody, Form, FormInput, Button, FormTextar
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import {editReport} from "../redux/Reports/actions";
+import * as reportsThunks from "../redux/Reports/thunks";
 
 import PageTitle from "../components/common/PageTitle";
 
@@ -13,6 +14,20 @@ const ReportInfo = () => {
   const { id } = useParams();
   const [currentReport, setCurrentReport] = useState();
   const dispatch = useDispatch();
+  const { authorization } = useSelector(state => state.authorizationUsers);
+
+  const handleDeleteReport = (selectedReport) => {
+    if (authorization != null && authorization.user != null && authorization.user._id != null) {
+        dispatch(reportsThunks.deleteReportFromDatabase(selectedReport));
+      }
+  };
+
+  const handleApproveReport = (selectedReport) => {
+    if (authorization != null && authorization.user != null && authorization.user._id != null) {
+        dispatch(reportsThunks.approveReport(selectedReport));
+      }
+  };
+
 
   useEffect(() => {
       if (id) {
@@ -66,13 +81,13 @@ const ReportInfo = () => {
         </Button>
       </Link>
 
-      <Link to="/reports-list">
+      <Link onClick={() => handleApproveReport}>
         <Button theme="accent" size="lg">          
           <i className="material-icons">file_copy</i> Usuń zgłoszoną treść
         </Button>
       </Link>
 
-      <Link to="/reports-list">
+      <Link onClick={() => handleDeleteReport}>
         <Button theme="accent" size="lg">          
           <i className="material-icons">file_copy</i> Usuń zgłoszenie
         </Button>
@@ -88,6 +103,10 @@ const ReportInfo = () => {
                 <Col md="12" className="form-group">
                   <label htmlFor="feDescription">Opis</label>
                   <FormTextarea rows="5"  size="lg" className="mb-3" placeholder="Tytuł zgłoszenia" defaultValue={currentReport.description} disabled="true"></FormTextarea>
+                </Col>
+                <Col md="12" className="form-group">
+                  <label htmlFor="feDescription">Kategoria</label>
+                  <FormTextarea size="lg" className="mb-3" defaultValue={currentReport.category} disabled="true"></FormTextarea>
                 </Col>
 
                 {currentReport.objectType == "POST" || currentReport.objectType == "COMMENT" ? 
