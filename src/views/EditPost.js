@@ -10,11 +10,17 @@ import { Post } from "../redux/Posts/types";
 
 import PageTitle from "../components/common/PageTitle";
 
+const featuredImageUrl = (featuredImage) => {
+  return `http://localhost:3000/featured-images/${featuredImage}`;
+}
+
 const EditPost = () => {
-  
+
   const {posts} = useSelector(state => state.posts);
   const { id } = useParams();
   const [currentPost, setCurrentPost] = useState();
+  const [image, setImage] = useState();
+  const [imagePreview, setImagePreview] = useState();
   const dispatch = useDispatch();
 
 
@@ -22,7 +28,7 @@ const EditPost = () => {
 
   const handleEditPost = () => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
-        dispatch(postThunks.updatePostInDatabase({title: currentPost.title, content: currentPost.content, eventDetails:null}, id, currentPost.image));
+        dispatch(postThunks.updatePostInDatabase({title: currentPost.title, content: currentPost.content, eventDetails:null}, id, image));
       }
   };
 
@@ -32,7 +38,7 @@ const EditPost = () => {
           setCurrentPost(post);
       }
   }, [id, posts]);
-  
+
 
   const updateTitle = e => {
     setCurrentPost({
@@ -50,10 +56,8 @@ const EditPost = () => {
 
 
   const updateImage = (files, pictures) => {
-    setCurrentPost({
-      ...currentPost,
-      image: pictures[0]
-    })
+    setImage(files[0]);
+    setImagePreview(pictures[0]);
   }
 
 
@@ -70,7 +74,7 @@ const EditPost = () => {
       <Link to="/posts-list">
         <Button theme="accent" size="lg"
           onClick={handleEditPost}>
-          
+
           <i className="material-icons">file_copy</i> Zatwierdź
         </Button>
       </Link>
@@ -99,10 +103,10 @@ const EditPost = () => {
                         singleImage={true}
                         maxFileSize={5242880}
                     />
-              <img src={currentPost.image} style={{ width: "100%" }}/>
+              <img src={imagePreview || featuredImageUrl(currentPost.featuredImage)} style={{ width: "100%" }}/>
             </Form>
           </CardBody>
-          
+
         </Card>
       </Col>
 

@@ -22,12 +22,14 @@ const AddNewEvent = () => {
   const [date, setDate] = useState(new Date());
   const [place, setPlace] = useState("Poznań");
   const [image, setImage] = useState();
+  const [imagePreview, setImagePreview] = useState();
   const {events} = useSelector(state => state.events);
 
   const handleOnDrop = (files, pictures) => {
-    setImage(pictures[0]);
+    setImage(files[0]);
+    setImagePreview(pictures[0]);
   }
-  
+
   const updateDate = date => {
     setDate(date);
   };
@@ -40,7 +42,7 @@ const AddNewEvent = () => {
         dispatch(eventThunks.addEventToDatabase(new Post(title, content, "EVENT", null, eventDetails), image));
       }
   };
-  
+
 
   return(
 
@@ -66,14 +68,14 @@ const AddNewEvent = () => {
           <div className="mb-3 d-flex justify-content-start align-self-center">
           <h6 className="mt-1 mr-3">Data wydarzenia: </h6>
           <DatePicker
-            selected={date} 
-            onChange={updateDate} 
+            selected={date}
+            onChange={updateDate}
             dateFormat="dd-MM-YYYY hh:mm"
             showTimeSelect
             />
           </div>
           <FormInput className="mb-1" style={{minHeight: "200px"}} placeholder="Opis" onChange={e => setContent(e.target.value)} />
-          
+
           <ImageUploader
                         withIcon={true}
                         buttonText='Wybierz zdjęcie'
@@ -82,7 +84,7 @@ const AddNewEvent = () => {
                         singleImage={true}
                         maxFileSize={5242880}
                     />
-              <img src={image} style={{ width: "100%" }}/>
+              <img src={imagePreview} style={{ width: "100%" }}/>
 
         </Form>
       </CardBody>
