@@ -65,7 +65,7 @@ const TariffsList = () => {
                 {tariffs.map((tariff, idx) => 
                   <tr key={idx+1}>
                     <td>{idx+1}</td>
-                    <td>{tariff.name}</td>
+                    <td>{tariff.title}</td>
                     <td>{tariff.category}</td>
                     <td>{tariff.price} zł</td>
                     <td> <Link to={"edit-tariff/" + tariff.id}><FaPen /></Link> &ensp; <Link onClick={() => dispatch(deleteTariff(tariff))}><FaTrashAlt /> </Link></td>

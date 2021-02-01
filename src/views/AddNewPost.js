@@ -8,7 +8,6 @@ import {addPost} from "../redux/Posts/actions";
 import { Post } from "../redux/Posts/types";
 import ImageUploader from 'react-images-upload';
 import * as postThunks from "../redux/Posts/thunks";
-import { useHttpErrorHandler } from '../utils/hooks/useHttpErrorHandler';
 
 const AddNewPost = () => {
 

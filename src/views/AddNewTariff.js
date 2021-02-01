@@ -13,16 +13,28 @@ import { Card, CardBody, Form, FormInput,
 
 import {addTariff} from "../redux/Tariffs/actions";
 import { Tariff } from "../redux/Tariffs/types";
+import * as tariffThunks from "../redux/Tariffs/thunks";
 
 
 const AddNewTariff = () => {
 
 
 const dispatch = useDispatch();
-const [name, setName] = useState();
+const [title, setTitle] = useState();
 const [price, setPrice] = useState();
 const [category, setCategory] = useState("Bieganie");
 const {tariffs} = useSelector(state => state.tariffs);
+
+
+const { authorization } = useSelector(state => state.authorizationUsers);
+
+const handleNewTariff = () => {
+  if (authorization != null && authorization.user != null && authorization.user._id != null) {
+      tariffs.push(new Tariff(title, price, category));
+      dispatch(tariffThunks.addTariffToDatabase(tariffs));
+    }
+};
+
 
 
 return(
@@ -32,11 +44,7 @@ return(
     <Row noGutters className="page-header py-4 d-flex justify-content-between">
       <PageTitle sm="4" title="Dodaj nową cenę" subtitle="Blog Tariffs" />
       <Link to="/tariffs-list">
-        <Button  theme="accent" size="lg"
-        onClick={()=> {
-          const newIndex = parseInt(tariffs[tariffs.length-1].id)+1;
-          dispatch(addTariff(new Tariff(newIndex, name, category, price)));                
-        }}>
+        <Button  theme="accent" size="lg" onClick={handleNewTariff}>
         <i className="material-icons">file_copy</i> Zatwierdź
         </Button>
       </Link>
@@ -48,7 +56,7 @@ return(
       <Card small className="mb-3">
       <CardBody>
         <Form className="add-new-tariff">
-          <FormInput size="lg" className="mb-3" placeholder="Nazwa"  onChange={e => setName(e.target.value)}/>
+          <FormInput size="lg" className="mb-3" placeholder="Nazwa"  onChange={e => setTitle(e.target.value)}/>
           <InputGroup className="mb-3">
             <InputGroupAddon type="prepend">
               <InputGroupText>Kategorie</InputGroupText>

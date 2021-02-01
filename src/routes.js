@@ -10,7 +10,6 @@ import UserProfileLite from "./views/UserProfileLite";
 import AddNewPost from "./views/AddNewPost";
 import AddNewTariff from "./views/AddNewTariff";
 import AddNewEvent from "./views/AddNewEvent";
-import ComponentsOverview from "./views/ComponentsOverview";
 import PostsList from "./views/PostsList";
 import TariffsList from "./views/TariffsList";
 import EventsList from "./views/EventsList";
@@ -52,11 +51,6 @@ export default [
     path: "/add-new-event",
     layout: DefaultLayout,
     component: AddNewEvent
-  },
-  {
-    path: "/components-overview",
-    layout: DefaultLayout,
-    component: ComponentsOverview
   },
   {
     path: "/posts-list",

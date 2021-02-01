@@ -21,11 +21,10 @@
 //     pending: false
 // }
 
-export function Tariff(id, name, category, price) {
-    this.id = id;
-    this.name = name;
-    this.category = category;
+export function Tariff(title, price, category) {
+    this.title = title;
     this.price = price;
+    this.category = category;
   }
 
 export const SET_TARIFFS = 'SET_TARIFFS';
