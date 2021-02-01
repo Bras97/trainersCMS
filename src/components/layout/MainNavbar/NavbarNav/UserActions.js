@@ -62,7 +62,7 @@
 
 
 
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Redirect, Link } from "react-router-dom";
 import {
   Dropdown,
@@ -73,7 +73,7 @@ import {
   NavItem,
   NavLink
 } from "shards-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as authorizationThunks from "../../../../redux/Authorization/thunks";
 
 const UserActions = (props) => {
@@ -84,6 +84,7 @@ const UserActions = (props) => {
   const surname = props.user.surname;
 
   const [visible, setVisible] = useState(false);
+  const [currentUser, setCurrentUser] = useState();
 
 
   const toggleUserActions = () => {
@@ -97,6 +98,19 @@ const UserActions = (props) => {
     window.location.assign('login');
   }
 
+  const { authorization } = useSelector(state => state.authorizationUsers);
+  useEffect(() => {
+      if(authorization){
+        console.log(authorization)
+        setCurrentUser(authorization.user);
+      }
+  }, [authorization]);
+
+
+  if(!currentUser){
+    return <div></div>
+  }
+
   return (
     <NavItem>
       <DropdownToggle caret tag={NavLink} className="text-nowrap px-3" onClick={toggleUserActions}>
@@ -107,7 +121,7 @@ const UserActions = (props) => {
           height = "40"
           width = "40"
         />{" "}
-        <span className="d-none d-md-inline-block">{name} {surname}</span>
+        <span className="d-none d-md-inline-block">{currentUser.userDetails.firstName} {currentUser.userDetails.lastName}</span>
       </DropdownToggle>
       <Collapse tag={DropdownMenu} right small open={visible} style={{width: "180px"}}>
         <Link to="/login" onClick={logout}>

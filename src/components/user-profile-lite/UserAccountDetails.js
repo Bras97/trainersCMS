@@ -256,8 +256,7 @@ const UserAccountDetails = ({ title }) => {
               </Row>
               <div className="text-center">
                 <Button theme="accent"
-                onClick={()=> {            
-                  console.log("CLICKED")    
+                onClick={()=> {              
                 dispatch(authorizationThunks.updateUser(currentUser.userDetails));
                 setIsSaved(true)}}
                 disabled={showMode}>
