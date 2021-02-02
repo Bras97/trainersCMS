@@ -79,11 +79,10 @@ export const updateUser = (user) => async (
 ) => {
     try {
         console.log("Do aktualizacji: ", user)
-        const authorizationUser = readAuthorizationUserFromLocalStorage();
+        const authorizationUser = JSON.parse(readAuthorizationUserFromLocalStorage());
         user.avatar = undefined;
         const response = await kyClient.put('user', {json: user});
         const userData = await response.json();
-        console.log("Po aktualizacji: ", userData)
         authorizationUser.user = userData
         if (userData) {
             dispatch(setAuthorizationUser(authorizationUser));
@@ -93,6 +92,7 @@ export const updateUser = (user) => async (
 
     } catch (e) {
         dispatch(setError(true));
+        console.log("ERROR")
     }
 };
 

@@ -57,7 +57,6 @@ const UserAccountDetails = ({ title }) => {
 
     }
   }, [authorization, currentUser]);
-console.log(faculties)
 
   useEffect(() => {
       if (id) {
@@ -102,16 +101,6 @@ console.log(faculties)
     });
   };
 
-  // const updateCity = e => {
-
-  //   const userDetails = currentUser.userDetails
-  //   userDetails.city = e.target.value
-
-  //   setCurrentUser({
-  //     ...currentUser.userDetails,
-  //     userDetails: userDetails
-  //   });
-  // };
 
   const updateDescription = e => {
 
@@ -174,6 +163,7 @@ console.log(faculties)
 
   const handleSubmit = async (e) => {
     console.log("USEEEEEEER:", currentUser)
+    currentUser.userDetails.specializations = currentUser.specializations;
     e.preventDefault();
     await dispatch(authorizationThunks.updateUser(currentUser.userDetails));
 
