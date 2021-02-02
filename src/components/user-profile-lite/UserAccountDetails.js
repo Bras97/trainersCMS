@@ -54,7 +54,7 @@ const UserAccountDetails = ({ title }) => {
     }
     if(currentUser && currentUser.userDetails){
       setDefaultCity({label: currentUser.userDetails.city, value: currentUser.userDetails.city})
-
+      console.log("USTAWIONO DOMYŚLNE MIASTO")
     }
   }, [authorization, currentUser]);
 
@@ -277,8 +277,7 @@ const UserAccountDetails = ({ title }) => {
                   <label htmlFor="feCity">Miasto</label>
                     <CreatableSelect
                       onChange={updateCity}
-                      defaultValue={defalutCity}
-
+                      defaultValue={{label: currentUser.userDetails.city, value: currentUser.userDetails.city}}
                       options={cities.map(city => {
                         const container = {};                    
                         container.label = city               
