@@ -1,7 +1,7 @@
 export default function() {
   return [
     {
-      title: "Profil trenera",
+      title: "Profil",
       htmlBefore: '<i class="material-icons">person</i>',
       to: "/user-profile-lite",
     },
