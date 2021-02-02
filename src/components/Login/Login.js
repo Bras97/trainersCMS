@@ -20,7 +20,7 @@ const Login = () => {
     }
 
     if (authorization && authorization.token) {
-        return <Redirect to="events-list" />
+        return <Redirect to="user-profile-lite" />
     }
 
     

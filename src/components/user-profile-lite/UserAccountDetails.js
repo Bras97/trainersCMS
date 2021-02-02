@@ -271,6 +271,8 @@ const UserAccountDetails = ({ title }) => {
                   />
                 </Col>
               </Row>
+              {authorization.user.type == "TRAINER" ?
+              <div>
               <Row form>
                 {/* City */}
                 <Col md="12" className="form-group">
@@ -315,6 +317,8 @@ const UserAccountDetails = ({ title }) => {
                     />
                 </Col>
               </Row>
+                
+                </div> : null}
               <Row form>
                 {/* Description */}
                 <Col md="8" className="form-group mt-2">
