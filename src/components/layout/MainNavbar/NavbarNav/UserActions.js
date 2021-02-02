@@ -115,6 +115,11 @@ const UserActions = (props) => {
         <span className="d-none d-md-inline-block">{name} {surname}</span>
       </DropdownToggle>
       <Collapse tag={DropdownMenu} right small open={visible} style={{width: "180px"}}>
+        <a href="https://trenerzy.tomkowiak.eu/" >
+          <DropdownItem caret>
+          <i className="material-icons">&#xE885;</i> Strona główna
+        </DropdownItem>
+          </a>
         <Link to="/login" onClick={logout}>
           <DropdownItem caret className="text-danger">
           <i className="material-icons text-danger">&#xE879;</i> Logout
