@@ -5,17 +5,26 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import {editReport} from "../redux/Reports/actions";
 import * as reportsThunks from "../redux/Reports/thunks";
+import { useHttpErrorHandler } from '../utils/hooks/useHttpErrorHandler';
 
 import PageTitle from "../components/common/PageTitle";
 import { Redirect } from "react-router-dom";
+import { setComments } from "../redux/Comments/actions";
+import * as commentThunks from "../redux/Comments/thunks";
+import * as reviewThunks from "../redux/Reviews/thunks";
 
 const ReportInfo = () => {
   
   const {reports} = useSelector(state => state.reports);
+  const {comments} = useSelector(state => state.comments);
+  const {reviews} = useSelector(state => state.reviews);
   const { id } = useParams();
   const [currentReport, setCurrentReport] = useState();
+  const [currentComment, setCurrentComment] = useState();
+  const [currentReview, setCurrentReview] = useState();
   const dispatch = useDispatch();
   const { authorization } = useSelector(state => state.authorizationUsers);
+  const handler = useHttpErrorHandler();
 
   
   if(authorization != null && authorization.user != null && (authorization.user.type == "USER" || authorization.user.type == "TRAINER")){
@@ -39,8 +48,29 @@ const ReportInfo = () => {
       if (id) {
           const report = reports.find(report => report._id == id);
           setCurrentReport(report);
+          if(report && report.objectType == "COMMENT" && authorization.user.type == "ADMIN"){
+            dispatch(commentThunks.fetchComments(handler))
+          }
+          else if(report && report.objectType == "REVIEW" && authorization.user.type == "ADMIN"){
+            dispatch(reviewThunks.fetchReviews(handler))
+          }
       }
   }, [id, reports]);
+
+  useEffect(() => {
+    if(reviews != null && currentReport && currentReport.objectId){
+      console.log("ID", currentReport.objectId, "R", reviews)
+      const review = reviews.find(review => review.id == currentReport.objectId);
+      console.log("R", review)
+      setCurrentReview(review);
+    }
+    if(comments != null && currentReport && currentReport.objectId){
+      const comment = comments.find(comment => comment.id == currentReport.objectId);
+      console.log("C", comment)
+      setCurrentComment(comment);
+    }
+
+  }, [reviews, comments]);
   
 
   const updateTitle = e => {
@@ -67,6 +97,9 @@ const ReportInfo = () => {
 
 
   if(!currentReport){
+    return <div></div>
+  }
+  if(!currentComment && !currentReview){
     return <div></div>
   }
 
@@ -123,7 +156,7 @@ const ReportInfo = () => {
 
                 {currentReport.objectType == "REVIEW" ? 
                 <Col md="12" className="form-group">
-                  <Link to={"/user-profile/" + currentReport.objectId} style={{fontWeight: "bold"}}>Link do trenera</Link>
+                  <Link to={"/user-profile/" + currentReview.reviewedUserId} style={{fontWeight: "bold"}}>Link do trenera</Link>
                 </Col>
                 : null}
                 
@@ -131,11 +164,11 @@ const ReportInfo = () => {
                 <Row className="ml-1 mr-1"> 
                   <Col md="9" className="form-group">
                     <label htmlFor="feDescription">Treść recenzji</label>
-                    <FormTextarea value={currentReport.objectContent} disabled="true"/>
+                    <FormTextarea value={currentReview.content} disabled="true"/>
                   </Col>
                   <Col md="3" className="form-group">
                     <label htmlFor="feDescription">Ocena</label>
-                    <FormTextarea type="number" value={currentReport.objectRate} disabled="true"/>
+                    <FormTextarea type="number" value={currentReview.grade} disabled="true"/>
                   </Col>
                 </Row>
                 : null}
@@ -143,7 +176,7 @@ const ReportInfo = () => {
                 {currentReport.objectType == "COMMENT" ? 
                 <Col md="12" className="form-group">
                   <label htmlFor="feDescription">Treść komentarza</label>
-                  <FormTextarea rows="5" value={currentReport.objectContent} onChange={updateContent}  disabled="true"/>
+                  <FormTextarea rows="5" value={currentComment.content} onChange={updateContent}  disabled="true"/>
                 </Col>
                 : null}
             </Form>

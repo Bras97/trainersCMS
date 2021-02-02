@@ -8,6 +8,8 @@ import currentUsers from './CurrentUser/reducers';
 import cities from './Cities/reducers';
 import faculties from './Faculties/reducers';
 import authorizationUsers from './Authorization/reducers';
+import reviews from './Reviews/reducers';
+import comments from './Comments/reducers';
 
 const allReducers = combineReducers({
     posts: posts,
@@ -18,7 +20,9 @@ const allReducers = combineReducers({
     reports: reports,
     cities: cities,
     faculties: faculties,
-    authorizationUsers: authorizationUsers
+    authorizationUsers: authorizationUsers,
+    reviews: reviews,
+    comments: comments
 });
 
 export default allReducers;
