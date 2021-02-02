@@ -13,6 +13,7 @@ import ImageUploader from 'react-images-upload';
 import { Post } from "../redux/Posts/types";
 import { EventDetails } from "../redux/Events/types";
 import * as eventThunks from "../redux/Events/thunks";
+import { Redirect } from "react-router-dom";
 
 const AddNewEvent = () => {
 
@@ -24,6 +25,10 @@ const AddNewEvent = () => {
   const [image, setImage] = useState();
   const [imagePreview, setImagePreview] = useState();
   const {events} = useSelector(state => state.events);
+
+  if(authorization != null && authorization.user != null && authorization.user.type == "USER"){
+    return <Redirect to="/login" /> 
+  }
 
   const handleOnDrop = (files, pictures) => {
     setImage(files[0]);

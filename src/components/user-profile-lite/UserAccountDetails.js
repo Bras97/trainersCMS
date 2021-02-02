@@ -45,16 +45,11 @@ const UserAccountDetails = ({ title }) => {
   const [showMode, setShowMode] = useState(false);
   const [currentAvatarFile, setCurrentAvatarFile] = useState(null);
   const { authorization } = useSelector(state => state.authorizationUsers);
-  const [defalutCity, setDefaultCity] = useState();
 
   useEffect(() => {
     if (authorization != null) {
         dispatch(facultiesThunks.fetchFaculties());
         dispatch(citiesThunks.fetchCities());
-    }
-    if(currentUser && currentUser.userDetails){
-      setDefaultCity({label: currentUser.userDetails.city, value: currentUser.userDetails.city})
-      console.log("USTAWIONO DOMYŚLNE MIASTO")
     }
   }, [authorization, currentUser]);
 
@@ -318,16 +313,17 @@ const UserAccountDetails = ({ title }) => {
                 </Col>
               </Row>
                 
-                </div> : null}
+              </div> : null}
               <Row form>
                 {/* Description */}
+              {authorization.user.type == "TRAINER" ?
                 <Col md="8" className="form-group mt-2">
                   <label htmlFor="feDescription">Opis</label>
                   <FormTextarea rows="7"
                     defaultValue={currentUser.userDetails.description}
                     onChange={updateDescription}
                     disabled={showMode}/>
-                </Col>
+                </Col> : <Col md="8"></Col>}
                 <Col className="form-group">
                   <CardHeader className="text-center" >
                     <div className="mb-3 mx-auto">

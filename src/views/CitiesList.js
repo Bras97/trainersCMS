@@ -27,6 +27,9 @@ const CitiesList = () => {
     }
   }, [authorization]);
 
+  if(authorization != null && authorization.user != null && (authorization.user.type == "USER" || authorization.user.type == "TRAINER" )){
+    return <Redirect to="/login" /> 
+  }
 
   const updateCityName = e => {
     setCityName(e.target.value);

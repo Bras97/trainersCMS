@@ -11,6 +11,7 @@ import PageTitle from "../components/common/PageTitle";
 import { Card, CardBody, Form, FormInput, Button, FormTextarea } from "shards-react";
 import {DatePicker} from "shards-react";
 import ImageUploader from 'react-images-upload';
+import { Redirect } from "react-router-dom";
 
 const featuredImageUrl = (featuredImage) => {
   return `http://localhost:3000/featured-images/${featuredImage}`;
@@ -26,6 +27,9 @@ const EditEvent = () => {
   const [imagePreview, setImagePreview] = useState();
   const dispatch = useDispatch();
 
+  if(authorization != null && authorization.user != null && authorization.user.type == "USER"){
+    return <Redirect to="/login" /> 
+  }
 
   const { authorization } = useSelector(state => state.authorizationUsers);
 

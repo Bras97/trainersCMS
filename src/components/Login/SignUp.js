@@ -17,7 +17,7 @@ const SignUp = () => {
     }
 
     if (authorization && authorization.token) {
-        return <Redirect to="posts-list" />
+        return <Redirect to="user-profile-lite"  />
     }
         
   

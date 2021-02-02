@@ -9,6 +9,7 @@ import PageTitle from "../components/common/PageTitle";
 import { deletePost } from "../redux/Posts/actions";
 import * as postThunks from "../redux/Posts/thunks";
 import { useHttpErrorHandler } from '../utils/hooks/useHttpErrorHandler';
+import { Redirect } from "react-router-dom";
 
 const PostsList = () => {
 
@@ -16,6 +17,7 @@ const PostsList = () => {
   const dispatch = useDispatch();
   const handler = useHttpErrorHandler();
   const { authorization } = useSelector(state => state.authorizationUsers);
+
 
   useEffect(() => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
@@ -29,6 +31,9 @@ const PostsList = () => {
     }
 }, [authorization]);
 
+if(authorization != null && authorization.user != null && authorization.user.type == "USER"){
+  return <Redirect to="/login" /> 
+}
 const handleDeletePost = (selectedPost) => {
   if (authorization != null && authorization.user != null && authorization.user._id != null) {
     console.log("SELECTED ID:", selectedPost)

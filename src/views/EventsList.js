@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import PageTitle from "../components/common/PageTitle";
 import { deleteEvent } from "../redux/Events/actions";
@@ -16,6 +17,10 @@ const EventsList = () => {
 
   const handler = useHttpErrorHandler();
   const { authorization } = useSelector(state => state.authorizationUsers);
+
+  if(authorization != null && authorization.user != null && authorization.user.type == "USER"){
+    return <Redirect to="/login" /> 
+  }
 
   useEffect(() => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {

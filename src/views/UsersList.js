@@ -9,6 +9,7 @@ import PageTitle from "../components/common/PageTitle";
 import { deleteUser } from "../redux/Users/actions";
 import * as usersThunks from "../redux/Users/thunks";
 import { useHttpErrorHandler } from '../utils/hooks/useHttpErrorHandler';
+import { Redirect } from "react-router-dom";
 
 const UsersList = () => {
 
@@ -18,6 +19,10 @@ const UsersList = () => {
 
   const handler = useHttpErrorHandler();
   const { authorization } = useSelector(state => state.authorizationUsers);
+
+  if(authorization != null && authorization.user != null && (authorization.user.type == "USER" || authorization.user.type == "TRAINER")){
+    return <Redirect to="/login" /> 
+  }
 
   useEffect(() => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {

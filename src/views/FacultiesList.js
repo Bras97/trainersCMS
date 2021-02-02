@@ -8,6 +8,7 @@ import {addFaculty} from "../redux/Faculties/actions";
 import PageTitle from "../components/common/PageTitle";
 import { deleteFaculty } from "../redux/Faculties/actions";
 import * as facultiesThunks from "../redux/Faculties/thunks";
+import { Redirect } from "react-router-dom";
 
 const FacultiesList = () => {
 
@@ -24,6 +25,9 @@ const FacultiesList = () => {
     }
   }, [authorization]);
 
+  if(authorization != null && authorization.user != null && (authorization.user.type == "USER" || authorization.user.type == "TRAINER")){
+    return <Redirect to="/login" /> 
+  }
 
   const updateFacultyName = e => {
     setFacultyName(e.target.value);

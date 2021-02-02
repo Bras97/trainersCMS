@@ -1,5 +1,5 @@
 import React from "react";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import { Container, Row, Col } from "shards-react";
 import { Link } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux"
@@ -14,6 +14,8 @@ import { Card, CardBody, Form, FormInput,
 import {addTariff} from "../redux/Tariffs/actions";
 import { Tariff } from "../redux/Tariffs/types";
 import * as tariffThunks from "../redux/Tariffs/thunks";
+import { Redirect } from "react-router-dom";
+import * as facultiesThunks from "../redux/Faculties/thunks";
 
 
 const AddNewTariff = () => {
@@ -22,11 +24,16 @@ const AddNewTariff = () => {
 const dispatch = useDispatch();
 const [title, setTitle] = useState();
 const [price, setPrice] = useState();
-const [category, setCategory] = useState("Bieganie");
+const [category, setCategory] = useState();
 const {tariffs} = useSelector(state => state.tariffs);
+const {faculties} = useSelector(state => state.faculties);
 
 
 const { authorization } = useSelector(state => state.authorizationUsers);
+
+if(authorization != null && authorization.user != null && (authorization.user.type == "USER" || authorization.user.type == "ADMIN")){
+  return <Redirect to="/login" /> 
+}
 
 const handleNewTariff = () => {
   if (authorization != null && authorization.user != null && authorization.user._id != null) {
@@ -34,6 +41,12 @@ const handleNewTariff = () => {
       dispatch(tariffThunks.addTariffToDatabase(tariffs));
     }
 };
+
+useEffect(() => {
+  if (authorization != null) {
+      dispatch(facultiesThunks.fetchFaculties());
+  }
+}, [authorization]);
 
 
 
@@ -62,10 +75,9 @@ return(
               <InputGroupText>Kategorie</InputGroupText>
             </InputGroupAddon>
             <FormSelect onChange={e => setCategory(e.target.value)}>
-              <option>Bieganie</option>
-              <option>Kolarstwo</option>
-              <option>Pływanie</option>
-              <option>Siłownia</option>
+              {faculties.map(faculty => 
+                <option>{faculty}</option>
+              )}
             </FormSelect>
           </InputGroup>
           <FormInput type="number" size="lg" className="mb-3" placeholder="Cena"  onChange={e => setPrice(e.target.value)}/>

@@ -7,6 +7,7 @@ import {editReport} from "../redux/Reports/actions";
 import * as reportsThunks from "../redux/Reports/thunks";
 
 import PageTitle from "../components/common/PageTitle";
+import { Redirect } from "react-router-dom";
 
 const ReportInfo = () => {
   
@@ -15,6 +16,11 @@ const ReportInfo = () => {
   const [currentReport, setCurrentReport] = useState();
   const dispatch = useDispatch();
   const { authorization } = useSelector(state => state.authorizationUsers);
+
+  
+  if(authorization != null && authorization.user != null && (authorization.user.type == "USER" || authorization.user.type == "TRAINER")){
+    return <Redirect to="/login" /> 
+  }
 
   const handleDeleteReport = (selectedReport) => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {

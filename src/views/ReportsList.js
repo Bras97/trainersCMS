@@ -9,6 +9,7 @@ import PageTitle from "../components/common/PageTitle";
 import { deleteReport } from "../redux/Reports/actions";
 import * as reportsThunks from "../redux/Reports/thunks";
 import { useHttpErrorHandler } from '../utils/hooks/useHttpErrorHandler';
+import { Redirect } from "react-router-dom";
 
 
 
@@ -19,6 +20,11 @@ const ReportsList = () => {
   const dispatch = useDispatch();
   const handler = useHttpErrorHandler();
   const { authorization } = useSelector(state => state.authorizationUsers);
+
+
+  if(authorization != null && authorization.user != null && (authorization.user.type == "USER" || authorization.user.type == "TRAINER")){
+    return <Redirect to="/login" /> 
+  }
 
   useEffect(() => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {

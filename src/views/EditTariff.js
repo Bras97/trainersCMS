@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import {editTariff} from "../redux/Tariffs/actions";
 
+import { Redirect } from "react-router-dom";
 import PageTitle from "../components/common/PageTitle";
 import { Card, CardBody, Form, FormInput,
   InputGroup,
@@ -19,6 +20,12 @@ const EditTariff = () =>  {
   const { id } = useParams();
   const [currentTariff, setCurrentTariff] = useState();
   const dispatch = useDispatch();
+
+  const { authorization } = useSelector(state => state.authorizationUsers);
+  if(authorization != null && authorization.user != null && (authorization.user.type == "USER" || authorization.user.type == "ADMIN")){
+    return <Redirect to="/login" /> 
+  }
+
 
   useEffect(() => {
       if (id) {

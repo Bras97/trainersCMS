@@ -8,6 +8,7 @@ import PageTitle from "../components/common/PageTitle";
 import { deleteTariff } from "../redux/Tariffs/actions";
 import * as tariffsThunks from "../redux/Tariffs/thunks";
 import { useHttpErrorHandler } from '../utils/hooks/useHttpErrorHandler';
+import { Redirect } from "react-router-dom";
 
 const TariffsList = () => {
 
@@ -16,6 +17,10 @@ const TariffsList = () => {
 
   const handler = useHttpErrorHandler();
   const { authorization } = useSelector(state => state.authorizationUsers);
+
+  if(authorization != null && authorization.user != null && (authorization.user.type == "USER" || authorization.user.type == "ADMIN")){
+    return <Redirect to="/login" /> 
+  }
 
   useEffect(() => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {

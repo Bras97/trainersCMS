@@ -7,6 +7,7 @@ import {editPost} from "../redux/Posts/actions";
 import ImageUploader from 'react-images-upload';
 import * as postThunks from "../redux/Posts/thunks";
 import { Post } from "../redux/Posts/types";
+import { Redirect } from "react-router-dom";
 
 import PageTitle from "../components/common/PageTitle";
 
@@ -23,6 +24,9 @@ const EditPost = () => {
   const [imagePreview, setImagePreview] = useState();
   const dispatch = useDispatch();
 
+  if(authorization != null && authorization.user != null && authorization.user.type == "USER"){
+    return <Redirect to="/login" /> 
+  }
 
   const { authorization } = useSelector(state => state.authorizationUsers);
 

@@ -8,6 +8,7 @@ import {addPost} from "../redux/Posts/actions";
 import { Post } from "../redux/Posts/types";
 import ImageUploader from 'react-images-upload';
 import * as postThunks from "../redux/Posts/thunks";
+import { Redirect } from "react-router-dom";
 
 const AddNewPost = () => {
 
@@ -19,6 +20,9 @@ const AddNewPost = () => {
   const [imagePreview, setImagePreview] = useState();
   const {posts} = useSelector(state => state.posts);
 
+  if(authorization != null && authorization.user != null && authorization.user.type == "USER"){
+    return <Redirect to="/login" /> 
+  }
 
   const { authorization } = useSelector(state => state.authorizationUsers);
 
