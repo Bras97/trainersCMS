@@ -22,6 +22,8 @@ const ReportInfo = () => {
   const [currentReport, setCurrentReport] = useState();
   const [currentComment, setCurrentComment] = useState();
   const [currentReview, setCurrentReview] = useState();
+  const [postType, setPostType] = useState(false);
+  const [exit, setExit] = useState(false);
   const dispatch = useDispatch();
   const { authorization } = useSelector(state => state.authorizationUsers);
   const handler = useHttpErrorHandler();
@@ -31,15 +33,17 @@ const ReportInfo = () => {
     return <Redirect to="/login" /> 
   }
 
-  const handleDeleteReport = (selectedReport) => {
-    if (authorization != null && authorization.user != null && authorization.user._id != null) {
-        dispatch(reportsThunks.deleteReportFromDatabase(selectedReport));
+  const handleDeleteReport = () => {
+    if (authorization != null && authorization.user != null && authorization.user._id != null && currentReport != null) {
+        dispatch(reportsThunks.deleteReportFromDatabase(currentReport));
+        setExit(true);
       }
   };
 
-  const handleApproveReport = (selectedReport) => {
-    if (authorization != null && authorization.user != null && authorization.user._id != null) {
-        dispatch(reportsThunks.approveReport(selectedReport));
+  const handleApproveReport = () => {
+    if (authorization != null && authorization.user != null && authorization.user._id != null && currentReport != null) {
+        dispatch(reportsThunks.approveReport(currentReport));
+        setExit(true);
       }
   };
 
@@ -53,6 +57,9 @@ const ReportInfo = () => {
           }
           else if(report && report.objectType == "REVIEW" && authorization.user.type == "ADMIN"){
             dispatch(reviewThunks.fetchReviews(handler))
+          }
+          else if(report && report.objectType == "POST" && authorization.user.type == "ADMIN"){
+            setPostType(true);
           }
       }
   }, [id, reports]);
@@ -99,8 +106,11 @@ const ReportInfo = () => {
   if(!currentReport){
     return <div></div>
   }
-  if(!currentComment && !currentReview){
+  if(!postType && !currentComment && !currentReview){
     return <div></div>
+  }
+  if(exit){
+    return <Redirect to="/reports-list" />
   }
 
   let link = 
@@ -120,13 +130,13 @@ const ReportInfo = () => {
         </Button>
       </Link>
 
-      <Link onClick={() => handleApproveReport}>
+      <Link onClick={() => handleApproveReport()}>
         <Button theme="accent" size="lg">          
           <i className="material-icons">file_copy</i> Usuń zgłoszoną treść
         </Button>
       </Link>
 
-      <Link onClick={() => handleDeleteReport}>
+      <Link onClick={() => handleDeleteReport()}>
         <Button theme="accent" size="lg">          
           <i className="material-icons">file_copy</i> Usuń zgłoszenie
         </Button>
