@@ -30,6 +30,7 @@ import {
 } from "../../redux/Authorization/actions";
 import CreatableSelect from 'react-select/creatable';
 import * as facultiesThunks from "../../redux/Faculties/thunks";
+import * as citiesThunks from "../../redux/Cities/thunks";
 
 const UserAccountDetails = ({ title }) => {
 
@@ -44,12 +45,18 @@ const UserAccountDetails = ({ title }) => {
   const [showMode, setShowMode] = useState(false);
   const [currentAvatarFile, setCurrentAvatarFile] = useState(null);
   const { authorization } = useSelector(state => state.authorizationUsers);
+  const [defalutCity, setDefaultCity] = useState();
 
   useEffect(() => {
     if (authorization != null) {
         dispatch(facultiesThunks.fetchFaculties());
+        dispatch(citiesThunks.fetchCities());
     }
-  }, [authorization]);
+    if(currentUser && currentUser.userDetails){
+      setDefaultCity({label: currentUser.userDetails.city, value: currentUser.userDetails.city})
+
+    }
+  }, [authorization, currentUser]);
 console.log(faculties)
 
   useEffect(() => {
@@ -95,16 +102,16 @@ console.log(faculties)
     });
   };
 
-  const updateCity = e => {
+  // const updateCity = e => {
 
-    const userDetails = currentUser.userDetails
-    userDetails.city = e.target.value
+  //   const userDetails = currentUser.userDetails
+  //   userDetails.city = e.target.value
 
-    setCurrentUser({
-      ...currentUser.userDetails,
-      userDetails: userDetails
-    });
-  };
+  //   setCurrentUser({
+  //     ...currentUser.userDetails,
+  //     userDetails: userDetails
+  //   });
+  // };
 
   const updateDescription = e => {
 
@@ -137,6 +144,18 @@ console.log(faculties)
       ...currentUser.userDetails,
       avatar: e.target.files[0]
     });
+  }
+
+  
+
+  const updateCity =  (newValue, actionMeta) => {
+    const userDetails = currentUser.userDetails;
+    userDetails.city = newValue.value;
+    setCurrentUser({
+      ...currentUser,
+      userDetails: userDetails
+    });
+    console.log(currentUser)
   }
 
   const updateSpecs =  (newValue, actionMeta) => {
@@ -266,14 +285,19 @@ console.log(faculties)
                 {/* City */}
                 <Col md="12" className="form-group">
                   <label htmlFor="feCity">Miasto</label>
-                  <FormSelect
-                    defaultValue={currentUser.userDetails.city}
-                    onChange={updateCity}
-                    disabled={showMode}>
-                    {cities.map(city =>
-                      <option>{city}</option>
-                    )}
-                  </FormSelect>
+                    <CreatableSelect
+                      onChange={updateCity}
+                      defaultValue={defalutCity}
+
+                      options={cities.map(city => {
+                        const container = {};                    
+                        container.label = city               
+                        container.value = city                    
+                        return container;
+                    }
+                      )}
+                      disabled={showMode}
+                    />
                 </Col>
               </Row>
               <Row form>
@@ -304,7 +328,7 @@ console.log(faculties)
               </Row>
               <Row form>
                 {/* Description */}
-                <Col md="8" className="form-group">
+                <Col md="8" className="form-group mt-2">
                   <label htmlFor="feDescription">Opis</label>
                   <FormTextarea rows="7"
                     defaultValue={currentUser.userDetails.description}
