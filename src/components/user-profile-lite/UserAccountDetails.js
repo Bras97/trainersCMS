@@ -28,12 +28,15 @@ import {
   setAuthorizationUser,
   setError
 } from "../../redux/Authorization/actions";
+import CreatableSelect from 'react-select/creatable';
+import * as facultiesThunks from "../../redux/Faculties/thunks";
 
 const UserAccountDetails = ({ title }) => {
 
   const {currentUsers} = useSelector(state => state.currentUsers);
   const {users} = useSelector(state => state.users);
   const {cities} = useSelector(state => state.cities);
+  const {faculties} = useSelector(state => state.faculties);
   const { id } = useParams();
   const [currentUser, setCurrentUser] = useState();
   const [isSaved, setIsSaved] = useState(false);
@@ -42,6 +45,12 @@ const UserAccountDetails = ({ title }) => {
   const [currentAvatarFile, setCurrentAvatarFile] = useState(null);
   const { authorization } = useSelector(state => state.authorizationUsers);
 
+  useEffect(() => {
+    if (authorization != null) {
+        dispatch(facultiesThunks.fetchFaculties());
+    }
+  }, [authorization]);
+console.log(faculties)
 
   useEffect(() => {
       if (id) {
@@ -83,13 +92,6 @@ const UserAccountDetails = ({ title }) => {
     setCurrentUser({
       ...currentUser,
       email: e.target.value
-    });
-  };
-
-  const updatePassword = e => {
-    setCurrentUser({
-      ...currentUser,
-      password: e.target.value
     });
   };
 
@@ -137,11 +139,22 @@ const UserAccountDetails = ({ title }) => {
     });
   }
 
+  const updateSpecs =  (newValue, actionMeta) => {
+    console.log(newValue.map(value => value.value));
+    const mappedValues = newValue.map(value => value.value);
+    setCurrentUser({
+      ...currentUser,
+      specializations: mappedValues
+    });
+    console.log(currentUser)
+  }
+
   const avatarUrl = (avatar) => {
     return `http://localhost:3000/avatars/${avatar}`;
   }
 
   const handleSubmit = async (e) => {
+    console.log("USEEEEEEER:", currentUser)
     e.preventDefault();
     await dispatch(authorizationThunks.updateUser(currentUser.userDetails));
 
@@ -261,6 +274,32 @@ const UserAccountDetails = ({ title }) => {
                       <option>{city}</option>
                     )}
                   </FormSelect>
+                </Col>
+              </Row>
+              <Row form>
+                {/* City */}
+                <Col md="12">
+                  <label htmlFor="feSpec">Specjalizacje</label>
+                    <CreatableSelect
+                      isMulti
+                      onChange={updateSpecs}
+                      defaultValue={currentUser.specializations.map(faculty => {
+                        const container = {};                    
+                        container.label = faculty               
+                        container.value = faculty                    
+                        return container;
+                    }
+
+                      )}
+                      options={faculties.map(faculty => {
+                        const container = {};                    
+                        container.label = faculty               
+                        container.value = faculty                    
+                        return container;
+                    }
+                      )}
+                      disabled={showMode}
+                    />
                 </Col>
               </Row>
               <Row form>
