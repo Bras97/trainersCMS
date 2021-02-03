@@ -45,6 +45,7 @@ const UserAccountDetails = ({ title }) => {
   const [showMode, setShowMode] = useState(false);
   const [currentAvatarFile, setCurrentAvatarFile] = useState(null);
   const { authorization } = useSelector(state => state.authorizationUsers);
+  const [temporaryImage, setTemporaryImage] = useState(false);
 
   useEffect(() => {
     if (authorization != null) {
@@ -74,7 +75,7 @@ const UserAccountDetails = ({ title }) => {
     userDetails.firstName = e.target.value
 
     setCurrentUser({
-      ...currentUser.userDetails,
+      ...currentUser,
       userDetails: userDetails
     });
   };
@@ -123,15 +124,6 @@ const UserAccountDetails = ({ title }) => {
     return <div></div>
   }
 
-  const updateAvatar = e => {
-    setCurrentUser({
-      ...currentUser.userDetails,
-      avatar: e.target.files[0]
-    });
-  }
-
-  
-
   const updateCity =  (newValue, actionMeta) => {
     const userDetails = currentUser.userDetails;
     userDetails.city = newValue.value;
@@ -157,7 +149,6 @@ const UserAccountDetails = ({ title }) => {
   }
 
   const handleSubmit = async (e) => {
-    console.log("USEEEEEEER:", currentUser)
     currentUser.userDetails.specializations = currentUser.specializations;
     e.preventDefault();
     await dispatch(authorizationThunks.updateUser(currentUser.userDetails));
@@ -183,6 +174,7 @@ const UserAccountDetails = ({ title }) => {
       }
     }
 
+    setTemporaryImage(false)
     setIsSaved(true)
   }
 
@@ -202,6 +194,7 @@ const UserAccountDetails = ({ title }) => {
       });
     }
 
+    setTemporaryImage(true);
     reader.readAsDataURL(file)
   }
 
@@ -258,7 +251,7 @@ const UserAccountDetails = ({ title }) => {
                 <Col md="6" className="form-group">
                   <label htmlFor="fePassword">Telefon</label>
                   <FormInput
-                    type="phone"
+                    type="number"
                     placeholder="Telefon"
                     defaultValue={currentUser.userDetails.phone}
                     onChange={updatePhone}
@@ -329,7 +322,7 @@ const UserAccountDetails = ({ title }) => {
                     <div className="mb-3 mx-auto">
                       <img
                         className="rounded-circle"
-                        src={ currentUser.userDetails.avatar != null ? avatarUrl(currentUser.userDetails.avatar) : null}
+                        src={temporaryImage ? currentUser.userDetails.avatar : avatarUrl(currentUser.userDetails.avatar)}
                         alt={currentUser.userDetails.name}
                         width="110"
                         height="110"
