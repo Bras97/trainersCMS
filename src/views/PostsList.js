@@ -13,7 +13,7 @@ import { Redirect } from "react-router-dom";
 
 const PostsList = () => {
 
-  const {posts} = useSelector(state => state.posts);
+  let {posts} = useSelector(state => state.posts);
   const dispatch = useDispatch();
   const handler = useHttpErrorHandler();
   const { authorization } = useSelector(state => state.authorizationUsers);
@@ -40,6 +40,7 @@ const handleDeletePost = (selectedPost) => {
       dispatch(postThunks.deletePostFromDatabase(selectedPost));
     }
 };
+
 
   return(
   <Container fluid className="main-content-container px-4">

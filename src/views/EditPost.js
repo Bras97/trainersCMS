@@ -22,6 +22,7 @@ const EditPost = () => {
   const [currentPost, setCurrentPost] = useState();
   const [image, setImage] = useState();
   const [imagePreview, setImagePreview] = useState();
+  const [backToList, setBackToList] = useState(false);
   const dispatch = useDispatch();
 
   if(authorization != null && authorization.user != null && authorization.user.type == "USER"){
@@ -29,21 +30,24 @@ const EditPost = () => {
   }
 
   const { authorization } = useSelector(state => state.authorizationUsers);
-
+  const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+  }
+  
   const handleEditPost = () => {
+    console.log("!!!");
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
-        dispatch(postThunks.updatePostInDatabase({title: currentPost.title, content: currentPost.content, eventDetails:null}, id, image));
+        dispatch(postThunks.updatePostInDatabase
+          ({title: currentPost.title, content: currentPost.content, eventDetails:null}, id, image)).then(() => {
+            setBackToList(true);
+          });
       }
   };
 
   useEffect(() => {
       if (id) {
-            console.log("ID: ", id);
-            console.log("POSTS: ", posts);
-            const post = posts.find(post => post._id == id);
-            console.log("POST: ", post);
-            setCurrentPost(post);
-          
+          const post = posts.find(post => post._id == id);
+          setCurrentPost(post);        
       }
   }, [id, posts]);
   
@@ -73,24 +77,23 @@ const EditPost = () => {
     setImagePreview(pictures[0]);
   }
 
-
   if(!currentPost){
     return <div></div>
   }
-
+  if(backToList==true){
+    return <Redirect to="/posts-list" />
+  }
+  
 
   return(
   <Container fluid className="main-content-container px-4 pb-4">
     {/* Page Header */}
     <Row noGutters className="page-header py-4 d-flex justify-content-between">
       <PageTitle sm="4" title="Edytuj post" subtitle="Blog Posts" className="text-sm-left" />
-      <Link to="/posts-list">
-        <Button theme="accent" size="lg"
+          <Button theme="accent" size="lg"
           onClick={handleEditPost}>
-
           <i className="material-icons">file_copy</i> Zatwierdź
         </Button>
-      </Link>
     </Row>
 
     <Row>

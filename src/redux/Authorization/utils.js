@@ -10,4 +10,3 @@ export const readAuthorizationUserFromLocalStorage = () => {
 export const removeAuthorizationUserFromLocalStorage = () => {
     return localStorage.removeItem('authorization');
 }
-

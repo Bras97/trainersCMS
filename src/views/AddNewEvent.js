@@ -24,6 +24,7 @@ const AddNewEvent = () => {
   const [place, setPlace] = useState("Poznań");
   const [image, setImage] = useState();
   const [imagePreview, setImagePreview] = useState();
+  const [backToList, setBackToList] = useState(false);
   const {events} = useSelector(state => state.events);
 
   if(authorization != null && authorization.user != null && authorization.user.type == "USER"){
@@ -44,10 +45,15 @@ const AddNewEvent = () => {
   const handleNewEvent = () => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
         const eventDetails = new EventDetails(place, date);
-        dispatch(eventThunks.addEventToDatabase(new Post(title, content, "EVENT", null, eventDetails), image));
+        dispatch(eventThunks.addEventToDatabase(new Post(title, content, "EVENT", null, eventDetails), image)).then(() => {
+          setBackToList(true);
+        });
       }
   };
 
+  if(backToList==true){
+    return <Redirect to="/events-list" />
+  }
 
   return(
 
@@ -55,12 +61,10 @@ const AddNewEvent = () => {
     {/* Page Header */}
     <Row noGutters className="page-header py-4 d-flex justify-content-between">
       <PageTitle sm="4" title="Dodaj nowe wydarzenie" subtitle="Blog Posts" className="text-sm-left" />
-      <Link to="/events-list">
         <Button  theme="accent" size="lg"
         onClick={handleNewEvent}>
         <i className="material-icons">file_copy</i> Zatwierdź
         </Button>
-      </Link>
     </Row>
 
     <Row>

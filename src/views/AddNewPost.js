@@ -18,6 +18,7 @@ const AddNewPost = () => {
   const [content, setContent] = useState();
   const [image, setImage] = useState();
   const [imagePreview, setImagePreview] = useState();
+  const [backToList, setBackToList] = useState(false);
   const {posts} = useSelector(state => state.posts);
 
   if(authorization != null && authorization.user != null && authorization.user.type == "USER"){
@@ -28,7 +29,9 @@ const AddNewPost = () => {
 
   const handleNewPost = async () => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
-        dispatch(postThunks.addPostToDatabase(new Post(title,content, "POST", null, null), image));
+        dispatch(postThunks.addPostToDatabase(new Post(title,content, "POST", null, null), image)).then(() => {
+          setBackToList(true);
+        });
       }
   };
 
@@ -37,17 +40,19 @@ const AddNewPost = () => {
     setImagePreview(pictures[0]);
   }
 
+  if(backToList==true){
+    return <Redirect to="/posts-list" />
+  }
+
   return(
 
   <Container fluid className="main-content-container px-4 pb-4">
     {/* Page Header */}
     <Row noGutters className="page-header py-4 d-flex justify-content-between">
       <PageTitle sm="4" title="Dodaj nowy post" subtitle="Blog Posts" className="text-sm-left" />
-      <Link to="/posts-list">
         <Button  theme="accent" size="lg" onClick={handleNewPost}>
         <i className="material-icons">file_copy</i> Zatwierdź
         </Button>
-      </Link>
     </Row>
 
     <Row>

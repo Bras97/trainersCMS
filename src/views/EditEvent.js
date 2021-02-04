@@ -25,6 +25,7 @@ const EditEvent = () => {
   const [currentEvent, setCurrentEvent] = useState();
   const [image, setImage] = useState();
   const [imagePreview, setImagePreview] = useState();
+  const [backToList, setBackToList] = useState(false);
   const dispatch = useDispatch();
 
   if(authorization != null && authorization.user != null && authorization.user.type == "USER"){
@@ -36,7 +37,10 @@ const EditEvent = () => {
   const handleEditEvent = () => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
         const eventDetails = {place: null, dateTime: currentEvent.eventDetails.dateTime}
-        dispatch(eventThunks.updateEventInDatabase({title: currentEvent.title, content: currentEvent.content, eventDetails:eventDetails}, id, image));
+        dispatch(eventThunks.updateEventInDatabase
+          ({title: currentEvent.title, content: currentEvent.content, eventDetails:eventDetails}, id, image)).then(() => {
+            setBackToList(true);
+          });
       }
   };
 
@@ -81,17 +85,19 @@ const EditEvent = () => {
   if(!currentEvent){
     return <div></div>
   }
+  if(backToList==true){
+    return <Redirect to="/events-list" />
+  }
+
 
   return(
   <Container fluid className="main-content-container px-4 pb-4">
     {/* Page Header */}
     <Row noGutters className="page-header py-4 d-flex justify-content-between">
       <PageTitle sm="4" title="Edytuj wydarzenie" subtitle="Blog Posts" className="text-sm-left" />
-      <Link to="/events-list">
         <Button theme="accent" size="lg" onClick={handleEditEvent}>
           <i className="material-icons">file_copy</i> Zatwierdź
         </Button>
-      </Link>
     </Row>
 
     <Row>
