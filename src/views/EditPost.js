@@ -8,6 +8,7 @@ import ImageUploader from 'react-images-upload';
 import * as postThunks from "../redux/Posts/thunks";
 import { Post } from "../redux/Posts/types";
 import { Redirect } from "react-router-dom";
+import {Alert} from "reactstrap"
 
 import PageTitle from "../components/common/PageTitle";
 
@@ -24,6 +25,8 @@ const EditPost = () => {
   const [imagePreview, setImagePreview] = useState();
   const [backToList, setBackToList] = useState(false);
   const dispatch = useDispatch();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isError, setIsError] = useState(false);
 
   if(authorization != null && authorization.user != null && authorization.user.type == "USER"){
     return <Redirect to="/login" /> 
@@ -37,11 +40,22 @@ const EditPost = () => {
   const handleEditPost = () => {
     console.log("!!!");
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
+      if(currentPost.title == null || currentPost.title == ""){
+        setIsError(true);
+        setErrorMessage("Brak tytułu");
+      }
+      else if(currentPost.content == null || currentPost.content == ""){
+        setIsError(true);
+        setErrorMessage("Brak opisu");
+      }
+      else{        
+        setIsError(false);
         dispatch(postThunks.updatePostInDatabase
           ({title: currentPost.title, content: currentPost.content, eventDetails:null}, id, image)).then(() => {
             setBackToList(true);
           });
       }
+    }
   };
 
   useEffect(() => {
@@ -100,6 +114,7 @@ const EditPost = () => {
       {/* Editor */}
       <Col lg="12" md="12">
         <Card small className="mb-3">
+          <Alert isOpen={isError} color="danger">{errorMessage}</Alert>
           <CardBody>
             <Form className="add-new-post">
                 <Col md="12" className="form-group">

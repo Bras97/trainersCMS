@@ -5,7 +5,7 @@ import PageTitle from "../components/common/PageTitle";
 import {useDispatch, useSelector} from "react-redux"
 import {useState} from "react";
 import { Link } from "react-router-dom";
-import { Card, CardBody, Form, FormInput, Button } from "shards-react";
+import { Card, CardBody, Form, FormInput, Button, FormTextarea } from "shards-react";
 import {addEvent} from "../redux/Events/actions";
 import { Event } from "../redux/Events/types";
 import {DatePicker} from "shards-react";
@@ -14,6 +14,7 @@ import { Post } from "../redux/Posts/types";
 import { EventDetails } from "../redux/Events/types";
 import * as eventThunks from "../redux/Events/thunks";
 import { Redirect } from "react-router-dom";
+import {Alert} from "reactstrap"
 
 const AddNewEvent = () => {
 
@@ -26,6 +27,8 @@ const AddNewEvent = () => {
   const [imagePreview, setImagePreview] = useState();
   const [backToList, setBackToList] = useState(false);
   const {events} = useSelector(state => state.events);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isError, setIsError] = useState(false);
 
   if(authorization != null && authorization.user != null && authorization.user.type == "USER"){
     return <Redirect to="/login" /> 
@@ -44,10 +47,21 @@ const AddNewEvent = () => {
 
   const handleNewEvent = () => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
+      if(title == null || title == ""){
+        setIsError(true);
+        setErrorMessage("Brak tytułu");
+      }
+      else if(content == null || content == ""){
+        setIsError(true);
+        setErrorMessage("Brak opisu");
+      }
+      else{        
+        setIsError(false);
         const eventDetails = new EventDetails(place, date);
         dispatch(eventThunks.addEventToDatabase(new Post(title, content, "EVENT", null, eventDetails), image)).then(() => {
           setBackToList(true);
         });
+      }
       }
   };
 
@@ -71,6 +85,7 @@ const AddNewEvent = () => {
       {/* Editor */}
       <Col lg="12" md="12">
       <Card small className="mb-3">
+      <Alert isOpen={isError} color="danger">{errorMessage}</Alert>
       <CardBody>
         <Form className="add-new-event">
           <FormInput size="lg" className="mb-3" placeholder="Nazwa wydarzenia" onChange={e => setTitle(e.target.value)} />
@@ -80,10 +95,11 @@ const AddNewEvent = () => {
             selected={date}
             onChange={updateDate}
             dateFormat="dd-MM-YYYY hh:mm"
+            minDate={new Date()}
             showTimeSelect
             />
           </div>
-          <FormInput className="mb-1" style={{minHeight: "200px"}} placeholder="Opis" onChange={e => setContent(e.target.value)} />
+          <FormTextarea rows="5" className="mb-1" style={{minHeight: "200px"}} placeholder="Opis" onChange={e => setContent(e.target.value)} />           
 
           <ImageUploader
                         withIcon={true}

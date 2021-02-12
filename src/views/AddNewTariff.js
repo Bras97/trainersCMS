@@ -16,6 +16,7 @@ import { Tariff } from "../redux/Tariffs/types";
 import * as tariffThunks from "../redux/Tariffs/thunks";
 import { Redirect } from "react-router-dom";
 import * as facultiesThunks from "../redux/Faculties/thunks";
+import {Alert} from "reactstrap"
 
 
 const AddNewTariff = () => {
@@ -27,6 +28,9 @@ const [price, setPrice] = useState();
 const [category, setCategory] = useState();
 const {tariffs} = useSelector(state => state.tariffs);
 const {faculties} = useSelector(state => state.faculties);
+const [isError, setIsError] = useState(false);
+const [backToList, setBackToList] = useState(false);
+const [errorMessage, setErrorMessage] = useState("");
 
 
 const { authorization } = useSelector(state => state.authorizationUsers);
@@ -37,8 +41,26 @@ if(authorization != null && authorization.user != null && (authorization.user.ty
 
 const handleNewTariff = () => {
   if (authorization != null && authorization.user != null && authorization.user._id != null) {
-      tariffs.push(new Tariff(title, price, category));
-      dispatch(tariffThunks.addTariffToDatabase(tariffs));
+      if(price == null || price <= 0){
+        setErrorMessage("Zła wartość cennika");
+        setIsError(true);
+      }
+      else if(title == null || title == ""){
+        setErrorMessage("Brak nazwy");
+        setIsError(true);
+      }
+      else{
+        setIsError(false);
+        if(category == null){
+          tariffs.push(new Tariff(title, price, faculties[0]));
+        }
+        else{
+          tariffs.push(new Tariff(title, price, category));
+        }
+        dispatch(tariffThunks.addTariffToDatabase(tariffs)).then(() => {
+          setBackToList(true);
+        });;
+      }
     }
 };
 
@@ -49,6 +71,10 @@ useEffect(() => {
 }, [authorization]);
 
 
+if(backToList==true){
+  return <Redirect to="/tariffs-list" />
+}
+
 
 return(
 
@@ -56,17 +82,16 @@ return(
     {/* Page Header */}
     <Row noGutters className="page-header py-4 d-flex justify-content-between">
       <PageTitle sm="4" title="Dodaj nową cenę" subtitle="Blog Tariffs" />
-      <Link to="/tariffs-list">
         <Button  theme="accent" size="lg" onClick={handleNewTariff}>
         <i className="material-icons">file_copy</i> Zatwierdź
         </Button>
-      </Link>
     </Row>
 
     <Row>
       {/* Editor */}
       <Col lg="12" md="12">
       <Card small className="mb-3">
+      <Alert isOpen={isError} color="danger">{errorMessage}</Alert>
       <CardBody>
         <Form className="add-new-tariff">
           <FormInput size="lg" className="mb-3" placeholder="Nazwa"  onChange={e => setTitle(e.target.value)}/>
@@ -80,7 +105,14 @@ return(
               )}
             </FormSelect>
           </InputGroup>
-          <FormInput type="number" size="lg" className="mb-3" placeholder="Cena"  onChange={e => setPrice(e.target.value)}/>
+          <FormInput 
+          type="number" 
+          size="lg" 
+          className="mb-3" 
+          placeholder="Cena"  
+          onChange={e => setPrice(e.target.value)}
+          min="1"
+          />
           
         </Form>
       </CardBody>

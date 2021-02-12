@@ -1,7 +1,7 @@
 import React from "react";
 import {useState} from "react";
 import { Link } from "react-router-dom";
-import { Container, Row, Col,Card, CardBody, Form, FormInput, Button } from "shards-react";
+import { Container, Row, Col,Card, CardBody, Form, FormInput, Button, FormTextarea } from "shards-react";
 import {useDispatch, useSelector} from "react-redux"
 import PageTitle from "../components/common/PageTitle";
 import {addPost} from "../redux/Posts/actions";
@@ -9,6 +9,7 @@ import { Post } from "../redux/Posts/types";
 import ImageUploader from 'react-images-upload';
 import * as postThunks from "../redux/Posts/thunks";
 import { Redirect } from "react-router-dom";
+import {Alert} from "reactstrap"
 
 const AddNewPost = () => {
 
@@ -20,6 +21,8 @@ const AddNewPost = () => {
   const [imagePreview, setImagePreview] = useState();
   const [backToList, setBackToList] = useState(false);
   const {posts} = useSelector(state => state.posts);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isError, setIsError] = useState(false);
 
   if(authorization != null && authorization.user != null && authorization.user.type == "USER"){
     return <Redirect to="/login" /> 
@@ -29,10 +32,20 @@ const AddNewPost = () => {
 
   const handleNewPost = async () => {
     if (authorization != null && authorization.user != null && authorization.user._id != null) {
+      if(title == null || title == ""){
+        setIsError(true);
+        setErrorMessage("Brak tytułu");
+      }
+      else if(content == null || content == ""){
+        setIsError(true);
+        setErrorMessage("Brak opisu");
+      }
+      else{        
         dispatch(postThunks.addPostToDatabase(new Post(title,content, "POST", null, null), image)).then(() => {
           setBackToList(true);
         });
       }
+    }
   };
 
   const handleOnDrop = (files, pictures) => {
@@ -59,11 +72,11 @@ const AddNewPost = () => {
       {/* Editor */}
       <Col lg="12" md="12">
         <Card small className="mb-3">
+      <Alert isOpen={isError} color="danger">{errorMessage}</Alert>
           <CardBody>
             <Form className="add-new-post">
               <FormInput size="lg" className="mb-3" placeholder="Tytuł posta" onChange={e => setTitle(e.target.value)}/>
-              <FormInput className="mb-1" style={{minHeight: "200px"}} placeholder="Opis posta" onChange={e => setContent(e.target.value)} />
-
+              <FormTextarea rows="5" className="mb-1" style={{minHeight: "200px"}} placeholder="Opis" onChange={e => setContent(e.target.value)} />           
 
               <ImageUploader
                         withIcon={true}
