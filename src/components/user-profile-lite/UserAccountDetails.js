@@ -46,6 +46,8 @@ const UserAccountDetails = ({ title }) => {
   const [currentAvatarFile, setCurrentAvatarFile] = useState(null);
   const { authorization } = useSelector(state => state.authorizationUsers);
   const [temporaryImage, setTemporaryImage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     if (authorization != null) {
@@ -149,6 +151,15 @@ const UserAccountDetails = ({ title }) => {
   }
 
   const handleSubmit = async (e) => {
+    if(currentUser.userDetails.firstName == null || currentUser.userDetails.firstName == "" ||
+    currentUser.userDetails.lastName == null || currentUser.userDetails.firslastNametName == "" ||
+    currentUser.userDetails.phone == null || currentUser.userDetails.phone == ""){
+      setIsError(true);
+      setIsSaved(false)
+      setErrorMessage("Dane nie mogą być puste");
+    }
+    else{
+      setIsError(false);
     currentUser.userDetails.specializations = currentUser.specializations;
     e.preventDefault();
     await dispatch(authorizationThunks.updateUser(currentUser.userDetails));
@@ -173,9 +184,11 @@ const UserAccountDetails = ({ title }) => {
         saveAuthorizationUserInLocalStorage(authorizationUser);
       }
     }
-
     setTemporaryImage(false)
     setIsSaved(true)
+      
+  }
+
   }
 
   const handleImageChange = e => {
@@ -204,6 +217,7 @@ const UserAccountDetails = ({ title }) => {
   <Card small className="mb-4">
 
     <Alert isOpen={isSaved}>Pomyślnie zapisano zmiany</Alert>
+    <Alert isOpen={isError} color="danger">{errorMessage}</Alert>
     <CardHeader className="border-bottom">
       <h6 className="m-0">{title}</h6>
     </CardHeader>
