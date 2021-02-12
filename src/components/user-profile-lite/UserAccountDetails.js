@@ -104,7 +104,7 @@ const UserAccountDetails = ({ title }) => {
     userDetails.description = e.target.value
 
     setCurrentUser({
-      ...currentUser.userDetails,
+      ...currentUser,
       userDetails: userDetails
     });
   };
@@ -115,7 +115,7 @@ const UserAccountDetails = ({ title }) => {
     userDetails.phone = e.target.value
 
     setCurrentUser({
-      ...currentUser.userDetails,
+      ...currentUser,
       userDetails: userDetails
     });
   };
