@@ -1,15 +1,22 @@
 import {
-    AuthorizationActions,
-    AuthorizationUser,
-    CLEAR_CURRENT_AUTHORIZATION_USER,
-    SET_AUTHORIZATION_USER,
-    SET_AUTHORIZATION_USER_PENDING,
-    SET_ERROR,
+  AuthorizationActions,
+  AuthorizationUser,
+  CLEAR_CURRENT_AUTHORIZATION_USER,
+  SET_AUTHORIZATION_USER,
+  SET_AUTHORIZATION_USER_PENDING, SET_EMAIL_ERROR,
+  SET_ERROR,
 } from "./types";
 
 export function setError(data) {
     return {
         type: SET_ERROR,
+        payload: data,
+    };
+}
+
+export function setEmailError(data) {
+    return {
+        type: SET_EMAIL_ERROR,
         payload: data,
     };
 }

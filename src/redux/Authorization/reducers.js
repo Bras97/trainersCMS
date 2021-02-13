@@ -1,12 +1,12 @@
 import {Reducer} from 'redux';
 import initialState from './state';
 import {
-    AuthorizationActions,
-    AuthorizationState,
-    CLEAR_CURRENT_AUTHORIZATION_USER,
-    SET_AUTHORIZATION_USER,
-    SET_AUTHORIZATION_USER_PENDING,
-    SET_ERROR
+  AuthorizationActions,
+  AuthorizationState,
+  CLEAR_CURRENT_AUTHORIZATION_USER,
+  SET_AUTHORIZATION_USER,
+  SET_AUTHORIZATION_USER_PENDING, SET_EMAIL_ERROR,
+  SET_ERROR
 } from './types';
 
 const userReducer = (state = initialState, action) => {
@@ -31,6 +31,11 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 error: action.payload,
             };
+      case SET_EMAIL_ERROR:
+        return {
+          ...state,
+          emailError: action.payload,
+        };
         default:
             return state;
     }

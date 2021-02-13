@@ -8,7 +8,7 @@ import {Alert} from "reactstrap"
 
 const SignUp = () => {
 
-    const { authorization, pending, error } = useSelector(state => state.authorizationUsers);
+    const { authorization, pending, error, emailError } = useSelector(state => state.authorizationUsers);
     const [values, setValues] = useState({type: "USER"});
     const dispatch = useDispatch();
 
@@ -19,22 +19,22 @@ const SignUp = () => {
     if (authorization && authorization.token) {
         return <Redirect to="user-profile-lite"  />
     }
-        
-  
+
+
     const updateEmail = e => {
         setValues({
           ...values,
           email: e.target.value
         });
       };
-  
+
       const updatePhone = e => {
           setValues({
             ...values,
             phone: e.target.value
           });
         };
-  
+
 
     const updatePassword = e => {
         setValues({
@@ -42,21 +42,21 @@ const SignUp = () => {
         password: e.target.value
         });
     };
-  
+
     const updateFirstName = e => {
         setValues({
           ...values,
           firstName: e.target.value
         });
       };
-  
+
       const updateLastName = e => {
           setValues({
             ...values,
             lastName: e.target.value
           });
         };
-        
+
     const updateUserType = e => {
         setValues({
             ...values,
@@ -85,10 +85,19 @@ const SignUp = () => {
         });
     }
 
+    const renderErrorAlert = () => {
+      if (emailError) {
+        return <Alert color="warning" severity="error">Użytkownik o taki adresie email już istnieje</Alert>;
+      }
+      if (error) {
+        return <Alert color="warning" severity="error">Wypełnij wszystkie dane</Alert>;
+      }
+    }
+
     return (
         <form class="row justify-content-center" style={{marginTop: "100px"}}>
         <div className="col-8">
-            {(error) && <Alert color="warning" severity="error">Wypełnij wszystkie dane</Alert>}
+            {renderErrorAlert()}
             <h3>Zarejestruj się</h3>
 
             <Row>
@@ -116,7 +125,7 @@ const SignUp = () => {
             </Row>
 
             <Row>
-        
+
                 <div className="form-group col-6">
                     <label>Hasło</label>
                     <input type="password" className="form-control" placeholder="Hasło" onChange={updatePassword} />
@@ -145,7 +154,7 @@ const SignUp = () => {
                 </div>
             </Row>
             <Row>
-        
+
                 <div className="form-group col-12">
                     <label>Opis</label>
                     <input type="text" className="form-control" placeholder="Opis" onChange={updateDescription} />

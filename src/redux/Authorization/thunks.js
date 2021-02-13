@@ -1,6 +1,9 @@
 import {
-    clearCurrentAuthorizationUser as clearCurrentAuthorizationUserAction, setAuthorizationUser,
-    setAuthorizationUserPending, setError,
+  clearCurrentAuthorizationUser as clearCurrentAuthorizationUserAction,
+  setAuthorizationUser,
+  setAuthorizationUserPending,
+  setEmailError,
+  setError,
 } from './actions';
 import {
     readAuthorizationUserFromLocalStorage,
@@ -65,11 +68,17 @@ export const register = (newUser) => async (
         if (data) {
             dispatch(setAuthorizationUser(data));
             dispatch(setError(false));
+            dispatch(setEmailError(false));
             saveAuthorizationUserInLocalStorage(data);
         }
 
     } catch (e) {
+        dispatch(setEmailError(false));
         dispatch(setError(true));
+        const responseError = await e.response.json();
+        if (responseError.errors && responseError.errors.email && responseError.errors.email.toString().includes("email is already registered")) {
+          dispatch(setEmailError(true));
+        }
     }
 };
 
