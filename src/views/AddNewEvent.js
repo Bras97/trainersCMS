@@ -34,6 +34,17 @@ const AddNewEvent = () => {
     return <Redirect to="/login" /> 
   }
 
+  if(date.getMinutes() < 30 &&  !(date.getMinutes() == 0 && date.getSeconds() == 0)){
+    date.setMinutes(30);
+    date.setSeconds(0);
+  }
+  else if(date.getMinutes() > 30 || (date.getMinutes() == 30 && date.getSeconds() > 0)){
+    date.setHours(date.getHours+1);
+    date.setMinutes(0);
+    date.setSeconds(0);
+  }
+
+
   const handleOnDrop = (files, pictures) => {
     setImage(files[0]);
     setImagePreview(pictures[0]);
@@ -94,7 +105,7 @@ const AddNewEvent = () => {
           <DatePicker
             selected={date}
             onChange={updateDate}
-            dateFormat="dd-MM-YYYY hh:mm"
+            dateFormat="dd-MM-YYYY HH:mm"
             minDate={new Date()}
             showTimeSelect
             />
@@ -108,6 +119,7 @@ const AddNewEvent = () => {
                         imgExtension={['.jpg', '.gif', '.png', '.gif']}
                         singleImage={true}
                         maxFileSize={5242880}
+                        label="max: 5MB, formaty: jpg | gif | png"
                     />
               <img src={imagePreview} style={{ width: "100%" }}/>
 

@@ -120,6 +120,11 @@ const UserActions = (props) => {
           <i className="material-icons">&#xE885;</i> Strona główna
         </DropdownItem>
           </a>
+        <a href="https://trenerzy.tomkowiak.eu/obserwowane" >
+          <DropdownItem caret>
+          <i className="material-icons">&#xE896;</i> Obserwowani trenerzy
+        </DropdownItem>
+          </a>
         <Link to="/login" onClick={logout}>
           <DropdownItem caret className="text-danger">
           <i className="material-icons text-danger">&#xE879;</i> Logout

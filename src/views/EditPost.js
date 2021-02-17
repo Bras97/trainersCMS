@@ -133,6 +133,7 @@ const EditPost = () => {
                         imgExtension={['.jpg', '.gif', '.png', '.gif']}
                         singleImage={true}
                         maxFileSize={5242880}
+                        label="max: 5MB, formaty: jpg | gif | png"
                     />
               <img src={imagePreview || featuredImageUrl(currentPost.featuredImage)} style={{ width: "100%" }}/>
             </Form>

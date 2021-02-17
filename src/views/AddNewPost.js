@@ -85,6 +85,7 @@ const AddNewPost = () => {
                         imgExtension={['.jpg', '.gif', '.png', '.gif']}
                         singleImage={true}
                         maxFileSize={5242880}
+                        label="max: 5MB, formaty: jpg | gif | png"
                     />
               <img src={imagePreview} style={{ width: "100%" }}/>
 

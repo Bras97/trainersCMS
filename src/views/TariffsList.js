@@ -76,7 +76,11 @@ const TariffsList = () => {
                 {tariffs.map((tariff, idx) => 
                   <tr key={idx+1}>
                     <td>{idx+1}</td>
-                    <td>{tariff.title}</td>
+                    <td style={{maxWidth: "400px",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis"
+                    }}>{tariff.title}</td>
                     <td>{tariff.category}</td>
                     <td>{tariff.price} zł</td>
                     <td><Link onClick={() => handleDeleteTariff(idx)}><FaTrashAlt /> </Link></td>

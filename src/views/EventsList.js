@@ -9,6 +9,7 @@ import PageTitle from "../components/common/PageTitle";
 import { deleteEvent } from "../redux/Events/actions";
 import * as eventsThunks from "../redux/Events/thunks";
 import { useHttpErrorHandler } from '../utils/hooks/useHttpErrorHandler';
+import dayjs from "dayjs";
 
 const EventsList = () => {
 
@@ -83,8 +84,12 @@ const EventsList = () => {
                 {events.map((event,idx) => 
                   <tr key={idx+1}>
                     <td>{idx+1}</td>
-                    <td>{event.title}</td>
-                    <td>{event.eventDetails.dateTime != null ? event.eventDetails.dateTime.toString() : null}</td>
+                    <td style={{maxWidth: "400px",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis"
+                    }}>{event.title}</td>
+                    <td>{event.eventDetails.dateTime != null ? dayjs(event.eventDetails.dateTime).format('DD/MM/YYYY HH:mm') : null}</td>
                     <td style={{maxWidth: "400px",
                     whiteSpace: "nowrap",
                     overflow: "hidden",

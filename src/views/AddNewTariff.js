@@ -41,8 +41,8 @@ if(authorization != null && authorization.user != null && (authorization.user.ty
 
 const handleNewTariff = () => {
   if (authorization != null && authorization.user != null && authorization.user._id != null) {
-      if(price == null || price <= 0){
-        setErrorMessage("Zła wartość cennika");
+      if(price == null || price <= 0 || price > 999999){
+        setErrorMessage("Zła wartość cennika (1 - 999 999 zł)");
         setIsError(true);
       }
       else if(title == null || title == ""){
@@ -111,6 +111,7 @@ return(
           className="mb-3" 
           placeholder="Cena"  
           onChange={e => setPrice(e.target.value)}
+          max="999999"
           min="1"
           />
           

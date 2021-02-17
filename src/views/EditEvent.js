@@ -35,6 +35,8 @@ const EditEvent = () => {
     return <Redirect to="/login" /> 
   }
 
+
+
   const { authorization } = useSelector(state => state.authorizationUsers);
 
   const handleEditEvent = () => {
@@ -147,6 +149,7 @@ const EditEvent = () => {
               imgExtension={['.jpg', '.gif', '.png', '.gif']}
               singleImage={true}
               maxFileSize={5242880}
+              label="max: 5MB, formaty: jpg | gif | png"
           />
           <img src={imagePreview || featuredImageUrl(currentEvent.featuredImage)} style={{ width: "100%" }}/>
 

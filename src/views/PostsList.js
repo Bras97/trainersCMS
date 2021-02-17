@@ -79,7 +79,11 @@ const handleDeletePost = (selectedPost) => {
                 {posts.map((post, idx) =>
                   <tr key={idx+1}>
                     <td>{idx+1}</td>
-                    <td>{post.title}</td>
+                    <td style={{maxWidth: "400px",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis"
+                    }}>{post.title}</td>
                     <td style={{maxWidth: "400px",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
