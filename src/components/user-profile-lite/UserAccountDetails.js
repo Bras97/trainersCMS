@@ -196,19 +196,25 @@ const UserAccountDetails = ({ title }) => {
 
     let reader = new FileReader();
     let file = e.target.files[0];
-    setCurrentAvatarFile(file);
-
-    reader.onloadend = () => {
-      const userDetails = currentUser.userDetails;
-      userDetails.avatar = reader.result;
-      setCurrentUser({
-        ...currentUser,
-        userDetails: userDetails
-      });
+    if(file.size < 5 * 1024){
+      setCurrentAvatarFile(file);
+  
+      reader.onloadend = () => {
+        const userDetails = currentUser.userDetails;
+        userDetails.avatar = reader.result;
+        setCurrentUser({
+          ...currentUser,
+          userDetails: userDetails
+        });
+      }
+  
+      setTemporaryImage(true);
+      reader.readAsDataURL(file)
     }
-
-    setTemporaryImage(true);
-    reader.readAsDataURL(file)
+    else{
+      setIsError(true)
+      setErrorMessage("Za duży rozmiar zdjęcia");
+    }
   }
 
 
@@ -341,6 +347,7 @@ const UserAccountDetails = ({ title }) => {
                         width="110"
                         height="110"
                       />
+                      <label className="ml-3">Max: 5MB</label>
                     </div>
 
                     <div className="text-center"  style={{maxWidth: "400px"}}>

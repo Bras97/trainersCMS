@@ -57,7 +57,8 @@ const EventsList = () => {
         <Card small className="mb-4">
           <CardHeader className="border-bottom">
             <h4 className="m-0">Wydarzenia</h4>
-            <h6 className="m-0 mt-1"><Link to="/add-new-event">Dodaj nowe wydarzenie</Link></h6>
+            {authorization.user.type != "ADMIN" ?
+            <h6 className="m-0 mt-1"><Link to="/add-new-event">Dodaj nowe wydarzenie</Link></h6> : null}
           </CardHeader>
           <CardBody className="p-0 pb-3">
             <table className="table mb-0">

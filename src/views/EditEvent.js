@@ -30,11 +30,20 @@ const EditEvent = () => {
   const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState("");
   const [isError, setIsError] = useState(false);
+  const [showMode, setShowMode] = useState(false);
 
   if(authorization != null && authorization.user != null && authorization.user.type == "USER"){
     return <Redirect to="/login" /> 
   }
 
+  
+
+  useEffect(() => {
+    if(authorization != null && authorization.user != null && authorization.user.type == "ADMIN"){
+      console.log("Jestem adminem");
+      setShowMode(true);
+    }
+  }, [authorization, currentEvent]);
 
 
   const { authorization } = useSelector(state => state.authorizationUsers);
@@ -125,7 +134,8 @@ const EditEvent = () => {
         <Form className="add-new-event">
           <Col md="12" className="form-group">
             <label htmlFor="feDescription">Nazwa</label>
-            <FormInput size="lg" className="mb-3" placeholder="Nazwa wydarzenia" defaultValue={currentEvent.title} onChange={updateTitle} />
+            <FormInput size="lg" className="mb-3" placeholder="Nazwa wydarzenia" 
+            defaultValue={currentEvent.title} onChange={updateTitle} disabled={showMode}/>
           </Col>
           <div className="mb-3 d-flex justify-content-start align-self-center">
           <h6 className="ml-3">Data: </h6>
@@ -136,12 +146,15 @@ const EditEvent = () => {
             minDate={new Date()}
             dateFormat="dd-MM-YYYY hh:mm"
             showTimeSelect
+            disabled={showMode}
             />
           </div>
           <Col md="12" className="form-group">
             <label htmlFor="feDescription">Opis</label>
-            <FormTextarea rows="5" className="mb-1" style={{minHeight: "200px"}} placeholder="Opis" defaultValue={currentEvent.content} onChange={updateContent} />
+            <FormTextarea rows="5" className="mb-1" style={{minHeight: "200px"}} placeholder="Opis" 
+            defaultValue={currentEvent.content} onChange={updateContent}  disabled={showMode}/>
             </Col>
+            {!showMode ? 
           <ImageUploader
               withIcon={true}
               buttonText='Wybierz zdjęcie'
@@ -150,7 +163,7 @@ const EditEvent = () => {
               singleImage={true}
               maxFileSize={5242880}
               label="max: 5MB, formaty: jpg | gif | png"
-          />
+          /> : null}
           <img src={imagePreview || featuredImageUrl(currentEvent.featuredImage)} style={{ width: "100%" }}/>
 
         </Form>

@@ -27,10 +27,18 @@ const EditPost = () => {
   const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState("");
   const [isError, setIsError] = useState(false);
+  const [showMode, setShowMode] = useState(false);
 
   if(authorization != null && authorization.user != null && authorization.user.type == "USER"){
     return <Redirect to="/login" /> 
   }
+
+  useEffect(() => {
+    if(authorization != null && authorization.user != null && authorization.user.type == "ADMIN"){
+      setShowMode(true);
+    }
+  }, [authorization, currentPost]);
+
 
   const { authorization } = useSelector(state => state.authorizationUsers);
   const sleep = (milliseconds) => {
@@ -119,13 +127,15 @@ const EditPost = () => {
             <Form className="add-new-post">
                 <Col md="12" className="form-group">
                   <label htmlFor="feDescription">Tytuł</label>
-                  <FormInput size="lg" className="mb-3" placeholder="Tytuł posta" defaultValue={currentPost.title} onChange={updateTitle}
+                  <FormInput size="lg" className="mb-3" placeholder="Tytuł posta" 
+                  defaultValue={currentPost.title} onChange={updateTitle} disabled={showMode}
                   ></FormInput>
                 </Col>
                 <Col md="12" className="form-group">
                   <label htmlFor="feDescription">Opis</label>
-                  <FormTextarea rows="5" placeholder="Opis posta" value={currentPost.content} onChange={updateContent} />
+                  <FormTextarea rows="5" placeholder="Opis posta" value={currentPost.content} onChange={updateContent} disabled={showMode} />
                 </Col>
+                {!showMode ? 
               <ImageUploader
                         withIcon={true}
                         buttonText='Wybierz zdjęcie'
@@ -134,7 +144,7 @@ const EditPost = () => {
                         singleImage={true}
                         maxFileSize={5242880}
                         label="max: 5MB, formaty: jpg | gif | png"
-                    />
+                    /> : null}
               <img src={imagePreview || featuredImageUrl(currentPost.featuredImage)} style={{ width: "100%" }}/>
             </Form>
           </CardBody>

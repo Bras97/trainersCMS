@@ -55,7 +55,9 @@ const handleDeletePost = (selectedPost) => {
         <Card small className="mb-4">
           <CardHeader className="border-bottom">
             <h4 className="m-0">Posty</h4>
-            <h6 className="m-0 mt-1"><Link to="/add-new-post">Dodaj nowy post</Link></h6>
+            
+            {authorization.user.type != "ADMIN" ?
+            <h6 className="m-0 mt-1"><Link to="/add-new-post">Dodaj nowy post</Link></h6> : null}
           </CardHeader>
           <CardBody className="p-0 pb-3">
             <table className="table mb-0">
